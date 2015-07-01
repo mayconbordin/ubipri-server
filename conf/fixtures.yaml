@@ -1,0 +1,107 @@
+user_types:
+  - &normalType !!models.UserType
+    name: Normal
+
+users:
+  - &borgesUser !!models.User
+    name: borges
+    fullName: Guilherme A. Borges
+    emailAddress: guilhermeborges@gmail.com
+    password: 12345
+    userType: *normalType
+    
+device_types:
+  - &androidDeviceType !!models.DeviceType
+    name: Android
+  - &notebookDeviceType !!models.DeviceType
+    name: Notebook
+  - &arduinoDeviceType !!models.DeviceType
+    name: Arduino
+  - &vmAndroidDeviceType !!models.DeviceType
+    name: VMAndroid
+  - &iosDeviceType !!models.DeviceType
+    name: iOS
+  - &rfidCardDeviceType !!models.DeviceType
+    name: RFID Card
+
+functionalities:
+  - &bluetoothFunctionality !!models.Functionality
+    name: Bluetooth
+  - &silentModeFunctionality !!models.Functionality
+    name: Silent Mode
+  - &vibrateAlertFunctionality !!models.Functionality
+    name: Vibrate Alert
+  - &airplaneModeFunctionality !!models.Functionality
+    name: Airplane Mode
+  - &wifiFunctionality !!models.Functionality
+    name: Wi-Fi
+  - &mobileNetworkDataFunctionality !!models.Functionality
+    name: Mobile Network Data Access
+  - &systemVolumeFunctionality !!models.Functionality
+    name: System Volume
+  - &mediaVolumeFunctionality !!models.Functionality
+    name: Media Volume
+  - &rignerVolumeFunctionality !!models.Functionality
+    name: Ringer Volume
+  - &screenTimeoutFunctionality !!models.Functionality
+    name: Screen Timeout
+  - &screenBrightnessFunctionality !!models.Functionality
+    name: Screen Brightness
+  - &smsFunctionality !!models.Functionality
+    name: SMS
+  - &launchAppFunctionality !!models.Functionality
+    name: Launch App
+  - &cameraAccessFunctionality !!models.Functionality
+    name: Camera Access
+  - &gpsFunctionality !!models.Functionality
+    name: GPS
+
+communication_types:
+  - &socketCommunicationType !!models.CommunicationType
+    name: Socket
+  - &wsSoapCommunicationType !!models.CommunicationType
+    name: WebService SOAP
+  - &wsRestCommunicationType !!models.CommunicationType
+    name: WebService Rest
+  - &gcmCommunicationType !!models.CommunicationType
+    name: Google Cloud Message
+  - &usbCommunicationType !!models.CommunicationType
+    name: USB
+  - &rs232CommunicationType !!models.CommunicationType
+    name: RS-232
+  - &httpCommunicationType !!models.CommunicationType
+    name: HTTP
+
+devices:
+  - &vmAndroid2Device !!models.Device
+    code: '1234554321'
+    name: VitualMachineAndroid_2.3
+    type: *vmAndroidDeviceType
+    user: *borgesUser
+    functionalities:
+      - *bluetoothFunctionality
+      - *silentModeFunctionality
+      - *vibrateAlertFunctionality
+      - *wifiFunctionality
+      - *rignerVolumeFunctionality
+      - *gpsFunctionality
+
+  - &tabletLab205Device !!models.Device
+    code: '1111111111'
+    name: Tablet Lab. 205
+    type: *androidDeviceType
+    user: *borgesUser
+    functionalities:
+      - *bluetoothFunctionality
+      - *silentModeFunctionality
+      - *vibrateAlertFunctionality
+      - *wifiFunctionality
+      - *rignerVolumeFunctionality
+
+  - &rfidCardBorgesDevice !!models.Device
+    code: '5E-EF-8-9B-54'
+    name: RFID Card - Borges
+    type: *rfidCardDeviceType
+    user: *borgesUser
+
+#device_communications:

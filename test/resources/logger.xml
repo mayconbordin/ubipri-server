@@ -1,0 +1,34 @@
+<configuration>
+    
+  <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%coloredLevel - %logger - %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
+  <!--
+    The logger name is typically the Java/Scala package name.
+    This configures the log level to log at for a package and its children packages.
+  -->
+  <logger name="play" level="INFO" />
+  <logger name="application" level="DEBUG" />
+  <logger name="TEST" level="DEBUG" />
+  <logger name="api" level="DEBUG" />
+  
+  <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
+  <logger name="com.avaje" level="OFF" />
+  <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
+  <logger name="com.zaxxer" level="OFF" />
+  <logger name="org.hibernate" level="OFF" />
+  
+  <!-- Print SQL statements 
+  <logger name="org.avaje.ebean.SQL" level="TRACE"/>
+  -->
+  
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>
