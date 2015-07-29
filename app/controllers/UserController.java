@@ -7,12 +7,18 @@ import javax.inject.Inject;
 import dao.DeviceDAO;
 import dao.DeviceTypeDAO;
 import dao.UserDAO;
+import dao.UserEnvironmentDAO;
 import forms.UserDeviceForm;
+import forms.UserLocationForm;
 import models.Device;
 import models.DeviceType;
 import models.User;
+import models.UserEnvironment;
+import models.UserEnvironmentPK;
+import models.serialization.Views;
 import play.data.Form;
 import play.mvc.*;
+import services.PrivacyService;
 import utils.http.BaseController;
 import utils.security.Secured;
 
@@ -20,6 +26,9 @@ public class UserController extends BaseController {
 	@Inject UserDAO userDao;
 	@Inject DeviceDAO deviceDao;
 	@Inject DeviceTypeDAO deviceTypeDao;
+	@Inject UserEnvironmentDAO userEnvDao;
+	
+	@Inject PrivacyService service;
 	
 	@Security.Authenticated(Secured.class)
 	public Result getUser() {
@@ -78,9 +87,21 @@ public class UserController extends BaseController {
 		}
 		
 		device.setType(type);
-		
 		deviceDao.create(device);
 		
 		return created(device);
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public Result updateLocation() {
+		Form<UserLocationForm> form = Form.form(UserLocationForm.class).bindFromRequest();
+		
+		if (form.hasErrors()) {
+			return invalidForm(form);
+		}
+		
+		List<models.Action> actions = service.changeUserLocation(getAuthUser(), form.get());
+		
+		return ok(actions, Views.Basic.class);
 	}
 }

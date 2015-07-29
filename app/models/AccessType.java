@@ -35,4 +35,9 @@ public class AccessType extends Model {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "AccessType [id=" + id + ", name=" + name + "]";
+	}
 }

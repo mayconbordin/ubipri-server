@@ -1,7 +1,7 @@
 # access_levels schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS access_levels CASCADE;
 CREATE TABLE access_levels (
 	id serial not null primary key,	
 	impact_factor double precision not null,

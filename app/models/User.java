@@ -4,9 +4,12 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.serialization.Views;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.avaje.ebean.Model;
+
 import play.data.format.*;
 import play.data.validation.*;
 import utils.HashUtil;
@@ -28,6 +31,7 @@ public class User extends Model {
     @Column(name="full_name", nullable=false)
     public String fullName;
     
+    @JsonIgnore
     private String authToken;
     
     @Column(length = 256, unique = true, nullable = false)
@@ -57,6 +61,10 @@ public class User extends Model {
 	
 	@OneToMany
 	public List<Device> devices;
+	
+	@OneToMany
+    @JsonIgnore
+    public List<UserEnvironment> environments;
 	
 	public String createToken() {
 		authToken = UUID.randomUUID().toString();
@@ -134,6 +142,14 @@ public class User extends Model {
 
 	public void setDevices(List<Device> devices) {
 		this.devices = devices;
+	}
+
+	public List<UserEnvironment> getEnvironments() {
+		return environments;
+	}
+
+	public void setEnvironments(List<UserEnvironment> environments) {
+		this.environments = environments;
 	}
 	
 	

@@ -13,12 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.postgis.Point;
+import org.postgis.Polygon;
+
 import models.Device;
+import models.Environment;
+import models.UserEnvironment;
 
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 
+import dao.EnvironmentDAO;
 import play.Logger;
 import play.test.*;
 import play.libs.Json;
@@ -29,6 +35,7 @@ import play.mvc.Http.Status;
 import play.db.Database;
 import play.db.Databases;
 import play.db.evolutions.*;
+import utils.db.FixturesUtil;
 
 
 public class ApplicationBaseTest extends WithApplication {
@@ -72,12 +79,8 @@ public class ApplicationBaseTest extends WithApplication {
 	@Override
 	public void startPlay() {
 		super.startPlay();
-
-		Map<String, List<Object>> tableMap = (Map<String, List<Object>>) Yaml.load("fixtures.yaml");
 		
-		for (Map.Entry<String, List<Object>> tableEntry : tableMap.entrySet()) {
-		    Ebean.save(tableEntry.getValue());
-		}
+		FixturesUtil.load("fixtures.yaml", database.getConnection());
 	}
 
 	@Override

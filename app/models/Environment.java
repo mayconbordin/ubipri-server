@@ -4,14 +4,21 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.postgis.Point;
+import org.postgis.Polygon;
+
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import play.data.format.*;
 import play.data.validation.*;
 
 @Entity
 @Table(name="environments")
 public class Environment extends Model {
-
+	public static final int SRID = 4326;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "environments_id_seq")
     public Integer id;
@@ -19,14 +26,10 @@ public class Environment extends Model {
     @Constraints.Required
     @Constraints.MaxLength(100)
     public String name;
-  
-    @Constraints.Required
-    public double latitude;
-  
-    @Constraints.Required
-    public double longitude;
-  
-    public double altitude;
+    
+    public Point location;
+    
+    public Polygon shape;
   
     @Column(name="operating_range", nullable=false)
     public double operatingRange;
@@ -47,9 +50,12 @@ public class Environment extends Model {
   
     @OneToMany
     public List<Action> customActions;
-  
-    @OneToMany
-    public List<Point> points;
+    
+    /**
+     * Used only for results with distance from a point
+     */
+    @Transient
+    public double distance;
 
 	public Integer getId() {
 		return id;
@@ -65,30 +71,6 @@ public class Environment extends Model {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public double getAltitude() {
-		return altitude;
-	}
-
-	public void setAltitude(double altitude) {
-		this.altitude = altitude;
 	}
 
 	public double getOperatingRange() {
@@ -139,13 +121,39 @@ public class Environment extends Model {
 		this.customActions = customActions;
 	}
 
-	public List<Point> getPoints() {
-		return points;
+	public Point getLocation() {
+		return location;
 	}
 
-	public void setPoints(List<Point> points) {
-		this.points = points;
+	public void setLocation(Point location) {
+		this.location = location;
+		this.location.setSrid(SRID);
 	}
 
-    
+	public Polygon getShape() {
+		return shape;
+	}
+
+	public void setShape(Polygon shape) {
+		this.shape = shape;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	@Override
+	public String toString() {
+		return "Environment [id=" + id + ", name=" + name + ", location="
+				+ location + ", shape=" + shape + ", operatingRange="
+				+ operatingRange + ", version=" + version
+				+ ", localizationType=" + localizationType
+				+ ", environmentType=" + environmentType + ", parent=" + parent
+				+ ", customActions=" + customActions + "]";
+	}
+
 }

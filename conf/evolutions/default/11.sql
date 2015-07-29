@@ -1,7 +1,7 @@
 # Device communications schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS device_functionalities CASCADE;
 CREATE TABLE device_functionalities (
 	device_id integer not null,
 	functionality_id integer not null,

@@ -5,6 +5,8 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import play.data.format.*;
 import play.data.validation.*;
 
@@ -34,10 +36,12 @@ public class Action extends Model {
     public String action;
   
     @Formats.DateTime(pattern="dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name="start_date")
     public Date startDate;
   
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name="end_date")
     public Date endDate;
   
@@ -130,6 +134,16 @@ public class Action extends Model {
 
 	public void setArgs(List<ActionArg> args) {
 		this.args = args;
+	}
+
+	@Override
+	public String toString() {
+		return "Action [id=" + id + ", accessLevel=" + accessLevel
+				+ ", functionality=" + functionality + ", environment="
+				+ environment + ", action=" + action + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", startDailyInterval="
+				+ startDailyInterval + ", durationInterval=" + durationInterval
+				+ ", args=" + args + "]";
 	}
   
     

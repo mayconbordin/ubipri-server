@@ -1,7 +1,7 @@
 # actions_args schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS actions_args CASCADE;
 CREATE TABLE actions_args (
 	id serial not null primary key,
 	label varchar(100) default null,

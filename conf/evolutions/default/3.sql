@@ -1,7 +1,7 @@
 # Localization types schema
  
 # --- !Ups
- 
+DROP TABLE IF EXISTS localization_types CASCADE;
 CREATE TABLE localization_types (
   id serial NOT NULL primary key,
   name character varying(100) NOT NULL,

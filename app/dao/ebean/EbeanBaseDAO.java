@@ -57,7 +57,7 @@ public abstract class EbeanBaseDAO<T, ID extends Serializable> {
 			query.fetch(relation);
 		}
 		
-		return query.where().eq(getPkFieldName(), id).findUnique();
+		return filterByPk(query, id).findUnique();
 	}
 	
 	public T findByQuery(Query<T> query) {
@@ -159,10 +159,10 @@ public abstract class EbeanBaseDAO<T, ID extends Serializable> {
 	
 	// boolean -----------------------------------------------------------------
 	public boolean exists(ID id) {
-		int count = Ebean.find(getPersistentClass())
-			.where().eq(getPkFieldName(), id)
-			.findRowCount();
+		Query<T> query = Ebean.find(getPersistentClass());
 		
+		int count = filterByPk(query, id).findRowCount();
+
 		return (count != 0);
 	}
 	
@@ -175,6 +175,11 @@ public abstract class EbeanBaseDAO<T, ID extends Serializable> {
 	public int count() {
         return createQuery().findRowCount();
     }
+	
+	// utility methods ---------------------------------------------------------
+	protected ExpressionList<T> filterByPk(Query<T> query, ID id) {
+		return query.where().eq(getPkFieldName(), id);
+	}
 
 	// schema info -------------------------------------------------------------
 	

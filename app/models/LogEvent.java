@@ -11,28 +11,34 @@ import play.data.validation.*;
 @Entity
 @Table(name="log_events")
 public class LogEvent extends Model {
-
 	/**
-	 * d - day shift
-	 * n - night shift
+	 * Day shift
 	 */
-	public static final char DAY_SHIFT = 'd';
+	public static final char DAY_SHIFT   = 'd';
+	
+	/**
+	 * Night shift
+	 */
 	public static final char NIGHT_SHIFT = 'n';
 
 	/**
-	 * Day of week:
-	 * 0 - no: weekend
-	 * 1 - yes: week day
+	 * Weekend
 	 */
 	public static final int DAY_OF_WEEKEND = 0;
-	public static final int DAY_OF_WEEK = 1;
+	
+	/**
+	 * Weekday
+	 */
+	public static final int DAY_OF_WEEK    = 1;
 
 	/**
-	 * Workday:
-	 * y - yes
-	 * n - no
+	 * Is a workday
 	 */
 	public static final char YES_WORKDAY = 'y';
+	
+	/**
+	 * Is not a workday
+	 */
 	public static final char NOT_WORKDAY = 'n';
 	
 	@Id

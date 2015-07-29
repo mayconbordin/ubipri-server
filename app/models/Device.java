@@ -4,7 +4,6 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import models.serialization.DeviceSerializer;
 import models.serialization.Views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

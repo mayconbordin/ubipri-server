@@ -16,6 +16,8 @@
   <logger name="application" level="DEBUG" />
   <logger name="TEST" level="DEBUG" />
   <logger name="api" level="DEBUG" />
+  <logger name="unit" level="DEBUG" />
+  <logger name="services" level="DEBUG" />
   
   <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
   <logger name="com.avaje" level="OFF" />

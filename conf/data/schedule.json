@@ -1,0 +1,314 @@
+{  
+  "1":{  
+    "data":"01/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"01/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Descri\u00e7\u00e3o do plano de ensino. Introdu\u00e7\u00e3o \u00e0 disciplina. Plano de ensino. Introdu\u00e7\u00e3o a linguagem  SQL",
+        "ensino_a_distancia":false,
+        "turma_id":"4",
+        "ambiente":{  
+          "id":4,
+          "nome":"sala 104",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "2":{  
+    "data":"02/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "3":{  
+    "data":"03/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "4":{  
+    "data":"04/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "5":{  
+    "data":"05/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"05/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Introdu\u00e7\u00e3o a disciplina. Plano de ensino. Situa\u00e7\u00e3o do tema banco de dados dentro da computa\u00e7\u00e3o. Arquivos convencionais, problemas; conceitos de banco de dados (BD) e SGBD: no\u00e7\u00f5es gerais de um sistema de BD; arquitetura de SGBD; ger\u00eancia de bancos fun\u00e7\u00f5es b\u00e1sicas de SGBD; usu\u00e1rios de BD;",
+        "ensino_a_distancia":false,
+        "turma_id":"2",
+        "ambiente":{  
+          "id":2,
+          "nome":"sala 102",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "6":{  
+    "data":"06/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "7":{  
+    "data":"07/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "8":{  
+    "data":"08/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"08/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Consultas (SQL, linguagem de manipula\u00e7\u00e3o de dados). Exerc\u00edcios de fixa\u00e7\u00e3o",
+        "ensino_a_distancia":false,
+        "turma_id":"4",
+        "ambiente":{  
+          "id":4,
+          "nome":"sala 104",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "9":{  
+    "data":"09/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "10":{  
+    "data":"10/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "11":{  
+    "data":"11/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "12":{  
+    "data":"12/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"12/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Abstra\u00e7\u00e3o de dados.  Modelo conceitual; modelo l\u00f3gico; modelo f\u00edsico. Introdu\u00e7\u00e3o a modelagem conceitual.  modelo de dados entidade relacionamento (ER)",
+        "ensino_a_distancia":false,
+        "turma_id":"2",
+        "ambiente":{  
+          "id":2,
+          "nome":"sala 102",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "13":{  
+    "data":"13/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "14":{  
+    "data":"14/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "15":{  
+    "data":"15/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"15/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Consultas (SQL, linguagem de defini\u00e7\u00e3o de dados). Exerc\u00edcios de fixa\u00e7\u00e3o",
+        "ensino_a_distancia":false,
+        "turma_id":"4",
+        "ambiente":{  
+          "id":4,
+          "nome":"sala 104",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "16":{  
+    "data":"16/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "17":{  
+    "data":"17/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "18":{  
+    "data":"18/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "19":{  
+    "data":"19/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"19/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Modelagem conceitual: objetivos; propriedades de um modelo conceitual; nota\u00e7\u00f5es. Estudo de caso.",
+        "ensino_a_distancia":false,
+        "turma_id":"2",
+        "ambiente":{  
+          "id":2,
+          "nome":"sala 102",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "20":{  
+    "data":"20/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "21":{  
+    "data":"21/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "22":{  
+    "data":"22/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"22/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Consultas Avan\u00e7adas (introdu\u00e7\u00e3o a subselects).  Exerc\u00edcios de fixa\u00e7\u00e3o. Integra\u00e7\u00e3o do SQL e com o  JAVA.  Exerc\u00edcios de fixa\u00e7\u00e3o",
+        "ensino_a_distancia":false,
+        "turma_id":"4",
+        "ambiente":{  
+          "id":4,
+          "nome":"sala 104",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "23":{  
+    "data":"23/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "24":{  
+    "data":"24/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "25":{  
+    "data":"25/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "26":{  
+    "data":"26/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"26/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"modelagem conceitual (mecanismos de abstra\u00e7\u00e3o; classifica\u00e7\u00e3o/instancia\u00e7\u00e3o; generaliza\u00e7\u00e3o/especializa\u00e7\u00e3o;). Exerc\u00edcios de fixa\u00e7\u00e3o. Descri\u00e7\u00e3o do trabalho G1.",
+        "ensino_a_distancia":false,
+        "turma_id":"2",
+        "ambiente":{  
+          "id":2,
+          "nome":"sala 102",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "27":{  
+    "data":"27/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "28":{  
+    "data":"28/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "29":{  
+    "data":"29/08/2014",
+    "aulas":[  
+      {  
+        "id":49,
+        "data":"29/08/2014",
+        "horario_inicio":"18:30:00",
+        "horario_fim":"22:50:00",
+        "status":"0",
+        "conteudo":"Consultas Avan\u00e7adas (subselects, group by).  Exerc\u00edcios de fixa\u00e7\u00e3o",
+        "ensino_a_distancia":false,
+        "turma_id":"4",
+        "ambiente":{  
+          "id":4,
+          "nome":"sala 104",
+          "tipo_ambiente_id":1
+        }
+      }
+    ]
+  },
+  "30":{  
+    "data":"30/08/2014",
+    "aulas":[  
+
+    ]
+  },
+  "31":{  
+    "data":"31/08/2014",
+    "aulas":[  
+
+    ]
+  }
+}

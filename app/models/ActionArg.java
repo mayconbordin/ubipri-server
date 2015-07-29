@@ -9,7 +9,7 @@ import play.data.format.*;
 import play.data.validation.*;
 
 @Entity
-@Table(name="action_args")
+@Table(name="actions_args")
 public class ActionArg extends Model {
 
     @Id
@@ -22,6 +22,7 @@ public class ActionArg extends Model {
   
     @Constraints.Required
     @Constraints.MaxLength(100)
+    @Column(name="arg_value")
     public String value;
   
     @ManyToOne(optional=false)

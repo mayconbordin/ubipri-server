@@ -1,7 +1,7 @@
 # log_events schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS log_events CASCADE;
 CREATE TABLE log_events (
 	id serial not null primary key,
 	log_time timestamp not null default now(),

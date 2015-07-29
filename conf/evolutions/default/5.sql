@@ -1,7 +1,7 @@
 # Users schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
 	id 	serial not null primary key,
 	name varchar(100) not null unique,

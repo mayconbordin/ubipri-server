@@ -27,6 +27,40 @@ public abstract class BaseController extends Controller {
 		return (User) Http.Context.current().args.get("user");
 	}
 	
+	protected String getParam(String key) {
+		return request().getQueryString(key);
+	}
+	
+	protected String getParam(String key, String def) {
+		String value = getParam(key);
+		if (value == null) value = def;
+		return value;
+	}
+	
+	protected Double getDoubleParam(String key) {
+		return Double.parseDouble(getParam(key));
+	}
+	
+	protected Double getDoubleParam(String key, Double def) {
+		String value = getParam(key);
+		if (value == null) {
+			return def;
+		}
+		return Double.parseDouble(value);
+	}
+	
+	protected Integer getIntParam(String key) {
+		return Integer.parseInt(getParam(key));
+	}
+	
+	protected Integer getIntParam(String key, Integer def) {
+		String value = getParam(key);
+		if (value == null) {
+			return def;
+		}
+		return Integer.parseInt(value);
+	}
+	
 	public static Status status(Object obj, int code) {
 		return status(obj, code, Object.class);
 	}

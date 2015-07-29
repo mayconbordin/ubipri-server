@@ -104,4 +104,1506 @@ devices:
     type: *rfidCardDeviceType
     user: *borgesUser
 
-#device_communications:
+device_communications:
+  - !!models.DeviceCommunication
+    name: Ethernet
+    address: 127.0.0.1
+    addressFormat: IPv4
+    port: 80
+    parameters: null
+    device: *vmAndroid2Device
+    communicationType: *wsRestCommunicationType
+    preferredOrder: 1
+  - !!models.DeviceCommunication
+    name: Wi-fi
+    address: 127.0.0.1
+    addressFormat: url
+    port: 80
+    parameters: null
+    device: *tabletLab205Device
+    communicationType: *wsRestCommunicationType
+    preferredOrder: 2
+  - !!models.DeviceCommunication
+    name: Wi-fi
+    address: SERVICE_KEY
+    addressFormat: IPv4
+    port: 80
+    parameters: DEVICE_KEY
+    device: *tabletLab205Device
+    communicationType: *gcmCommunicationType
+    preferredOrder: 1
+
+localization_types:
+  - &gpsLocType !!models.LocalizationType
+    name: GPS
+    precision: 600.0
+    metric: m2
+  - &rfidLocType !!models.LocalizationType
+    name: RFID
+    precision: 3.0
+    metric: m2
+
+environment_types:
+  - &blockedEnvType !!models.EnvironmentType
+    name: Blocked
+  - &privateEnvType !!models.EnvironmentType
+    name: Private
+  - &publicEnvType !!models.EnvironmentType
+    name: Public
+    
+_locations:
+  - &poaLocation !!org.postgis.Point
+    x: -30.072296142578118
+    y: -51.17763595581054
+    z: 10.0
+    srid: 4326
+  - &campusValeUfrgsLocation !!org.postgis.Point
+    x: -30.071927547454848
+    y: -51.12007999420165
+    z: 0.0
+    srid: 4326
+  - &predioInf72Location !!org.postgis.Point
+    x: -30.06849765777585
+    y: -51.12047672271728
+    z: 0.0
+    srid: 4326
+  - &apBorgesLocation !!org.postgis.Point
+    x: -30.039857387542725
+    y: -51.20896339416505
+    z: 0.0
+    srid: 4326
+  - &lab205Location !!org.postgis.Point
+    x: -30.0686149597168
+    y: -51.1206169128418
+    z: 0.0
+    srid: 4326
+    
+#_shapes:
+#  - &poaShape !!org.postgis.Polygon
+    
+    
+environments:
+  - &poaEnv !!models.Environment
+    name: Porto Alegre
+    operatingRange: 17550.786
+    localizationType: *gpsLocType
+    environmentType: *publicEnvType
+    version: 1
+    location: *poaLocation
+  - &campusValeUfrgsEnv !!models.Environment
+    name: Campus Vale UFRGS
+    operatingRange: 903.524
+    localizationType: *gpsLocType
+    environmentType: *publicEnvType
+    version: 1
+    location: *campusValeUfrgsLocation
+    parent: *poaEnv
+  - &predioInf72Env !!models.Environment
+    name: Prédio Informática 72
+    operatingRange: 33.178
+    localizationType: *rfidLocType
+    environmentType: *privateEnvType
+    version: 1
+    location: *predioInf72Location
+    parent: *campusValeUfrgsEnv
+  - &apBorgesEnv !!models.Environment
+    name: Apartamento do Borges
+    operatingRange: 20.826
+    localizationType: *rfidLocType
+    environmentType: *privateEnvType
+    version: 2
+    location: *apBorgesLocation
+    parent: *poaEnv
+  - &lab205Env !!models.Environment
+    name: Laboratório 205
+    operatingRange: 5.0
+    localizationType: *rfidLocType
+    environmentType: *privateEnvType
+    version: 2
+    location: *lab205Location
+    parent: *predioInf72Env
+    
+user_profile_environments:
+  - &unknownProfile !!models.UserProfileEnvironment
+    name: Unknown
+  - &transientProfile !!models.UserProfileEnvironment
+    name: Transient
+  - &userProfile !!models.UserProfileEnvironment
+    name: User
+  - &responsibleProfile !!models.UserProfileEnvironment
+    name: Responsible
+  - &studentProfile !!models.UserProfileEnvironment
+    name: Student
+  - &managerProfile !!models.UserProfileEnvironment
+    name: Manager
+    
+access_types:
+  - &blockedAccessType !!models.AccessType
+    name: Blocked
+  - &guestAccessType !!models.AccessType
+    name: Guest
+  - &basicAccessType !!models.AccessType
+    name: Basic
+  - &advancedAccessType !!models.AccessType
+    name: Advanced
+  - &administrativeAccessType !!models.AccessType
+    name: Administrative
+    
+access_levels:
+  - &allBlockedAccessLevel !!models.AccessLevel
+    accessType: *blockedAccessType
+    environmentType: *blockedEnvType
+    impactFactor: 0.0
+  - &adminBlockedAccessLevel !!models.AccessLevel
+    accessType: *administrativeAccessType
+    environmentType: *blockedEnvType
+    impactFactor: 10.0
+  - &blockedPrivateAccessLevel !!models.AccessLevel
+    accessType: *blockedAccessType
+    environmentType: *privateEnvType
+    impactFactor: 0.0
+  - &guestPrivateAccessLevel !!models.AccessLevel
+    accessType: *guestAccessType
+    environmentType: *privateEnvType
+    impactFactor: 2.0
+  - &basicPrivateAccessLevel !!models.AccessLevel
+    accessType: *basicAccessType
+    environmentType: *privateEnvType
+    impactFactor: 5.0
+  - &advancedPrivateAccessLevel !!models.AccessLevel
+    accessType: *advancedAccessType
+    environmentType: *privateEnvType
+    impactFactor: 8.0
+  - &adminPrivateAccessLevel !!models.AccessLevel
+    accessType: *administrativeAccessType
+    environmentType: *privateEnvType
+    impactFactor: 10.0
+  - &allBlockedAccessLevel !!models.AccessLevel
+    accessType: *administrativeAccessType
+    environmentType: *publicEnvType
+    impactFactor: 0.0
+  
+  
+actions:
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *bluetoothFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *silentModeFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *vibrateAlertFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *airplaneModeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *mobileNetworkDataFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *systemVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *mediaVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *rignerVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *screenTimeoutFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *screenBrightnessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *smsFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *launchAppFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *cameraAccessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *gpsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *adminBlockedAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *bluetoothFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *silentModeFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *vibrateAlertFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *airplaneModeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *mobileNetworkDataFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *systemVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *mediaVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *rignerVolumeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *screenTimeoutFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *screenBrightnessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *smsFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *launchAppFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *cameraAccessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *blockedPrivateAccessLevel
+    functionality: *gpsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *bluetoothFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *silentModeFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *vibrateAlertFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *airplaneModeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *mobileNetworkDataFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *smsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *launchAppFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *cameraAccessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *guestPrivateAccessLevel
+    functionality: *gpsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *bluetoothFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *silentModeFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *airplaneModeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *mobileNetworkDataFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *smsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *launchAppFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *cameraAccessFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *basicPrivateAccessLevel
+    functionality: *gpsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *advancedPrivateAccessLevel
+    functionality: *airplaneModeFunctionality
+    action: off
+
+  - !!models.Action
+    accessLevel: *advancedPrivateAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *advancedPrivateAccessLevel
+    functionality: *mobileNetworkDataFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *advancedPrivateAccessLevel
+    functionality: *cameraAccessFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *advancedPrivateAccessLevel
+    functionality: *gpsFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *adminPrivateAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+
+  - !!models.Action
+    accessLevel: *allBlockedAccessLevel
+    functionality: *wifiFunctionality
+    action: on
+  
+  
+user_in_environment:
+  - &borgesInPoa !!models.UserEnvironment
+    environment: *poaEnv
+    userProfile: *userProfile
+    currentAccessType: *administrativeAccessType
+    user: *borgesUser
+  - &borgesInCampusVale !!models.UserEnvironment
+    environment: *campusValeUfrgsEnv
+    userProfile: *studentProfile
+    currentAccessType: *administrativeAccessType
+    user: *borgesUser
+  - &borgesInPredioInf72 !!models.UserEnvironment
+    environment: *predioInf72Env
+    userProfile: *studentProfile
+    currentAccessType: *basicAccessType
+    user: *borgesUser
+  - &borgesInApBorges !!models.UserEnvironment
+    environment: *apBorgesEnv
+    userProfile: *managerProfile
+    currentAccessType: *administrativeAccessType
+    user: *borgesUser
+  - &borgesInLab205 !!models.UserEnvironment
+    environment: *lab205Env
+    userProfile: *studentProfile
+    currentAccessType: *basicAccessType
+    user: *borgesUser
+    
+access_type_classifier:
+  - &rule0 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule1 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule2 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule3 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule4 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule5 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule6 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule7 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule8 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule9 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule10 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule11 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule12 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule13 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule14 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule15 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule16 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule17 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule18 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule19 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule20 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule21 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule22 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule23 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule24 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule25 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule26 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule27 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule28 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule29 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule30 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule31 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule32 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule33 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule34 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule35 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule36 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule37 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule38 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule39 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule40 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule41 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule42 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule43 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule44 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule45 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule46 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule47 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule48 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule49 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule50 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule51 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule52 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule53 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule54 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule55 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule56 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule57 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule58 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule59 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule60 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule61 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule62 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule63 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule64 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule65 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule66 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule67 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule68 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule69 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule70 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule71 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule72 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule73 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule74 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule75 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule76 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule77 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule78 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule79 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule80 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule81 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule82 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule83 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule84 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule85 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule86 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule87 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule88 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule89 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule90 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule91 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule92 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule93 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule94 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule95 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule96 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule97 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule98 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule99 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule100 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule101 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule102 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule103 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule104 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule105 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule106 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule107 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule108 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule109 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule110 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule111 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule112 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule113 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule114 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule115 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule116 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule117 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule118 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule119 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule120 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule121 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule122 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule123 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule124 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule125 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule126 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule127 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule128 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule129 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule130 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule131 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule132 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule133 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule134 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule135 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+  - &rule136 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: y
+  - &rule137 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: d
+    workday: n
+  - &rule138 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: y
+  - &rule139 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 1
+    shift: n
+    workday: n
+  - &rule140 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: y
+  - &rule141 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: d
+    workday: n
+  - &rule142 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: y
+  - &rule143 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *blockedEnvType
+    weekday: 0
+    shift: n
+    workday: n

@@ -13,6 +13,7 @@ import play.data.validation.*;
 @Table(name="user_in_environment")
 public class UserEnvironment extends Model {
 
+	@Column(insertable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_in_environment_id_seq")
 	public Integer id;
   
@@ -20,8 +21,8 @@ public class UserEnvironment extends Model {
 	public UserEnvironmentPK pk;
   
 	@ManyToOne(optional=false)
-	@JoinColumn(name="environment_id")
-	public Environment environment;
+	@JoinColumn(name="environment_id", insertable = false, updatable = false)
+	private Environment environment;
 	  
 	@ManyToOne(optional=false)
 	@JoinColumn(name="user_profile_environment_id")
@@ -32,11 +33,15 @@ public class UserEnvironment extends Model {
 	public AccessType currentAccessType;
   
 	@ManyToOne(optional=false)
-	@JoinColumn(name="user_id")
-	public User user;
+	@JoinColumn(name="user_id", insertable = false, updatable = false)
+	private User user;
   
 	@Column(name = "impact_factor")
 	public double impactFactor;
+	
+	public UserEnvironment() {
+		this.pk = new UserEnvironmentPK();
+	}
   
 	public Integer getId() {
 		return id;
@@ -60,6 +65,7 @@ public class UserEnvironment extends Model {
 
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
+		this.pk.environmentId = environment.getId();
 	}
 
 	public UserProfileEnvironment getUserProfile() {
@@ -84,6 +90,7 @@ public class UserEnvironment extends Model {
 
 	public void setUser(User user) {
 		this.user = user;
+		this.pk.userId = user.getId();
 	}
 
 	public double getImpactFactor() {
@@ -93,42 +100,4 @@ public class UserEnvironment extends Model {
 	public void setImpactFactor(double impactFactor) {
 		this.impactFactor = impactFactor;
 	}
-
-	/*@Embeddable
-	public class UserEnvironmentPK implements Serializable {
-		private static final long serialVersionUID = 1L;
-
-		@Column(name = "user_id")
-		public Long userId;
-	    
-		@Column(name = "environment_id")
-		public Long environmentId;
-	    
-		@Override
-		public boolean equals(Object obj) {
-	        if (obj == null) {
-	            return false;
-	        }
-	        if (getClass() != obj.getClass()) {
-	            return false;
-	        }
-	        final UserEnvironmentPK other = (UserEnvironmentPK) obj;
-	        if ((this.userId == null) ? (other.userId != null) : !this.userId.equals(other.userId)) {
-	                return false;
-	            }
-	        if ((this.environmentId == null) ? (other.environmentId != null) : !this.environmentId.equals(other.environmentId)) {
-	            return false;
-	        }
-	        return true;
-		}
-
-		@Override
-		public int hashCode() {
-	        int hash = 3;
-	        hash = 89 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-	        hash = 89 * hash + (this.environmentId != null ? this.environmentId.hashCode() : 0);
-	        return hash;
-		}
-	}*/
-
 }

@@ -1,7 +1,7 @@
 # actions schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS actions CASCADE;
 CREATE TABLE actions (
 	id serial not null primary key,
 	

@@ -1,7 +1,7 @@
 # Device communications schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS device_communications CASCADE;
 CREATE TABLE device_communications (
 	id serial not null primary key,
 	name varchar(100) not null,

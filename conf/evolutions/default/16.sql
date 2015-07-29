@@ -1,7 +1,7 @@
 # user_in_environment schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS user_in_environment CASCADE;
 CREATE TABLE user_in_environment (
 	id serial not null unique,
 	

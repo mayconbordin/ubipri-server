@@ -35,4 +35,9 @@ public class EnvironmentType extends Model {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "EnvironmentType [id=" + id + ", name=" + name + "]";
+	}
 }

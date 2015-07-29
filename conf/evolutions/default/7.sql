@@ -1,7 +1,7 @@
 # Environments schema
  
 # --- !Ups
-
+DROP TABLE IF EXISTS devices CASCADE;
 CREATE TABLE devices (
 	id  serial not null primary key,
 	code varchar(50) not null unique,

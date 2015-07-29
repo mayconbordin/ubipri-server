@@ -4,7 +4,11 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import models.serialization.Views;
+
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import play.data.format.*;
 import play.data.validation.*;
 
@@ -28,6 +32,7 @@ public class AccessLevel extends Model {
     public EnvironmentType environmentType;
     
     @OneToMany
+    @JsonView(Views.Full.class)
     public List<Action> actions;
 
 	public Integer getId() {
@@ -68,6 +73,13 @@ public class AccessLevel extends Model {
 
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
+	}
+
+	@Override
+	public String toString() {
+		return "AccessLevel [id=" + id + ", impactFactor=" + impactFactor
+				+ ", accessType=" + accessType + ", environmentType="
+				+ environmentType + ", actions=" + actions + "]";
 	}
 
     

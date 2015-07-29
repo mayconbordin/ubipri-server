@@ -99,4 +99,30 @@ public class UserEndpointTest extends ApplicationBaseTest {
     	expected = String.format("[{code:'1234554321'},{code:'1111111111'},{code:'5E-EF-8-9B-54'},{code:'%s'}]", code);
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
 	}
+	
+	@Test
+    public void testUpdateLocation() throws Exception {
+		logger.debug("testUpdateLocation");
+    	RequestBuilder request = buildRequest().method(PUT).uri("/user/location")
+    			.bodyForm(ImmutableMap.of(
+    					"deviceCode", "1234554321",
+    					"environmentId", "1"
+				));
+
+    	Result result = route(request);
+    	assertEquals(Status.OK, result.status());
+    	assertIsJson(result);
+    	
+    	//logger.info(contentAsString(result));
+
+    	String expected = "[{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Bluetooth'},'action':'off'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Silent Mode'},'action':'on'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Vibrate Alert'},'action':'on'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Wi-Fi'},'action':'on'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Ringer Volume'},'action':'off'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'GPS'},'action':'on'},"
+    			+ "{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Wi-Fi'},'action':'on'}]";
+    	
+    	JSONAssert.assertEquals(expected, contentAsString(result), false);
+    }
 }

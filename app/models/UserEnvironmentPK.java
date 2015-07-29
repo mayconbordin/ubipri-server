@@ -10,11 +10,41 @@ public class UserEnvironmentPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "user_id")
-	public Long userId;
+	public Integer userId;
     
 	@Column(name = "environment_id")
-	public Long environmentId;
-    
+	public Integer environmentId;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getEnvironmentId() {
+		return environmentId;
+	}
+
+	public void setEnvironmentId(Integer environmentId) {
+		this.environmentId = environmentId;
+	}
+	
+	public UserEnvironmentPK() {
+		
+	}
+	
+	public UserEnvironmentPK(User user, Environment environment) {
+		this.userId = user.getId();
+		this.environmentId = environment.getId();
+	}
+	
+	public UserEnvironmentPK(int userId, int environmentId) {
+		this.userId = userId;
+		this.environmentId = environmentId;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
         if (obj == null) {
@@ -39,5 +69,11 @@ public class UserEnvironmentPK implements Serializable {
         hash = 89 * hash + (this.userId != null ? this.userId.hashCode() : 0);
         hash = 89 * hash + (this.environmentId != null ? this.environmentId.hashCode() : 0);
         return hash;
+	}
+
+	@Override
+	public String toString() {
+		return "UserEnvironmentPK [userId=" + userId + ", environmentId="
+				+ environmentId + "]";
 	}
 }
