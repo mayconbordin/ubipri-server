@@ -1,8 +1,7 @@
 package dao;
 
 import models.LogEvent;
-import dao.ebean.EbeanBaseDAO;
 
-public class LogEventDAO extends EbeanBaseDAO<LogEvent, Integer> {
+public interface LogEventDAO extends BaseDAO<LogEvent, Integer> {
 
 }

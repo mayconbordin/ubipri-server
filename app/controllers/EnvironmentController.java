@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.postgis.Point;
 
+import dao.EnvironmentDAO;
 import models.Device;
 import models.Environment;
 import models.Functionality;
@@ -15,7 +16,6 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Security;
-import dao.EnvironmentDAO;
 import utils.gis.GeometryBuilder;
 import utils.http.BaseController;
 import utils.security.Secured;

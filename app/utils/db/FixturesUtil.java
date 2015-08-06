@@ -17,7 +17,7 @@ import play.libs.Yaml;
 
 import com.avaje.ebean.Ebean;
 
-import dao.EnvironmentDAO;
+import dao.ebean.EnvironmentEbeanDAO;
 
 public class FixturesUtil {
 	public static void load(String path) {
@@ -53,7 +53,7 @@ public class FixturesUtil {
 			}
 			
 		    if (tableEntry.getKey().equals("environments")) {
-		    	EnvironmentDAO dao = new EnvironmentDAO();
+		    	EnvironmentEbeanDAO dao = new EnvironmentEbeanDAO();
 		    	dao.setConnection(dbConn);
 		    	
 		    	for (Object o : tableEntry.getValue()) {

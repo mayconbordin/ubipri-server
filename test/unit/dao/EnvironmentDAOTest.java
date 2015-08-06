@@ -12,18 +12,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.postgis.Point;
 
-import dao.EnvironmentDAO;
 import play.Logger;
 import utils.gis.GeometryBuilder;
 import base.ApplicationBaseTest;
+import dao.ebean.EnvironmentEbeanDAO;
 
 public class EnvironmentDAOTest extends ApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
-	private EnvironmentDAO dao;
+	private EnvironmentEbeanDAO dao;
 
 	@Before
 	public void setUp() {
-		dao = new EnvironmentDAO();
+		dao = new EnvironmentEbeanDAO();
 		dao.setConnection(database.getConnection());
 	}
 

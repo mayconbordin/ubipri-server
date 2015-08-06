@@ -1,10 +1,7 @@
 package utils.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import controllers.SecurityController;
-import dao.UserDAO;
+import dao.ebean.UserEbeanDAO;
 import models.User;
 import play.libs.Json;
 import play.mvc.Http.Context;
@@ -14,11 +11,11 @@ import utils.http.Errors;
 
 public class Secured extends Security.Authenticator {
 	
-	private UserDAO userDao;
+	private UserEbeanDAO userDao;
 	
 	public Secured() {
 		super();
-		userDao = new UserDAO();
+		userDao = new UserEbeanDAO();
 	}
 	
 	@Override

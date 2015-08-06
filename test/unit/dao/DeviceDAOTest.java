@@ -5,17 +5,17 @@ import models.Device;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import dao.DeviceDAO;
 import play.Logger;
 import base.ApplicationBaseTest;
+import dao.ebean.DeviceEbeanDAO;
 
 public class DeviceDAOTest extends ApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	
-	private DeviceDAO deviceDao;
+	private DeviceEbeanDAO deviceDao;
 
 	public DeviceDAOTest() {
-		deviceDao = new DeviceDAO();
+		deviceDao = new DeviceEbeanDAO();
 	}
 
 	@Test

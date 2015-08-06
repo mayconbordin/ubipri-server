@@ -1,6 +1,14 @@
 user_types:
   - &normalType !!models.UserType
     name: Normal
+  - &adminType !!models.UserType
+    name: Administrador
+  - &studentType !!models.UserType
+    name: Aluno
+  - &professorType !!models.UserType
+    name: Professor
+  - &coordType !!models.UserType
+    name: Coordenador
 
 users:
   - &borgesUser !!models.User
@@ -9,6 +17,18 @@ users:
     emailAddress: guilhermeborges@gmail.com
     password: 12345
     userType: *normalType
+  - &valderiUser !!models.User
+    name: valderi
+    fullName: Valderi R. Q. Leithardt
+    emailAddress: valderi@gmail.com
+    password: 12345
+    userType: *normalType
+    
+user_credentials:
+  - &valderiSigai !!models.UserCredential
+    externalId: 1234
+    system: SIGA-i
+    user: *valderiUser
     
 device_types:
   - &androidDeviceType !!models.DeviceType

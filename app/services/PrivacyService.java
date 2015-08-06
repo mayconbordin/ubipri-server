@@ -7,6 +7,14 @@ import javax.inject.Inject;
 
 import org.joda.time.DateTime;
 
+import dao.AccessLevelDAO;
+import dao.AccessTypeClassifierDAO;
+import dao.ActionDAO;
+import dao.DeviceDAO;
+import dao.DeviceTypeDAO;
+import dao.LogEventDAO;
+import dao.UserDAO;
+import dao.UserEnvironmentDAO;
 import play.Logger;
 import models.AccessLevel;
 import models.AccessTypeClassifier;
@@ -18,14 +26,6 @@ import models.LogEvent;
 import models.User;
 import models.UserEnvironment;
 import models.UserEnvironmentPK;
-import dao.AccessLevelDAO;
-import dao.AccessTypeClassifierDAO;
-import dao.ActionDAO;
-import dao.DeviceDAO;
-import dao.DeviceTypeDAO;
-import dao.LogEventDAO;
-import dao.UserDAO;
-import dao.UserEnvironmentDAO;
 import forms.UserLocationForm;
 
 public class PrivacyService {

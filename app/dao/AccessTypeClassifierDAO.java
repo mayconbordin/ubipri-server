@@ -1,21 +1,10 @@
 package dao;
 
-import com.avaje.ebean.Query;
-
-import dao.ebean.EbeanBaseDAO;
 import models.AccessTypeClassifier;
 import models.EnvironmentType;
 import models.UserProfileEnvironment;
 
-public class AccessTypeClassifierDAO extends EbeanBaseDAO<AccessTypeClassifier, Integer> {
+public interface AccessTypeClassifierDAO extends BaseDAO<AccessTypeClassifier, Integer> {
 	public AccessTypeClassifier find(UserProfileEnvironment userProfile, EnvironmentType environmentType,
-			char shift, int weekday, char workday) {
-		Query<AccessTypeClassifier> query = createQuery();
-		
-		return query.where().eq("userProfile", userProfile)
-					.where().eq("environmentType", environmentType)
-					.where().eq("shift", shift)
-					.where().eq("weekday", weekday)
-					.where().eq("workday", workday).findUnique();
-	}
+			char shift, int weekday, char workday);
 }

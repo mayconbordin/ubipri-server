@@ -5,13 +5,13 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import dao.UserDAO;
 import models.User;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Security;
 import utils.http.BaseController;
 import utils.security.Secured;
-import dao.UserDAO;
 import forms.LoginForm;
 
 public class SecurityController extends BaseController {

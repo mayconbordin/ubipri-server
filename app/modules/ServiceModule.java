@@ -5,6 +5,8 @@ import com.google.inject.AbstractModule;
 import play.Configuration;
 import play.Environment;
 import services.IScheduleService;
+import services.ISigaiService;
+import services.SigaiService;
 
 public class ServiceModule extends AbstractModule {
 
@@ -27,5 +29,7 @@ public class ServiceModule extends AbstractModule {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    	
+    	bind(ISigaiService.class).to(SigaiService.class);
     }
 }

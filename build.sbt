@@ -21,7 +21,10 @@ libraryDependencies ++= Seq(
   "com.ganyo" % "gcm-server" % "1.0.2",
   "org.skyscreamer" % "jsonassert" % "1.2.3",
   "com.github.mayconbordin" % "postgis-geojson" % "1.0",
-  "commons-io" % "commons-io" % "2.4"
+  "commons-io" % "commons-io" % "2.4",
+  "org.apache.httpcomponents" % "httpclient" % "4.5",
+  "com.github.mayconbordin" % "OAuth2Client" % "1.0.1",
+  "org.mockito" % "mockito-all" % "1.10.19"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

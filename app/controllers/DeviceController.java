@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dao.DeviceDAO;
 import models.Device;
 import models.Functionality;
 import models.User;
@@ -12,7 +13,6 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Security;
-import dao.DeviceDAO;
 import utils.http.BaseController;
 import utils.security.Secured;
 

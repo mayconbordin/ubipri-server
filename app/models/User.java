@@ -63,6 +63,9 @@ public class User extends Model {
 	public List<Device> devices;
 	
 	@OneToMany
+	public List<UserCredential> credentials;
+	
+	@OneToMany
     @JsonIgnore
     public List<UserEnvironment> environments;
 	
@@ -151,6 +154,21 @@ public class User extends Model {
 	public void setEnvironments(List<UserEnvironment> environments) {
 		this.environments = environments;
 	}
-	
+
+	public List<UserCredential> getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(List<UserCredential> credentials) {
+		this.credentials = credentials;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", fullName=" + fullName + ", authToken=" + authToken
+				+ ", emailAddress=" + emailAddress + ", password=" + password + ", currentEnvironment="
+				+ currentEnvironment + ", userType=" + userType + ", devices=" + devices + ", credentials="
+				+ credentials + ", environments=" + environments + "]";
+	}
 	
 }

@@ -1,8 +1,7 @@
 package dao;
 
 import models.EnvironmentType;
-import dao.ebean.EbeanBaseDAO;
 
-public class EnvironmentTypeDAO extends EbeanBaseDAO<EnvironmentType, Integer> {
+public interface EnvironmentTypeDAO extends BaseDAO<EnvironmentType, Integer> {
 
 }

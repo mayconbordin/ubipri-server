@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import play.Logger;
 import base.ApplicationBaseTest;
-import dao.UserDAO;
+import dao.ebean.UserEbeanDAO;
 
 public class UserDAOTest extends ApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	
-	private UserDAO userDao;
+	private UserEbeanDAO userDao;
 
 	public UserDAOTest() {
-		userDao = new UserDAO();
+		userDao = new UserEbeanDAO();
 	}
 
 	@Test

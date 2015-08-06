@@ -12,6 +12,8 @@ import com.avaje.ebean.PagedList;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.Update;
 
+import dao.BaseDAO;
+
 /**
  * Implements the generic CRUD data access operations.
  * <p>
@@ -19,13 +21,11 @@ import com.avaje.ebean.Update;
  * Of course, assuming that you have a traditional 1:1 approach for Entity:DAO design.
  * <p>
  */
-public abstract class EbeanBaseDAO<T, ID extends Serializable> {
-
-
+public abstract class BaseEbeanDAO<T, ID extends Serializable> implements BaseDAO<T, ID> {
 	private final Class<T> persistentClass;
 
 	@SuppressWarnings("unchecked")
-	protected EbeanBaseDAO() {
+	protected BaseEbeanDAO() {
 		persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 

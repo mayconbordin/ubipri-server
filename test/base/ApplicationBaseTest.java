@@ -13,22 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.postgis.Point;
-import org.postgis.Polygon;
-
-import models.Device;
-import models.Environment;
-import models.UserEnvironment;
-
-import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 
-import dao.EnvironmentDAO;
+import play.Application;
 import play.Logger;
 import play.test.*;
 import play.libs.Json;
-import play.libs.Yaml;
 import play.mvc.Result;
 import play.mvc.Http.RequestBuilder;
 import play.mvc.Http.Status;
@@ -62,7 +53,7 @@ public class ApplicationBaseTest extends WithApplication {
     }
 
 	@Override
-    protected FakeApplication provideFakeApplication() {
+	protected Application provideApplication() {
 		File path 				   = new File(".");
 		ClassLoader classLoader    = Helpers.class.getClassLoader();
 		Map<String, Object> config = new HashMap<String, Object>();
