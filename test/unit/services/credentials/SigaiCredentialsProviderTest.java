@@ -20,17 +20,36 @@ import services.credentials.DefaultCredentialsProvider;
 import services.credentials.SigaiCredentialsProvider;
 import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
+import play.libs.Json;
+
 import static play.inject.Bindings.bind;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.mockito.Mockito.*;
 
 public class SigaiCredentialsProviderTest extends ApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	private CredentialsProvider provider;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		String content = 
+				"{\"id\":51,\"matricula\":\"3456\",\"nome\":\"Dione Taschetto\",\"email\":\"dione_taschetto@gmail.com\"" +
+				",\"display_name\":\"3456 | Dione Taschetto\",\"roles\":[{\"id\":2,\"name\":\"professor\"," +
+				"\"display_name\":\"Professor\",\"description\":null}]}";
+		
+		Map<String, Object> userInfo = Json.mapper().readValue(content, HashMap.class);
+		
+		ISigaiService sigaiMock = mock(ISigaiService.class);
+		when(sigaiMock.authenticateUser("1234", "12345")).thenReturn(true);
+		when(sigaiMock.authenticateUser("3456", "12345")).thenReturn(true);
+		when(sigaiMock.getUserInfo()).thenReturn(userInfo);
+		
 		Injector injector = new GuiceInjectorBuilder()
 			    .bindings(new DAOModule())
-			    .overrides(bind(ISigaiService.class).to(SigaiService.class))
+			    .overrides(bind(ISigaiService.class).toInstance(sigaiMock))
 			    .overrides(bind(CredentialsProvider.class).to(SigaiCredentialsProvider.class))
 			    .injector();
 		
@@ -53,10 +72,8 @@ public class SigaiCredentialsProviderTest extends ApplicationBaseTest {
 		
 		User user = provider.register("3456", "12345", null);
 		
-		System.out.println(user.toString());
-		
-		/*assertNotNull(user);
+		assertNotNull(user);
 		assertNotNull(user.getId());
-		assertEquals("teste", user.getName());*/
+		assertEquals("dione", user.getName());
 	}
 }

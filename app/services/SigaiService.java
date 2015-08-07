@@ -1,12 +1,15 @@
 package services;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mayconbordin.oauth2.client.AccessToken;
 import org.mayconbordin.oauth2.client.OAuth2Client;
 import org.mayconbordin.oauth2.client.OAuth2Exception;
 
 import play.Play;
+import play.libs.Json;
 import play.Configuration;
 import play.Logger;
 
@@ -59,15 +62,26 @@ public class SigaiService implements ISigaiService {
 		return false;
 	}
 	
-	public String getUserInfo() {
+	public Map<String, Object> getUserInfo() {
 		try {
 			if (accessToken == null || accessToken.isExpired()) {
 				authenticateUser(null, null);
 			}
 			
-		    return accessToken.getResource(userInfoUrl);
+		    String content = accessToken.getResource(userInfoUrl);
+		    return parseResponse(content);
 		} catch (OAuth2Exception e) {
 			logger.error("Error getting the user information with SIGA-i", e);
+		}
+		
+		return null;
+	}
+	
+	protected Map<String, Object> parseResponse(String content) {
+		try {
+			return (Map<String, Object>) Json.mapper().readValue(content, HashMap.class);
+		} catch (IOException e) {
+			logger.error("Unable to parse response from SIGA-i", e);
 		}
 		
 		return null;

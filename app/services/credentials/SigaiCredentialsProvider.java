@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 import dao.UserCredentialDAO;
 import dao.UserDAO;
@@ -16,10 +15,11 @@ import dao.UserTypeDAO;
 import models.User;
 import models.UserCredential;
 import models.UserType;
-import play.libs.Json;
+import play.Logger;
 import services.ISigaiService;
 
 public class SigaiCredentialsProvider implements CredentialsProvider {
+	private final Logger.ALogger logger = Logger.of(this.getClass());
 	public final static String NAME = "SIGA-i";
 	
 	@Inject ISigaiService service;
@@ -50,19 +50,19 @@ public class SigaiCredentialsProvider implements CredentialsProvider {
 			return null;
 		}
 		
-		String userInfo = service.getUserInfo();
+		Map<String, Object> userInfo = service.getUserInfo();
 
 		// get user information
-		JsonNode json = Json.parse(userInfo);
-		String fullName = json.has("nome") ? json.get("nome").textValue() : "";
+		//JsonNode json = Json.parse(userInfo);
+		String fullName = (String) userInfo.get("nome");
 		String[] nameSplit = fullName.split("\\s+");
 
 		User user = new User();
 		user.setName(nameSplit.length > 0 ? nameSplit[0].toLowerCase() : "");
 		user.setFullName(fullName);
-		user.setEmailAddress(json.has("email") ? json.get("email").textValue() : "");
+		user.setEmailAddress((String) userInfo.get("email"));
 		user.setPassword(password);
-		user.setUserType(parseUserTypeFromRoles(json));
+		user.setUserType(parseUserTypeFromRoles((List<Map<String, Object>>) userInfo.get("roles")));
 		
 		// create user
 		userDao.create(user);
@@ -80,19 +80,17 @@ public class SigaiCredentialsProvider implements CredentialsProvider {
 		return user;
 	}
 	
-	protected UserType parseUserTypeFromRoles(JsonNode json) {
-		List<String> userRoles = new ArrayList<String>();
-		Iterator<JsonNode> it = json.get("roles").iterator();
+	protected UserType parseUserTypeFromRoles(List<Map<String, Object>> userRoles) {
+		List<String> listOfRoles = new ArrayList<String>();
 		
-		while (it.hasNext()) {
-			JsonNode role = it.next();
-			userRoles.add(role.get("display_name").asText().trim());
+		for (Map<String, Object> userRole : userRoles) {
+			listOfRoles.add((String) userRole.get("display_name"));
 		}
 		
 		String selectedRole = null;
-		
+
 		for (String role : roles) {
-			if (userRoles.contains(role)) {
+			if (listOfRoles.contains(role)) {
 				selectedRole = role;
 			}
 		}

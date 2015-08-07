@@ -9,6 +9,8 @@ import dao.UserTypeDAO;
 import models.User;
 
 public class DefaultCredentialsProvider implements CredentialsProvider {
+	public final static String NAME = "default";
+	
 	@Inject UserDAO userDao;
 	@Inject UserTypeDAO userTypeDao;
 

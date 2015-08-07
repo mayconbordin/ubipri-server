@@ -36,8 +36,8 @@ public class SigaiServiceTest extends ApplicationBaseTest {
 	public void testGetUserInfo() {
 		logger.debug("testGetUserInfo");
 		service.authenticateUser("1234", "12345");
-		String userInfo = service.getUserInfo();
+		service.getUserInfo();
 		
-		System.out.println(userInfo);
+		//System.out.println(userInfo);
 	}
 }
