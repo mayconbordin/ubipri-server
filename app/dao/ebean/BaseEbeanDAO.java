@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import models.User;
-
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.PagedList;
@@ -64,11 +62,11 @@ public abstract class BaseEbeanDAO<T, ID extends Serializable> implements BaseDA
 		return query.findUnique();
 	}
 	
-	public T findByField(String fieldName, String fieldValue) {
+	public T findByField(String fieldName, Object fieldValue) {
 		return createQuery().where().eq(fieldName, fieldValue).findUnique();
 	}
 	
-	public T findByFieldWith(String fieldName, String fieldValue, String...relations) {
+	public T findByFieldWith(String fieldName, Object fieldValue, String...relations) {
 		Query<T> query =  createQuery();
 		
 		for (String relation : relations) {
@@ -78,7 +76,7 @@ public abstract class BaseEbeanDAO<T, ID extends Serializable> implements BaseDA
 		return query.where().eq(fieldName, fieldValue).findUnique();
 	}
 	
-	public List<T> findAllByField(String fieldName, String fieldValue) {
+	public List<T> findAllByField(String fieldName, Object fieldValue) {
 		return createQuery().where().eq(fieldName, fieldValue).findList();
 	}
 	

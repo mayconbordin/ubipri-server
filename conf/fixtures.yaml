@@ -164,8 +164,8 @@ localization_types:
     metric: m2
 
 environment_types:
-  - &blockedEnvType !!models.EnvironmentType
-    name: Blocked
+  - &restrictEnvType !!models.EnvironmentType
+    name: Restrict
   - &privateEnvType !!models.EnvironmentType
     name: Private
   - &publicEnvType !!models.EnvironmentType
@@ -272,11 +272,11 @@ access_types:
 access_levels:
   - &allBlockedAccessLevel !!models.AccessLevel
     accessType: *blockedAccessType
-    environmentType: *blockedEnvType
+    environmentType: *restrictEnvType
     impactFactor: 0.0
   - &adminBlockedAccessLevel !!models.AccessLevel
     accessType: *administrativeAccessType
-    environmentType: *blockedEnvType
+    environmentType: *restrictEnvType
     impactFactor: 10.0
   - &blockedPrivateAccessLevel !!models.AccessLevel
     accessType: *blockedAccessType
@@ -590,6 +590,39 @@ actions:
     functionality: *wifiFunctionality
     action: on
   
+frequency_levels:
+  - &less_frequentFrequency !!models.FrequencyLevel
+    name: less_frequent
+    level: 1
+  - &normalFrequency !!models.FrequencyLevel
+    name: normal
+    level: 2
+  - &frequentFrequency !!models.FrequencyLevel
+    name: frequent
+    level: 3
+    
+environment_frequency_levels:
+  - !!models.EnvironmentFrequencyLevel
+    environment: *poaEnv
+    frequencyLevel: *less_frequentFrequency
+    min: 0
+    max: 15
+    period: 20
+    metric: d
+  - !!models.EnvironmentFrequencyLevel
+    environment: *poaEnv
+    frequencyLevel: *normalFrequency
+    min: 15
+    max: 50
+    period: 20
+    metric: d
+  - !!models.EnvironmentFrequencyLevel
+    environment: *poaEnv
+    frequencyLevel: *frequentFrequency
+    min: 50
+    max: 100
+    period: 20
+    metric: d
   
 user_in_environment:
   - &borgesInPoa !!models.UserEnvironment
@@ -626,1004 +659,3442 @@ access_type_classifier:
     weekday: 1
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule1 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule2 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule3 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
     weekday: 1
-    shift: n
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule4 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
-    weekday: 0
-    shift: d
+    weekday: 1
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule5 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
-    weekday: 0
-    shift: d
-    workday: n
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule6 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
-    weekday: 0
+    weekday: 1
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule7 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
     environmentType: *privateEnvType
-    weekday: 0
+    weekday: 1
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule8 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
-    weekday: 1
+    environmentType: *privateEnvType
+    weekday: 0
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule9 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
-    weekday: 1
+    environmentType: *privateEnvType
+    weekday: 0
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule10 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
-    weekday: 1
-    shift: n
-    workday: y
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule11 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
-    weekday: 1
-    shift: n
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule12 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
+    environmentType: *privateEnvType
     weekday: 0
-    shift: d
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule13 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
+    environmentType: *privateEnvType
     weekday: 0
-    shift: d
-    workday: n
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule14 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule15 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
+    accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *publicEnvType
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule16 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule17 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule18 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule19 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 1
-    shift: n
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule20 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule21 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: n
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule22 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    accessType: *administrativeAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
-    weekday: 0
+    environmentType: *publicEnvType
+    weekday: 1
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule23 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule24 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule25 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule26 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule27 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule28 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule29 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule30 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule31 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *unknownProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule32 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *unknownProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: n
-    workday: n
-  - &rule24 !!models.AccessTypeClassifier
-    accessType: *guestAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
+    environmentType: *restrictEnvType
     weekday: 1
     shift: d
     workday: y
-  - &rule25 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 1
-    shift: d
-    workday: n
-  - &rule26 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 1
-    shift: n
-    workday: y
-  - &rule27 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 1
-    shift: n
-    workday: n
-  - &rule28 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule29 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule30 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: n
-    workday: y
-  - &rule31 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: n
-    workday: n
-  - &rule32 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
-    weekday: 1
-    shift: d
-    workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule33 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule34 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule35 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule36 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule37 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule38 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule36 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule37 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule38 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: n
-    workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule39 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *transientProfile
-    environmentType: *publicEnvType
-    weekday: 0
+    accessType: *blockedAccessType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 1
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule40 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
-    weekday: 1
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 0
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule41 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
-    weekday: 1
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 0
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule42 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: y
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule43 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule44 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 0
-    shift: d
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule45 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 0
-    shift: d
-    workday: n
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule46 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 0
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule47 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *transientProfile
-    environmentType: *blockedEnvType
+    userProfile: *unknownProfile
+    environmentType: *restrictEnvType
     weekday: 0
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule48 !!models.AccessTypeClassifier
-    accessType: *basicAccessType
-    userProfile: *userProfile
+    accessType: *guestAccessType
+    userProfile: *transientProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule49 !!models.AccessTypeClassifier
-    accessType: *basicAccessType
-    userProfile: *userProfile
+    accessType: *guestAccessType
+    userProfile: *transientProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule50 !!models.AccessTypeClassifier
-    accessType: *basicAccessType
-    userProfile: *userProfile
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
     environmentType: *privateEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule51 !!models.AccessTypeClassifier
-    accessType: *guestAccessType
-    userProfile: *userProfile
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule52 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule53 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule54 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule52 !!models.AccessTypeClassifier
-    accessType: *guestAccessType
-    userProfile: *userProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule53 !!models.AccessTypeClassifier
-    accessType: *guestAccessType
-    userProfile: *userProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule54 !!models.AccessTypeClassifier
-    accessType: *guestAccessType
-    userProfile: *userProfile
-    environmentType: *privateEnvType
-    weekday: 0
-    shift: n
-    workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule55 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *userProfile
+    userProfile: *transientProfile
     environmentType: *privateEnvType
-    weekday: 0
+    weekday: 1
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule56 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
-    weekday: 1
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule57 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
-    weekday: 1
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule58 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
-    weekday: 1
-    shift: n
-    workday: y
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule59 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
-    weekday: 1
-    shift: n
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule60 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
     weekday: 0
-    shift: d
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule61 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
     weekday: 0
-    shift: d
-    workday: n
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule62 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule63 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *userProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule64 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule65 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule66 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule67 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 1
-    shift: n
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule68 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule69 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: n
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule70 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
-    weekday: 0
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule71 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *userProfile
-    environmentType: *blockedEnvType
-    weekday: 0
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 1
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule72 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
-    weekday: 1
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule73 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
-    weekday: 1
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule74 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
-    weekday: 1
-    shift: n
-    workday: y
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule75 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
-    weekday: 1
-    shift: n
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule76 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 0
-    shift: d
+    shift: n
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule77 !!models.AccessTypeClassifier
-    accessType: *advancedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 0
-    shift: d
-    workday: n
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule78 !!models.AccessTypeClassifier
-    accessType: *basicAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 0
     shift: n
-    workday: y
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule79 !!models.AccessTypeClassifier
-    accessType: *basicAccessType
-    userProfile: *responsibleProfile
-    environmentType: *privateEnvType
+    accessType: *administrativeAccessType
+    userProfile: *transientProfile
+    environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule80 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
     weekday: 1
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule81 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
     weekday: 1
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule82 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
     weekday: 1
-    shift: n
-    workday: y
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule83 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule84 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule85 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule86 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule84 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule85 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule86 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
-    weekday: 0
-    shift: n
-    workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule87 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *responsibleProfile
-    environmentType: *publicEnvType
-    weekday: 0
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 1
     shift: n
     workday: n
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule88 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
-    weekday: 1
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
     shift: d
     workday: y
+    frequencyLevel: *normalFrequency
+    
   - &rule89 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
-    weekday: 1
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
     shift: d
-    workday: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
   - &rule90 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: y
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
   - &rule91 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule92 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule93 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule94 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule95 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *transientProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule96 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule97 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule98 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule99 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule100 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule101 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule102 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule103 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule104 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule92 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
+    frequencyLevel: *frequentFrequency
+    
+  - &rule105 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule106 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule107 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: y
-  - &rule93 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
+    frequencyLevel: *frequentFrequency
+    
+  - &rule108 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule109 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule110 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: n
-  - &rule94 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
+    frequencyLevel: *frequentFrequency
+    
+  - &rule111 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule112 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule113 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: y
-  - &rule95 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule114 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule115 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule116 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
-    userProfile: *responsibleProfile
-    environmentType: *blockedEnvType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule96 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule117 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule118 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule119 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule120 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule121 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule122 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule123 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule124 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule125 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule126 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule127 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule128 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule129 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule130 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule131 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule132 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule133 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule134 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule135 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule136 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule137 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule138 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule139 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule140 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule141 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule142 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *userProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule143 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule144 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule145 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule146 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule147 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule148 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule149 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule150 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule151 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule152 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule153 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule154 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule155 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule156 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule157 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule158 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule159 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule160 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule161 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule162 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule163 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule164 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule165 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule166 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *userProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule167 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule168 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule169 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule170 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule171 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule172 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule173 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule174 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule175 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule176 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule177 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule178 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule179 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule180 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule181 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule182 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule183 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule184 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule185 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule186 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule187 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule188 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule189 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule190 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule191 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule192 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule193 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule194 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule195 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule196 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule197 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule198 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule199 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule200 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule201 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule202 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule203 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule204 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule205 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule206 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule207 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule208 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule209 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule210 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule211 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule212 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule213 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule214 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *responsibleProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule215 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule216 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule217 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule218 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule219 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule220 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule221 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule222 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule223 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule224 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule225 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule226 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule227 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule228 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule229 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule230 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule231 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule232 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule233 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule234 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule235 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule236 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule237 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule238 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *responsibleProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule239 !!models.AccessTypeClassifier
     accessType: *advancedAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
     workday: y
-  - &rule97 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule240 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule241 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule242 !!models.AccessTypeClassifier
     accessType: *basicAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
     workday: n
-  - &rule98 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule243 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule244 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule245 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule246 !!models.AccessTypeClassifier
+    accessType: *advancedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule247 !!models.AccessTypeClassifier
     accessType: *basicAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: y
-  - &rule99 !!models.AccessTypeClassifier
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule248 !!models.AccessTypeClassifier
     accessType: *basicAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule100 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule249 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule250 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule251 !!models.AccessTypeClassifier
+    accessType: *basicAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule252 !!models.AccessTypeClassifier
     accessType: *guestAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: y
-  - &rule101 !!models.AccessTypeClassifier
+    frequencyLevel: *normalFrequency
+    
+  - &rule253 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule254 !!models.AccessTypeClassifier
     accessType: *guestAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: n
-  - &rule102 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule255 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule256 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule257 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: y
-  - &rule103 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule258 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule259 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule260 !!models.AccessTypeClassifier
     accessType: *blockedAccessType
     userProfile: *studentProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule104 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule261 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule262 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule263 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: y
-  - &rule105 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule264 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule265 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule266 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: n
-  - &rule106 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule267 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule268 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule269 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: n
     workday: y
-  - &rule107 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule270 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule271 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule272 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule108 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule273 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule274 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule275 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: d
     workday: y
-  - &rule109 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule276 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule277 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule278 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: d
     workday: n
-  - &rule110 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule279 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule280 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule281 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: y
-  - &rule111 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule282 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule283 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule284 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *studentProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule112 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
+    frequencyLevel: *frequentFrequency
+    
+  - &rule285 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
     userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: d
-    workday: y
-  - &rule113 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: d
-    workday: n
-  - &rule114 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: y
-  - &rule115 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: n
-  - &rule116 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule117 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule118 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: n
-    workday: y
-  - &rule119 !!models.AccessTypeClassifier
-    accessType: *blockedAccessType
-    userProfile: *studentProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule120 !!models.AccessTypeClassifier
+    frequencyLevel: *normalFrequency
+    
+  - &rule286 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *studentProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule287 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule288 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule289 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule290 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule291 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule292 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule293 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule294 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule295 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule296 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule297 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule298 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule299 !!models.AccessTypeClassifier
+    accessType: *guestAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule300 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule301 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule302 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule303 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule304 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule305 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule306 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule307 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule308 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule309 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule310 !!models.AccessTypeClassifier
+    accessType: *blockedAccessType
+    userProfile: *studentProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule311 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
     workday: y
-  - &rule121 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule312 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule313 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule314 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: d
     workday: n
-  - &rule122 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule315 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule316 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule317 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: y
-  - &rule123 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule318 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule319 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule320 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule124 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule321 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule322 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule323 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: y
-  - &rule125 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule324 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule325 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule326 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: d
     workday: n
-  - &rule126 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule327 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule328 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule329 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: y
-  - &rule127 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule330 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule331 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule332 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *privateEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule128 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule333 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule334 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *privateEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule335 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: y
-  - &rule129 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule336 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule337 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule338 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: d
     workday: n
-  - &rule130 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule339 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule340 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule341 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: n
     workday: y
-  - &rule131 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule342 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule343 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule344 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 1
     shift: n
     workday: n
-  - &rule132 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule345 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule346 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule347 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: d
     workday: y
-  - &rule133 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule348 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule349 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule350 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: d
     workday: n
-  - &rule134 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule351 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule352 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule353 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: y
-  - &rule135 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule354 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule355 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule356 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
     environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: n
-  - &rule136 !!models.AccessTypeClassifier
+    frequencyLevel: *frequentFrequency
+    
+  - &rule357 !!models.AccessTypeClassifier
     accessType: *administrativeAccessType
     userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: d
-    workday: y
-  - &rule137 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: d
-    workday: n
-  - &rule138 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: y
-  - &rule139 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 1
-    shift: n
-    workday: n
-  - &rule140 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: y
-  - &rule141 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: d
-    workday: n
-  - &rule142 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
-    weekday: 0
-    shift: n
-    workday: y
-  - &rule143 !!models.AccessTypeClassifier
-    accessType: *administrativeAccessType
-    userProfile: *managerProfile
-    environmentType: *blockedEnvType
+    environmentType: *publicEnvType
     weekday: 0
     shift: n
     workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule358 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *publicEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule359 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule360 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule361 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule362 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule363 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule364 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule365 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule366 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule367 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule368 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule369 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule370 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 1
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule371 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule372 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule373 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule374 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule375 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule376 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: d
+    workday: n
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule377 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *frequentFrequency
+    
+  - &rule378 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *normalFrequency
+    
+  - &rule379 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: y
+    frequencyLevel: *less_frequentFrequency
+    
+  - &rule380 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *frequentFrequency
+    
+  - &rule381 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *normalFrequency
+    
+  - &rule382 !!models.AccessTypeClassifier
+    accessType: *administrativeAccessType
+    userProfile: *managerProfile
+    environmentType: *restrictEnvType
+    weekday: 0
+    shift: n
+    workday: n
+    frequencyLevel: *less_frequentFrequency

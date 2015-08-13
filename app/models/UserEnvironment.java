@@ -31,6 +31,10 @@ public class UserEnvironment extends Model {
 	@ManyToOne(optional=false)
 	@JoinColumn(name="current_access_type_id")
 	public AccessType currentAccessType;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="current_frequency_level_id")
+	public FrequencyLevel currentFrequencyLevel;
   
 	@ManyToOne(optional=false)
 	@JoinColumn(name="user_id", insertable = false, updatable = false)
@@ -99,5 +103,13 @@ public class UserEnvironment extends Model {
 
 	public void setImpactFactor(double impactFactor) {
 		this.impactFactor = impactFactor;
+	}
+
+	public FrequencyLevel getCurrentFrequencyLevel() {
+		return currentFrequencyLevel;
+	}
+
+	public void setCurrentFrequencyLevel(FrequencyLevel currentFrequencyLevel) {
+		this.currentFrequencyLevel = currentFrequencyLevel;
 	}
 }

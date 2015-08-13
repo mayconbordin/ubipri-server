@@ -6,12 +6,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 import dao.AccessLevelDAO;
 import dao.AccessTypeClassifierDAO;
 import dao.ActionDAO;
 import dao.DeviceDAO;
 import dao.DeviceTypeDAO;
+import dao.EnvironmentFrequencyLevelDAO;
 import dao.LogEventDAO;
 import dao.UserDAO;
 import dao.UserEnvironmentDAO;
@@ -21,6 +24,7 @@ import models.AccessTypeClassifier;
 import models.Action;
 import models.Device;
 import models.Environment;
+import models.EnvironmentFrequencyLevel;
 import models.Functionality;
 import models.LogEvent;
 import models.User;
@@ -28,7 +32,7 @@ import models.UserEnvironment;
 import models.UserEnvironmentPK;
 import forms.UserLocationForm;
 
-public class PrivacyService {
+public class PrivacyService implements IPrivacyService {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	
 	@Inject UserDAO userDao;
@@ -39,6 +43,7 @@ public class PrivacyService {
 	@Inject AccessTypeClassifierDAO classifierDao;
 	@Inject AccessLevelDAO accessLevelDao;
 	@Inject ActionDAO actionDao;
+	@Inject EnvironmentFrequencyLevelDAO envFreqDao;
 	
 	public List<Action> changeUserLocation(User user, UserLocationForm form) {
 		// get user information
@@ -66,6 +71,8 @@ public class PrivacyService {
 				user.setCurrentEnvironment(null);
 			} else {
 				user.setCurrentEnvironment(env);
+				
+				//TODO: recalculate user frequency on the environment
 			}
 			
 			userDao.update(user);
@@ -90,6 +97,7 @@ public class PrivacyService {
 				env.getEnvironmentType(), log.getShift(), log.getWeekday(), log.getWorkday());
 
 		if (classified == null) {
+			//TODO: default actions
 			return null;
 		}
 		
@@ -134,6 +142,46 @@ public class PrivacyService {
 		logDao.create(log);
 		
 		return log;
+	}
+	
+	public void updateUserFrequency(User user, Environment environment) {
+		// get rules for frequency levels for the environment
+		List<EnvironmentFrequencyLevel> levels = envFreqDao.findAllByField("environment", environment);
+		
+		// if not rules can be found, assume that users don't evolve in this environment
+		if (levels.isEmpty()) {
+			return;
+		}
+
+		// get the period for checking the user frequency
+		Period period = getPeriodFromFrequencyLevels(levels);
+		
+		// get the actual frequency in days for the user in the period
+		int frequencyInDays = logDao.count(user, environment, period);
+		
+		// calculate the presence of the user in the period
+		double presence = (frequencyInDays*100)/period.getDays();
+		
+
+		System.out.println("LEVELS: " + levels.size());
+		System.out.println("PERIOD: " + period.getDays() + " days");
+		System.out.println("PRESENCE: " + presence + "%");
+	}
+	
+	protected Period getPeriodFromFrequencyLevels(List<EnvironmentFrequencyLevel> levels) {
+		EnvironmentFrequencyLevel firstLevel = levels.get(0);
+		
+		if (firstLevel.getMetric() == 'd') {
+			return Period.days(firstLevel.getPeriod());
+		} else if (firstLevel.getMetric() == 'w') {
+			return Period.weeks(firstLevel.getPeriod());
+		} else if (firstLevel.getMetric() == 'm') {
+			return Period.months(firstLevel.getPeriod());
+		} else if (firstLevel.getMetric() == 'y') {
+			return Period.years(firstLevel.getPeriod());
+		}
+				
+		return null;
 	}
 	
 	protected List<Action> mergeActions(List<Action> accessLevelActions, List<Action> customActions,

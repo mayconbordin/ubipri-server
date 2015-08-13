@@ -36,6 +36,10 @@ public class AccessTypeClassifier extends Model {
 	@ManyToOne(optional=false)
 	@JoinColumn(name="access_type_id")
 	public AccessType accessType;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="frequency_level_id")
+	public FrequencyLevel frequencyLevel;
 
 	public Integer getId() {
 		return id;
@@ -91,6 +95,14 @@ public class AccessTypeClassifier extends Model {
 
 	public void setAccessType(AccessType accessType) {
 		this.accessType = accessType;
+	}
+
+	public FrequencyLevel getFrequencyLevel() {
+		return frequencyLevel;
+	}
+
+	public void setFrequencyLevel(FrequencyLevel frequencyLevel) {
+		this.frequencyLevel = frequencyLevel;
 	}
 
 	@Override

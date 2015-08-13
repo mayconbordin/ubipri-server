@@ -7,6 +7,7 @@ import java.util.Map;
 
 import models.Action;
 import models.Environment;
+import models.EnvironmentFrequencyLevel;
 import models.UserEnvironment;
 
 import org.joda.time.DateTime;
@@ -36,6 +37,15 @@ public class FixturesUtil {
 					
 					ue.getPk().setUserId(ue.getUser().getId());
 					ue.getPk().setEnvironmentId(ue.getEnvironment().getId());
+		    	}
+			}
+			
+			if (tableEntry.getKey().equals("environment_frequency_levels")) {
+				for (Object o : tableEntry.getValue()) {
+					EnvironmentFrequencyLevel efl = (EnvironmentFrequencyLevel) o;
+					
+					efl.getPk().setEnvironmentId(efl.getEnvironment().getId());
+					efl.getPk().setFrequencyLevelId(efl.getFrequencyLevel().getId());
 		    	}
 			}
 			

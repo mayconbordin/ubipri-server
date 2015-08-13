@@ -17,11 +17,11 @@ public interface BaseDAO<T, ID extends Serializable> {
 	
 	public T findByQuery(Query<T> query);
 	
-	public T findByField(String fieldName, String fieldValue);
+	public T findByField(String fieldName, Object fieldValue);
 	
-	public T findByFieldWith(String fieldName, String fieldValue, String...relations);
+	public T findByFieldWith(String fieldName, Object fieldValue, String...relations);
 	
-	public List<T> findAllByField(String fieldName, String fieldValue);
+	public List<T> findAllByField(String fieldName, Object fieldValue);
 	
 	public List<T> findAllByQuery(Query<T> query);
 	
