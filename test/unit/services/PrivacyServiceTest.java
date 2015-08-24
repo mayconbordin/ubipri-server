@@ -2,6 +2,7 @@ package unit.services;
 
 import dao.LogEventDAO;
 import data.DataLoader;
+import forms.UserLocationForm;
 import models.EnvironmentFrequencyLevel;
 import models.FrequencyLevel;
 import models.User;
@@ -38,6 +39,21 @@ public class PrivacyServiceTest extends ApplicationBaseTest {
 
 		LogEventDAO logDao = injector.instanceOf(LogEventDAO.class);
 		DataLoader.populateLogs(logDao);
+	}
+
+	@Test
+	public void testChangeUserLocation() {
+		logger.debug("testChangeUserLocation");
+
+		User u = new User();
+		u.setId(1);
+
+		UserLocationForm form = new UserLocationForm();
+		form.setDeviceCode("1234554321");
+		form.setEnvironmentId(1);
+		form.setExiting(false);
+
+		service.changeUserLocation(u, form);
 	}
 	
 	@Test
