@@ -3,7 +3,6 @@ package base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.POST;
-import static play.test.Helpers.PUT;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 
@@ -30,11 +29,11 @@ import utils.db.FixturesUtil;
 
 
 public class ApplicationBaseTest extends WithApplication {
-	private final Logger.ALogger logger = Logger.of("TEST");
+	private final Logger.ALogger logger = Logger.of("ApplicationBaseTest");
 	
 	protected FakeApplication application;
 	protected Database database;
-	
+
 	protected Map<String,String> setupDatabase() {
 		String driver = "org.postgresql.Driver";
 		String url    = "jdbc:postgresql://localhost/ubipri_test";
@@ -43,7 +42,7 @@ public class ApplicationBaseTest extends WithApplication {
             "username", "postgres",
             "password", "postgres"
         ));
-        
+
 		Evolutions.applyEvolutions(database);
 
         return ImmutableMap.of(

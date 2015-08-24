@@ -9,7 +9,7 @@ CREATE TABLE environment_frequency_levels (
     min double precision NOT NULL,
     max double precision NOT NULL,
     period integer NOT NULL,
-    metric char NOT NULL,
+    metric character(1) NOT NULL,
     
     CONSTRAINT environment_frequency_levels_pkey PRIMARY KEY (environment_id, frequency_level_id),
     FOREIGN KEY (environment_id) REFERENCES environments (id),

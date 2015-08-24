@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.joda.time.PeriodType;
 
 import dao.AccessLevelDAO;
 import dao.AccessTypeClassifierDAO;
@@ -53,60 +52,43 @@ public class PrivacyService implements IPrivacyService {
 		Device device = deviceDao.findByFieldWith("code", form.getDeviceCode(), "functionalities");
 		
 		// get the rules for the user in the current environment
-		UserEnvironment userEnv = userEnvDao.findWith(new UserEnvironmentPK(
+		UserEnvironment userInEnvironment = userEnvDao.findWith(new UserEnvironmentPK(
 				user.getId(), form.getEnvironmentId()), "environment", "userProfile", 
-				"currentAccessType", "environment.environmentType");
+				"currentAccessType", "environment.environmentType", "user");
 		
-		Environment env = userEnv.getEnvironment();
-		
-		// Check if user/device has changed environments
-		boolean hasChangedUserLocation   = (user.getCurrentEnvironment() == null 
-				|| user.getCurrentEnvironment().getId() != form.getEnvironmentId());
-		boolean hasChangedDeviceLocation = (device.getCurrentEnvironment() == null 
-				|| device.getCurrentEnvironment().getId() != form.getEnvironmentId());
-		
-		// Update current user location
-		if (hasChangedUserLocation) {
-			if (form.isExiting()) {
-				user.setCurrentEnvironment(null);
-			} else {
-				user.setCurrentEnvironment(env);
-				
-				//TODO: recalculate user frequency on the environment
-			}
-			
-			userDao.update(user);
-		}
-		
-		// Update current device location
-		if (hasChangedDeviceLocation) {
-			if (form.isExiting()) {
-				device.setCurrentEnvironment(null);
-			} else {
-				device.setCurrentEnvironment(env);
-			}
-			
-			deviceDao.update(device);
-		}
+		Environment environment = userInEnvironment.getEnvironment();
+
+		// Update current user and device location
+		updateUserAndDeviceLocation(user, device, environment, form.isExiting());
 		
 		// create the log event
-		LogEvent log = createLogEvent(user, env, device, form.isExiting());
+		LogEvent log = createLogEvent(user, environment, device, form.isExiting());
+
+		// If exiting environment, there is no need for getting its actions
+		if (form.isExiting()) {
+			return null;
+		}
+
+		// get user frequency on the environment
+		EnvironmentFrequencyLevel frequencyLevel = getUserFrequencyLevel(user, environment, new DateTime(log.getTime()));
 		
-		// Get the type of access based on 5 parameters
-		AccessTypeClassifier classified = classifierDao.find(userEnv.getUserProfile(),
-				env.getEnvironmentType(), log.getShift(), log.getWeekday(), log.getWorkday());
+		// Get the type of access based on 6 parameters
+		AccessTypeClassifier classified = classifierDao.find(userInEnvironment.getUserProfile(),
+				environment.getEnvironmentType(), log.getShift(), log.getWeekday(), log.getWorkday(), frequencyLevel);
 
 		if (classified == null) {
 			//TODO: default actions
 			return null;
 		}
 		
-		// Find the user's access level
-		AccessLevel accessLevel = accessLevelDao.findWith(env.getEnvironmentType(),
+		// Find the user's access level based on the environment type and access type
+		AccessLevel accessLevel = accessLevelDao.findWith(environment.getEnvironmentType(),
 				classified.getAccessType(), "actions", "actions.functionality");
 
-		List<Action> customActions = actionDao.getCustomActions(env, accessLevel);
-		
+		// Get the custom actions (actions set for a particular environment)
+		List<Action> customActions = actionDao.getCustomActions(environment, accessLevel);
+
+		// logging info
 		logger.info("AccessLevel actions: " + accessLevel.getActions().size());
 		logger.info("Custom actions: " + customActions.size());
 		logger.info("Device functionalities: " + device.getFunctionalities().size());
@@ -144,30 +126,43 @@ public class PrivacyService implements IPrivacyService {
 		return log;
 	}
 	
-	public void updateUserFrequency(User user, Environment environment) {
+	public EnvironmentFrequencyLevel getUserFrequencyLevel(User user, Environment environment, DateTime date) {
 		// get rules for frequency levels for the environment
 		List<EnvironmentFrequencyLevel> levels = envFreqDao.findAllByField("environment", environment);
 		
 		// if not rules can be found, assume that users don't evolve in this environment
 		if (levels.isEmpty()) {
-			return;
+			return null;
 		}
 
 		// get the period for checking the user frequency
 		Period period = getPeriodFromFrequencyLevels(levels);
 		
 		// get the actual frequency in days for the user in the period
-		int frequencyInDays = logDao.count(user, environment, period);
+		int frequencyInDays = logDao.count(user, environment, period, date);
 		
-		// calculate the presence of the user in the period
+		// calculate the percentage of presence of the user in the period
 		double presence = (frequencyInDays*100)/period.getDays();
-		
 
-		System.out.println("LEVELS: " + levels.size());
-		System.out.println("PERIOD: " + period.getDays() + " days");
-		System.out.println("PRESENCE: " + presence + "%");
+		// logging info
+		logger.debug(String.format("User presence: %.2f%% (%d of %d days).", presence, frequencyInDays, period.getDays()));
+
+		EnvironmentFrequencyLevel selectedLevel = null;
+
+		for (EnvironmentFrequencyLevel l : levels) {
+			if (presence >= l.getMin() && presence <= l.getMax()) {
+				selectedLevel = l;
+			}
+		}
+
+		return selectedLevel;
 	}
-	
+
+	/**
+	 * Get the period based on the first frequency level (assume all of them use the SAME metric the same for one environment).
+	 * @param levels
+	 * @return
+	 */
 	protected Period getPeriodFromFrequencyLevels(List<EnvironmentFrequencyLevel> levels) {
 		EnvironmentFrequencyLevel firstLevel = levels.get(0);
 		
@@ -183,7 +178,16 @@ public class PrivacyService implements IPrivacyService {
 				
 		return null;
 	}
-	
+
+	/**
+	 * Override the access level actions with custom one, if they exist, and remove those that are not applied to the current
+	 * device.
+	 *
+	 * @param accessLevelActions
+	 * @param customActions
+	 * @param deviceFunctionalities
+	 * @return
+	 */
 	protected List<Action> mergeActions(List<Action> accessLevelActions, List<Action> customActions,
 			List<Functionality> deviceFunctionalities) {
 		List<Action> finalActions = new ArrayList<Action>();
@@ -209,5 +213,32 @@ public class PrivacyService implements IPrivacyService {
         }
         
         return finalActions;
+	}
+
+	/**
+	 * Update the current user and device location on the database, if necessary.
+	 *
+	 * @param user
+	 * @param device
+	 * @param environment
+	 * @param isExiting
+	 */
+	protected void updateUserAndDeviceLocation(User user, Device device, Environment environment, boolean isExiting) {
+		boolean hasChangedUserLocation   = (user.getCurrentEnvironment() == null
+				|| user.getCurrentEnvironment().getId() != environment.getId());
+		boolean hasChangedDeviceLocation = (device.getCurrentEnvironment() == null
+				|| device.getCurrentEnvironment().getId() != environment.getId());
+
+		// Update current user location
+		if (hasChangedUserLocation) {
+			user.setCurrentEnvironment(isExiting ? null : environment);
+			userDao.update(user);
+		}
+
+		// Update current device location
+		if (hasChangedDeviceLocation) {
+			device.setCurrentEnvironment(isExiting ? null : environment);
+			deviceDao.update(device);
+		}
 	}
 }

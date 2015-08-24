@@ -1,17 +1,22 @@
 package unit.services;
 
+import dao.LogEventDAO;
+import data.DataLoader;
+import models.EnvironmentFrequencyLevel;
+import models.FrequencyLevel;
+import models.User;
+import modules.ServiceModule;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
 import base.ApplicationBaseTest;
-import dao.ebean.EnvironmentEbeanDAO;
 import models.Environment;
 import modules.DAOModule;
 import play.Logger;
 import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
 import services.IPrivacyService;
-import services.ISigaiService;
 import services.PrivacyService;
 
 import static org.junit.Assert.*;
@@ -24,19 +29,59 @@ public class PrivacyServiceTest extends ApplicationBaseTest {
 	@Before
 	public void setUp() {
 		Injector injector = new GuiceInjectorBuilder()
-			    .bindings(new DAOModule())
-			    .overrides(bind(IPrivacyService.class).to(PrivacyService.class))
-			    .injector();
-		
+				.bindings(new DAOModule())
+				.bindings(new ServiceModule(play.Environment.simple(), application.configuration()))
+				.overrides(bind(IPrivacyService.class).to(PrivacyService.class))
+				.build();
+
 		service = injector.instanceOf(IPrivacyService.class);
+
+		LogEventDAO logDao = injector.instanceOf(LogEventDAO.class);
+		DataLoader.populateLogs(logDao);
 	}
 	
 	@Test
-	public void testUpdateUserFrequency() {
-		logger.debug("testUpdateUserFrequency");
+	public void testGetUserFrequency() {
+		logger.debug("testGetUserFrequency");
 		
-		Environment e = new EnvironmentEbeanDAO().find(1);
-		
-		service.updateUserFrequency(null, e);
+		Environment e = new Environment();
+		e.setId(1);
+
+		User u = new User();
+		u.setId(1);
+
+		EnvironmentFrequencyLevel level = service.getUserFrequencyLevel(u, e, new DateTime(2015, 8, 30, 14, 11));
+		assertEquals(e.getId(), level.getEnvironment().getId());
+		assertEquals(FrequencyLevel.FREQUENT, level.getFrequencyLevel().getName());
+	}
+
+	@Test
+	public void testGetUserFrequencyNormal() {
+		logger.debug("testGetUserFrequencyNormal");
+
+		Environment e = new Environment();
+		e.setId(1);
+
+		User u = new User();
+		u.setId(1);
+
+		EnvironmentFrequencyLevel level = service.getUserFrequencyLevel(u, e, new DateTime(2015, 8, 9, 14, 11));
+		assertEquals(e.getId(), level.getEnvironment().getId());
+		assertEquals(FrequencyLevel.NORMAL, level.getFrequencyLevel().getName());
+	}
+
+	@Test
+	public void testGetUserFrequencyLessFrequent() {
+		logger.debug("testGetUserFrequencyLessFrequent");
+
+		Environment e = new Environment();
+		e.setId(1);
+
+		User u = new User();
+		u.setId(1);
+
+		EnvironmentFrequencyLevel level = service.getUserFrequencyLevel(u, e, new DateTime(2015, 8, 1, 14, 11));
+		assertEquals(e.getId(), level.getEnvironment().getId());
+		assertEquals(FrequencyLevel.LESS_FREQUENT, level.getFrequencyLevel().getName());
 	}
 }

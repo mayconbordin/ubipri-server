@@ -11,6 +11,10 @@ import play.data.validation.Constraints;
 @Entity
 @Table(name="frequency_levels")
 public class FrequencyLevel {
+	public static final String LESS_FREQUENT = "less_frequent";
+	public static final String NORMAL = "normal";
+	public static final String FREQUENT = "frequent";
+
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "frequency_levels_id_seq")
     public Integer id;

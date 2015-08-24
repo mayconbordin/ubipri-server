@@ -23,7 +23,7 @@ public class ServiceModule extends AbstractModule {
     	String scheduleClassName = configuration.getString("service.schedule", "services.MockScheduleService");
 
     	try {
-            Class<IScheduleService> bindingClass = (Class<IScheduleService>) 
+            Class<IScheduleService> bindingClass = (Class<IScheduleService>)
             		environment.classLoader().loadClass(scheduleClassName);
             bind(IScheduleService.class).to(bindingClass);
         } catch (ClassNotFoundException e) {
