@@ -16,5 +16,21 @@ public class UserEnvironmentEbeanDAO extends BaseEbeanDAO<UserEnvironment, UserE
 		return query.where().eq("user_id", id.getUserId())
 				    .where().eq("environment_id", id.getEnvironmentId());
 	}
-	
+
+	@Override
+	public UserEnvironment find(UserEnvironmentPK userEnvironmentPK) {
+		Query<UserEnvironment> query = createQuery();
+		return filterByPk(query, userEnvironmentPK).findUnique();
+	}
+
+	@Override
+	public UserEnvironment findWith(UserEnvironmentPK userEnvironmentPK, String... relations) {
+		Query<UserEnvironment> query = createQuery();
+
+		for (String relation : relations) {
+			query.fetch(relation);
+		}
+
+		return filterByPk(query, userEnvironmentPK).findUnique();
+	}
 }

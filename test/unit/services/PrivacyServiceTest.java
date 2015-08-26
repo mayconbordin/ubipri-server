@@ -3,22 +3,22 @@ package unit.services;
 import dao.LogEventDAO;
 import data.DataLoader;
 import forms.UserLocationForm;
-import models.EnvironmentFrequencyLevel;
-import models.FrequencyLevel;
-import models.User;
+import models.*;
 import modules.ServiceModule;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
 import base.ApplicationBaseTest;
-import models.Environment;
 import modules.DAOModule;
 import play.Logger;
 import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
+import services.IClock;
 import services.IPrivacyService;
 import services.PrivacyService;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static play.inject.Bindings.bind;
@@ -33,29 +33,76 @@ public class PrivacyServiceTest extends ApplicationBaseTest {
 				.bindings(new DAOModule())
 				.bindings(new ServiceModule(play.Environment.simple(), application.configuration()))
 				.overrides(bind(IPrivacyService.class).to(PrivacyService.class))
+				.overrides(bind(IClock.class).to(MockClock.class))
 				.build();
 
 		service = injector.instanceOf(IPrivacyService.class);
 
 		LogEventDAO logDao = injector.instanceOf(LogEventDAO.class);
 		DataLoader.populateLogs(logDao);
+
+		MockClock.setDateTime(new DateTime(2015, 8, 26, 8, 50));
 	}
 
 	@Test
 	public void testChangeUserLocation() {
 		logger.debug("testChangeUserLocation");
+		logger.debug("User entering a public location");
 
-		User u = new User();
-		u.setId(1);
+		User user = new User();
+		user.setId(1);
 
-		UserLocationForm form = new UserLocationForm();
-		form.setDeviceCode("1234554321");
-		form.setEnvironmentId(1);
-		form.setExiting(false);
+		UserLocationForm form = new UserLocationForm("1234554321", 1, false);
 
-		service.changeUserLocation(u, form);
+		List<Action> actions = service.changeUserLocation(user, form);
+
+		logger.info("Size of actions: "+actions.size());
+
+		assertEquals(1, actions.size());
+		assertEquals("Wi-Fi", actions.get(0).getFunctionality().getName());
+		assertEquals("on", actions.get(0).getAction());
 	}
-	
+
+	@Test
+	public void testChangeUserLocationPrivateEnv() {
+		logger.debug("testChangeUserLocation");
+		logger.debug("User entering a private location");
+
+		User user = new User();
+		user.setId(1);
+
+		UserLocationForm form = new UserLocationForm("1234554321", 2, false);
+
+		List<Action> actions = service.changeUserLocation(user, form);
+
+		logger.info("Size of actions: "+actions.size());
+
+		assertEquals(1, actions.size());
+		assertEquals("Wi-Fi", actions.get(0).getFunctionality().getName());
+		assertEquals("on", actions.get(0).getAction());
+	}
+
+	@Test
+	public void testChangeUserLocationPrivateEnv2() {
+		logger.debug("testChangeUserLocation2");
+		logger.debug("User entering a private location");
+
+		User user = new User();
+		user.setId(1);
+
+		UserLocationForm form = new UserLocationForm("1234554321", 5, false);
+
+		List<Action> actions = service.changeUserLocation(user, form);
+
+		logger.info("Size of actions: " + actions.size());
+
+		assertEquals(2, actions.size());
+		assertEquals("Wi-Fi", actions.get(0).getFunctionality().getName());
+		assertEquals("on", actions.get(0).getAction());
+		assertEquals("GPS", actions.get(1).getFunctionality().getName());
+		assertEquals("on", actions.get(1).getAction());
+	}
+
 	@Test
 	public void testGetUserFrequency() {
 		logger.debug("testGetUserFrequency");

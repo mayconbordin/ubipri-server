@@ -298,7 +298,7 @@ access_levels:
     accessType: *administrativeAccessType
     environmentType: *privateEnvType
     impactFactor: 10.0
-  - &allBlockedAccessLevel !!models.AccessLevel
+  - &adminPublicAccessLevel !!models.AccessLevel
     accessType: *administrativeAccessType
     environmentType: *publicEnvType
     impactFactor: 0.0
@@ -586,7 +586,7 @@ actions:
     action: on
 
   - !!models.Action
-    accessLevel: *allBlockedAccessLevel
+    accessLevel: *adminPublicAccessLevel
     functionality: *wifiFunctionality
     action: on
   

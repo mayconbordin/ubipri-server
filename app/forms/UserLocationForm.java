@@ -11,7 +11,20 @@ public class UserLocationForm {
 
 	public boolean exiting = false;
 	public boolean async = false;
-	
+
+	public UserLocationForm() { }
+
+	public UserLocationForm(String deviceCode, int environmentId) {
+		this.deviceCode = deviceCode;
+		this.environmentId = environmentId;
+	}
+
+	public UserLocationForm(String deviceCode, int environmentId, boolean exiting) {
+		this.deviceCode = deviceCode;
+		this.environmentId = environmentId;
+		this.exiting = exiting;
+	}
+
 	public String getDeviceCode() {
 		return deviceCode;
 	}

@@ -4,9 +4,7 @@ import com.google.inject.AbstractModule;
 
 import play.Configuration;
 import play.Environment;
-import services.IScheduleService;
-import services.ISigaiService;
-import services.SigaiService;
+import services.*;
 
 public class ServiceModule extends AbstractModule {
 
@@ -31,5 +29,6 @@ public class ServiceModule extends AbstractModule {
         }
     	
     	bind(ISigaiService.class).to(SigaiService.class);
+    	bind(IClock.class).to(RealClock.class);
     }
 }

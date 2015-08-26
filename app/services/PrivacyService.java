@@ -5,30 +5,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dao.*;
+import models.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-import dao.AccessLevelDAO;
-import dao.AccessTypeClassifierDAO;
-import dao.ActionDAO;
-import dao.DeviceDAO;
-import dao.DeviceTypeDAO;
-import dao.EnvironmentFrequencyLevelDAO;
-import dao.LogEventDAO;
-import dao.UserDAO;
-import dao.UserEnvironmentDAO;
 import play.Logger;
-import models.AccessLevel;
-import models.AccessTypeClassifier;
-import models.Action;
-import models.Device;
-import models.Environment;
-import models.EnvironmentFrequencyLevel;
-import models.Functionality;
-import models.LogEvent;
-import models.User;
-import models.UserEnvironment;
-import models.UserEnvironmentPK;
 import forms.UserLocationForm;
 
 public class PrivacyService implements IPrivacyService {
@@ -37,12 +19,15 @@ public class PrivacyService implements IPrivacyService {
 	@Inject UserDAO userDao;
 	@Inject DeviceDAO deviceDao;
 	@Inject DeviceTypeDAO deviceTypeDao;
-	@Inject UserEnvironmentDAO userEnvDao;
+	@Inject UserEnvironmentDAO userEnvironmentDao;
 	@Inject LogEventDAO logDao;
 	@Inject AccessTypeClassifierDAO classifierDao;
 	@Inject AccessLevelDAO accessLevelDao;
 	@Inject ActionDAO actionDao;
 	@Inject EnvironmentFrequencyLevelDAO envFreqDao;
+	@Inject FrequencyLevelDAO frequencyLevelDao;
+
+	@Inject IClock clock;
 	
 	public List<Action> changeUserLocation(User user, UserLocationForm form) {
 		// get user information
@@ -52,7 +37,7 @@ public class PrivacyService implements IPrivacyService {
 		Device device = deviceDao.findByFieldWith("code", form.getDeviceCode(), "functionalities");
 		
 		// get the rules for the user in the current environment
-		UserEnvironment userInEnvironment = userEnvDao.findWith(new UserEnvironmentPK(
+		UserEnvironment userInEnvironment = userEnvironmentDao.findWith(new UserEnvironmentPK(
 				user.getId(), form.getEnvironmentId()), "environment", "userProfile", 
 				"currentAccessType", "environment.environmentType", "user");
 		
@@ -70,14 +55,26 @@ public class PrivacyService implements IPrivacyService {
 		}
 
 		// get user frequency on the environment
-		EnvironmentFrequencyLevel frequencyLevel = getUserFrequencyLevel(user, environment, new DateTime(log.getTime()));
-		
+		EnvironmentFrequencyLevel envFreqLevel = getUserFrequencyLevel(user, environment, new DateTime(log.getTime()));
+		FrequencyLevel frequencyLevel = null;
+
+		if (envFreqLevel == null) {
+			frequencyLevel = frequencyLevelDao.findByField("name", FrequencyLevel.NORMAL);
+		} else {
+			frequencyLevel = envFreqLevel.getFrequencyLevel();
+		}
+
 		// Get the type of access based on 6 parameters
 		AccessTypeClassifier classified = classifierDao.find(userInEnvironment.getUserProfile(),
 				environment.getEnvironmentType(), log.getShift(), log.getWeekday(), log.getWorkday(), frequencyLevel);
 
+		// print classification information
+		logger.info("user_profile="+userInEnvironment.getUserProfile().getName()
+				+ "; environment_type="+environment.getEnvironmentType().getName() + "; shift="+log.getShift()
+				+ "; weekday=" + log.getWeekday() + "; workday=" + log.getWorkday() + "; frequency_level=" + envFreqLevel
+				+ "; access_type=" + classified.getAccessType());
+
 		if (classified == null) {
-			//TODO: default actions
 			return null;
 		}
 		
@@ -89,7 +86,7 @@ public class PrivacyService implements IPrivacyService {
 		List<Action> customActions = actionDao.getCustomActions(environment, accessLevel);
 
 		// logging info
-		logger.info("AccessLevel actions: " + accessLevel.getActions().size());
+		logger.info("AccessLevel "+accessLevel.getId()+" actions: " + accessLevel.getActions().size());
 		logger.info("Custom actions: " + customActions.size());
 		logger.info("Device functionalities: " + device.getFunctionalities().size());
 		
@@ -97,7 +94,7 @@ public class PrivacyService implements IPrivacyService {
 	}
 	
 	public LogEvent createLogEvent(User user, Environment environment, Device device, boolean exiting) {
-		DateTime ts = DateTime.now();
+		DateTime ts = clock.getCurrentDateTime();
 		
 		LogEvent log = new LogEvent();
 		log.setUser(user);
@@ -180,7 +177,7 @@ public class PrivacyService implements IPrivacyService {
 	}
 
 	/**
-	 * Override the access level actions with custom one, if they exist, and remove those that are not applied to the current
+	 * Override the access level actions with custom ones, if they exist, and remove those that are not applied to the current
 	 * device.
 	 *
 	 * @param accessLevelActions

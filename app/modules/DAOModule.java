@@ -17,6 +17,7 @@ public class DAOModule extends AbstractModule {
         bind(EnvironmentDAO.class).to(EnvironmentEbeanDAO.class);
         bind(EnvironmentFrequencyLevelDAO.class).to(EnvironmentFrequencyLevelEbeanDAO.class);
         bind(EnvironmentTypeDAO.class).to(EnvironmentTypeEbeanDAO.class);
+        bind(FrequencyLevelDAO.class).to(FrequencyLevelEbeanDAO.class);
         bind(FunctionalityDAO.class).to(FunctionalityEbeanDAO.class);
         bind(LocalizationTypeDAO.class).to(LocalizationTypeEbeanDAO.class);
         bind(LogEventDAO.class).to(LogEventEbeanDAO.class);

@@ -93,4 +93,14 @@ public class EnvironmentFrequencyLevel extends Model {
 	public void setMetric(char metric) {
 		this.metric = metric;
 	}
+
+	@Override
+	public String toString() {
+		return "EnvironmentFrequencyLevel{" +
+				"min=" + min +
+				", max=" + max +
+				", period=" + period +
+				", metric=" + metric +
+				'}';
+	}
 }

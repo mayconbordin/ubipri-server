@@ -1,11 +1,8 @@
 package dao;
 
-import models.AccessTypeClassifier;
-import models.EnvironmentFrequencyLevel;
-import models.EnvironmentType;
-import models.UserProfileEnvironment;
+import models.*;
 
 public interface AccessTypeClassifierDAO extends BaseDAO<AccessTypeClassifier, Integer> {
 	public AccessTypeClassifier find(UserProfileEnvironment userProfile, EnvironmentType environmentType,
-			char shift, int weekday, char workday, EnvironmentFrequencyLevel frequencyLevel);
+			char shift, int weekday, char workday, FrequencyLevel frequencyLevel);
 }
