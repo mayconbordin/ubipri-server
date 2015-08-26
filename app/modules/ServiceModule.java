@@ -5,6 +5,8 @@ import com.google.inject.AbstractModule;
 import play.Configuration;
 import play.Environment;
 import services.*;
+import services.auth.Authenticator;
+import services.auth.SigaiAuthenticator;
 
 public class ServiceModule extends AbstractModule {
 
@@ -28,7 +30,8 @@ public class ServiceModule extends AbstractModule {
             throw new RuntimeException(e);
         }
     	
-    	bind(ISigaiService.class).to(SigaiService.class);
     	bind(IClock.class).to(RealClock.class);
+    	bind(IPrivacyService.class).to(PrivacyService.class);
+    	bind(Authenticator.class).to(SigaiAuthenticator.class);
     }
 }

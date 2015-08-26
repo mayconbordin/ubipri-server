@@ -3,41 +3,41 @@ package utils.security;
 import controllers.SecurityController;
 import dao.ebean.UserEbeanDAO;
 import models.User;
+import play.Play;
 import play.libs.Json;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security;
+import services.auth.Authenticator;
 import utils.http.Errors;
+
+import javax.inject.Inject;
 
 public class Secured extends Security.Authenticator {
 	
-	private UserEbeanDAO userDao;
+	private Authenticator authenticator;
 	
 	public Secured() {
 		super();
-		userDao = new UserEbeanDAO();
+
+		authenticator = Play.application().injector().instanceOf(Authenticator.class);
 	}
 	
 	@Override
 	public String getUsername(Context ctx) {
-		User user = null;
-		String[] authTokenHeaderValues = ctx.request().headers().get(SecurityController.AUTH_TOKEN_HEADER);
-		
-		if ((authTokenHeaderValues != null) && (authTokenHeaderValues.length == 1) 
-				&& (authTokenHeaderValues[0] != null)) {
-			user = userDao.findByAuthToken(authTokenHeaderValues[0]);
-			if (user != null) {
-				ctx.args.put("user", user);
-				return user.getEmailAddress();
-			}
+		User user = authenticator.getUser(ctx.request());
+
+		if (user != null) {
+			ctx.args.put("user", user);
+			return user.getEmailAddress();
 		}
+
 		return null;
 	}
+
 	@Override
 	public Result onUnauthorized(Context ctx) {
-		Errors err = new Errors();
-		err.addError("Unauthorized access", 1);
-		
-		return unauthorized(Json.toJson(err));
+		Errors error = Errors.create("Unauthorized access", 1);
+		return unauthorized(Json.toJson(error));
 	}
 }

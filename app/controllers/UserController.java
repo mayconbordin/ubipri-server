@@ -49,8 +49,7 @@ public class UserController extends BaseController {
 		user.setName(form.get().getName());
 		user.setEmailAddress(form.get().getEmailAddress());
 		user.setFullName(form.get().getFullName());
-		user.setPassword(form.get().getPassword());
-		
+
 		userDao.update(user);
 		
 		return ok(user);

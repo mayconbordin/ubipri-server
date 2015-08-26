@@ -5,6 +5,7 @@ import static play.test.Helpers.*;
 
 import java.util.Map;
 
+import base.GuiceApplicationBaseTest;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -20,7 +21,7 @@ import play.mvc.Http.Status;
 import play.mvc.Result;
 import play.mvc.Http.RequestBuilder;
 
-public class UserEndpointTest extends ApplicationBaseTest {
+public class UserEndpointTest extends GuiceApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	
 	@Test
@@ -46,7 +47,7 @@ public class UserEndpointTest extends ApplicationBaseTest {
 		
     	RequestBuilder request = buildRequest().method(PUT).uri("/user")
 			.bodyForm(ImmutableMap.of("name", name, "emailAddress", email,
-					"fullName", fullName, "password", "12345"));
+					"fullName", fullName));
 
     	Result result = route(request);
     	assertEquals(Status.OK, result.status());
@@ -113,7 +114,7 @@ public class UserEndpointTest extends ApplicationBaseTest {
     	assertEquals(Status.OK, result.status());
     	assertIsJson(result);
     	
-    	logger.info(contentAsString(result));
+    	//logger.info(contentAsString(result));
 
     	String expected = "[{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Wi-Fi'},'action':'on'}]";
     	

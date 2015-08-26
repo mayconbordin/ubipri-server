@@ -40,15 +40,15 @@ public class User extends Model {
     @Constraints.Email
     private String emailAddress;
     
-    @Column(length = 64, nullable = false)
-    private byte[] shaPassword;
+    //@Column(length = 64, nullable = false)
+    //private byte[] shaPassword;
     
-    @Transient
+    /*@Transient
     @Constraints.Required
     @Constraints.MinLength(3)
     @Constraints.MaxLength(256)
     @JsonIgnore
-    private String password;
+    private String password;*/
     
     @ManyToOne(optional=true)
 	@JoinColumn(name="current_environment_id")
@@ -114,14 +114,14 @@ public class User extends Model {
 		this.emailAddress = emailAddress.toLowerCase();
 	}
 
-	public String getPassword() {
+	/*public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 		shaPassword = HashUtil.getSha512(password);
-	}
+	}*/
 
 	public Environment getCurrentEnvironment() {
 		return currentEnvironment;
@@ -166,7 +166,7 @@ public class User extends Model {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", fullName=" + fullName + ", authToken=" + authToken
-				+ ", emailAddress=" + emailAddress + ", password=" + password + ", currentEnvironment="
+				+ ", emailAddress=" + emailAddress + ", currentEnvironment="
 				+ currentEnvironment + ", userType=" + userType + ", devices=" + devices + ", credentials="
 				+ credentials + ", environments=" + environments + "]";
 	}
