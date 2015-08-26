@@ -63,6 +63,7 @@ public class User extends Model {
 	public List<Device> devices;
 	
 	@OneToMany
+	@JsonIgnore
 	public List<UserCredential> credentials;
 	
 	@OneToMany

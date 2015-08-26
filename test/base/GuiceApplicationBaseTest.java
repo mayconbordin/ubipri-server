@@ -5,16 +5,14 @@ import com.google.common.collect.ImmutableMap;
 import play.Application;
 import play.Logger;
 import play.Mode;
-import play.api.Environment;
+import play.api.inject.Binding;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.db.Database;
 import play.db.Databases;
 import play.db.evolutions.Evolutions;
 import play.libs.Json;
 import play.mvc.Http.RequestBuilder;
-import play.mvc.Http.Status;
 import play.mvc.Result;
-import play.test.FakeApplication;
 import play.test.Helpers;
 import play.test.WithApplication;
 import services.auth.Authenticator;
@@ -60,20 +58,19 @@ public class GuiceApplicationBaseTest extends WithApplication {
 		File path 				   = new File(".");
 		ClassLoader classLoader    = Helpers.class.getClassLoader();
 		Map<String, Object> config = new HashMap<String, Object>();
-		List<String> plugins 	   = new ArrayList<String>();
-		
+
 		config.putAll(setupDatabase());
 		config.put("logger.application", "DEBUG");
 
-		application = new GuiceApplicationBuilder()
-				.configure(config)
-				.in(path)
-				.in(classLoader)
-				.in(Mode.TEST)
-				.overrides(bind(Authenticator.class).to(MockAuthenticator.class))
-				.build();
+		application = buildApplication(new GuiceApplicationBuilder()
+				.configure(config).in(path).in(classLoader).in(Mode.TEST));
 
 		return application;
+	}
+
+	protected Application buildApplication(GuiceApplicationBuilder builder) {
+		return builder.overrides(bind(Authenticator.class).to(MockAuthenticator.class))
+				.build();
 	}
 
 	@Override
@@ -89,9 +86,15 @@ public class GuiceApplicationBaseTest extends WithApplication {
 		database.shutdown();
 		super.stopPlay();
 	}
+
+	protected List<Binding<?>> getOverrides() {
+		List<Binding<?>> overrides = new ArrayList<>();
+		overrides.add(bind(Authenticator.class).to(MockAuthenticator.class));
+		return overrides;
+	}
 	
 	protected RequestBuilder buildRequest() {
-		return new RequestBuilder().header("Authorization", "Bearer #test-token#");
+		return new RequestBuilder().header("Authorization", "Bearer access_token");
 	}
 	
 	protected void assertIsJson(Result result) {
