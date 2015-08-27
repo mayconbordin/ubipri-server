@@ -26,14 +26,14 @@ public class Environment extends Model {
     @Constraints.Required
     @Constraints.MaxLength(100)
     public String name;
-    
+
     public Point location;
-    
+
     public Polygon shape;
   
     @Column(name="operating_range", nullable=false)
     public double operatingRange;
-  
+
     public int version;
   
     @ManyToOne(optional=false)
@@ -46,8 +46,12 @@ public class Environment extends Model {
   
     @ManyToOne(optional=true)
     @JoinColumn(name="parent_environment_id")
+	@JsonIgnore
     public Environment parent;
-  
+
+	@Transient
+	public Integer parentId;
+
     @OneToMany
     public List<Action> customActions;
     
@@ -111,6 +115,7 @@ public class Environment extends Model {
 
 	public void setParent(Environment parent) {
 		this.parent = parent;
+		this.parentId = parent.getId();
 	}
 
 	public List<Action> getCustomActions() {
@@ -144,6 +149,14 @@ public class Environment extends Model {
 
 	public void setDistance(double distance) {
 		this.distance = distance;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package api;
 import static org.junit.Assert.assertEquals;
 import static play.test.Helpers.*;
 
+import base.GuiceApplicationBaseTest;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -14,7 +15,7 @@ import play.mvc.Http.RequestBuilder;
 import play.mvc.Http.Status;
 import base.ApplicationBaseTest;
 
-public class EnvironmentEndpointTest extends ApplicationBaseTest {
+public class EnvironmentEndpointTest extends GuiceApplicationBaseTest {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
 	
 	@Test
@@ -28,7 +29,9 @@ public class EnvironmentEndpointTest extends ApplicationBaseTest {
     	assertEquals(Status.OK, result.status());
     	assertIsJson(result);
 
-    	String expected = "[{id:1},{id:2},{id:3}]";
+		logger.info(contentAsString(result));
+
+    	String expected = "[{id:1},{id:2},{id:3},{id:4},{id:5}]";
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
     }
 	
@@ -38,7 +41,7 @@ public class EnvironmentEndpointTest extends ApplicationBaseTest {
 		
 		double lat = -30.072296142578118;
 		double lon = -51.17763595581054;
-		double radius = 6390.0; // meters
+		double radius = 2000.0; // meters
 		
     	RequestBuilder request = buildRequest().method(GET)
     			.uri("/environments?lat="+lat+"&lon="+lon+"&radius="+radius);
@@ -47,7 +50,7 @@ public class EnvironmentEndpointTest extends ApplicationBaseTest {
     	assertEquals(Status.OK, result.status());
     	assertIsJson(result);
 
-    	String expected = "[{id:1},{id:3}]";
+    	String expected = "[{id:1}]";
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
     }
 	

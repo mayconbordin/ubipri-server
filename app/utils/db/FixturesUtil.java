@@ -30,7 +30,7 @@ public class FixturesUtil {
 		
 		for (Map.Entry<String, List<Object>> tableEntry : tableMap.entrySet()) {
 			if (tableEntry.getKey().startsWith("_")) continue;
-			
+
 			if (tableEntry.getKey().equals("user_in_environment")) {
 				for (Object o : tableEntry.getValue()) {
 					UserEnvironment ue = (UserEnvironment) o;

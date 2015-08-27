@@ -45,7 +45,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	public List<Environment> findAll(Integer limit, Integer offset) {
 		List<Environment> result = new ArrayList<Environment>();
 		
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric "
 				   + "FROM environments e "
@@ -80,7 +80,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	public List<Environment> findNearBy(Point location, double radius) {
 		List<Environment> result = new ArrayList<Environment>();
 		
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric, "
 				   + "ST_Distance_Sphere(e.location, ST_SetSRID(ST_MakePoint(?, ?, ?), 4326)) as distance_meters "
@@ -197,7 +197,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 
 	@Override
 	public Environment find(Integer id) {
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric FROM environments e "
 				   + "INNER JOIN environment_types AS et ON et.id = e.environment_type_id "
@@ -253,6 +253,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
     	e.setVersion(r.getInt("version"));
     	e.setEnvironmentType(type);
     	e.setLocalizationType(locType);
+		e.setParentId(r.getInt("parent_environment_id"));
     	
     	try {
     		e.setDistance(r.getDouble("distance_meters"));

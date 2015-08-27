@@ -31,13 +31,14 @@ public class EnvironmentController extends BaseController {
 		Double lat = getDoubleParam("lat", null);
 		Double lon = getDoubleParam("lon", null);
 		Double rad = getDoubleParam("radius", 10.0);
+		int limit  = getIntParam("limit", 50);
 		
 		List<Environment> environments;
 
 		if (lat != null && lon != null) {
 			environments = dao.findNearBy(new Point(lat, lon), rad);
 		} else {
-			environments = dao.findAll(50);
+			environments = dao.findAll(limit);
 		}
 
 		return ok(environments);

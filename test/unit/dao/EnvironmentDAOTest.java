@@ -1,6 +1,7 @@
 package unit.dao;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -112,12 +113,24 @@ public class EnvironmentDAOTest extends ApplicationBaseTest {
 		Environment test = dao.find(e.getId());
 		
 		assertEquals("Home", test.getName());
-		assertEquals("Blocked", test.getEnvironmentType().getName());
+		assertEquals("Restrict", test.getEnvironmentType().getName());
 		assertEquals("GPS", test.getLocalizationType().getName());
 		
 		assertNotNull(test.getLocation());
 		assertEquals(-30.039857387542725, test.getLocation().getX(), 0);
 		assertEquals(-51.20896339416505, test.getLocation().getY(), 0);
+	}
+
+	@Test
+	public void testFindExisting() throws Exception {
+		logger.debug("testFindExisting");
+
+		Environment env = dao.findWith(2, "parent");
+
+		assertEquals("Campus Vale UFRGS", env.getName());
+		assertEquals(1, env.getVersion());
+
+		logger.debug("Parent: "+env.getParent());
 	}
 	
 	@Test
@@ -141,8 +154,12 @@ public class EnvironmentDAOTest extends ApplicationBaseTest {
 		
 		Point p = GeometryBuilder.createPoint3d(-30.0719275474548, -51.1200799942017, 0.0);
 		List<Environment> list = dao.findNearBy(p, 400);
+
+		for (Environment e : list) {
+			logger.debug("Environment "+e.getName()+", distance: "+e.getDistance());
+		}
 		
-		assertEquals(2, list.size());
+		assertEquals(3, list.size());
 		
 	}
 	
