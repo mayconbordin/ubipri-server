@@ -44,4 +44,13 @@ public class FrequencyLevel {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
+
+	@Override
+	public String toString() {
+		return "FrequencyLevel{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", level=" + level +
+				'}';
+	}
 }

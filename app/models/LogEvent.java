@@ -107,22 +107,6 @@ public class LogEvent extends Model {
 		this.workday = workday;
 	}
 
-	/*public String getEvent() {
-		return event;
-	}
-
-	public void setEvent(String event) {
-		this.event = event;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}*/
-
 	public boolean isExiting() {
 		return exiting;
 	}

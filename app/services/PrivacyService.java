@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.google.common.collect.ImmutableList;
 import dao.*;
 import models.*;
 import org.joda.time.DateTime;
@@ -15,6 +16,10 @@ import forms.UserLocationForm;
 
 public class PrivacyService implements IPrivacyService {
 	private final Logger.ALogger logger = Logger.of(this.getClass());
+
+	private static final List<Integer> evolvableProfiles = ImmutableList.of(
+			UserProfileEnvironment.UNKNOW, UserProfileEnvironment.TRANSIENT, UserProfileEnvironment.USER
+	);
 	
 	@Inject UserDAO userDao;
 	@Inject DeviceDAO deviceDao;
@@ -26,6 +31,7 @@ public class PrivacyService implements IPrivacyService {
 	@Inject ActionDAO actionDao;
 	@Inject EnvironmentFrequencyLevelDAO envFreqDao;
 	@Inject FrequencyLevelDAO frequencyLevelDao;
+	@Inject UserProfileEnvironmentDAO userProfileEnvironmentDAO;
 
 	@Inject IClock clock;
 	
@@ -55,24 +61,19 @@ public class PrivacyService implements IPrivacyService {
 		}
 
 		// get user frequency on the environment
-		EnvironmentFrequencyLevel envFreqLevel = getUserFrequencyLevel(user, environment, new DateTime(log.getTime()));
-		FrequencyLevel frequencyLevel = null;
+		FrequencyLevel frequencyLevel = getFrequencyLevel(user, environment, new DateTime(log.getTime()));
 
-		if (envFreqLevel == null) {
-			frequencyLevel = frequencyLevelDao.findByField("name", FrequencyLevel.NORMAL);
-		} else {
-			frequencyLevel = envFreqLevel.getFrequencyLevel();
-		}
+		// see if the user can be evolved in the environment
+		UserProfileEnvironment userProfile = updateUserProfileInEnvironment(userInEnvironment, frequencyLevel);
 
 		// Get the type of access based on 6 parameters
-		AccessTypeClassifier classified = classifierDao.find(userInEnvironment.getUserProfile(),
-				environment.getEnvironmentType(), log.getShift(), log.getWeekday(), log.getWorkday(), frequencyLevel);
+		AccessTypeClassifier classified = classifierDao.find(userProfile, environment.getEnvironmentType(), log.getShift(),
+				log.getWeekday(), log.getWorkday(), frequencyLevel);
 
 		// print classification information
-		logger.info("user_profile="+userInEnvironment.getUserProfile().getName()
-				+ "; environment_type="+environment.getEnvironmentType().getName() + "; shift="+log.getShift()
-				+ "; weekday=" + log.getWeekday() + "; workday=" + log.getWorkday() + "; frequency_level=" + envFreqLevel
-				+ "; access_type=" + classified.getAccessType());
+		logger.info("user_profile="+userProfile.getName() + "; environment_type="+environment.getEnvironmentType().getName()
+				+ "; shift="+log.getShift() + "; weekday=" + log.getWeekday() + "; workday=" + log.getWorkday()
+				+ "; frequency_level=" + frequencyLevel + "; access_type=" + classified.getAccessType());
 
 		if (classified == null) {
 			return null;
@@ -102,9 +103,7 @@ public class PrivacyService implements IPrivacyService {
 		log.setDevice(device);
 		log.setTime(ts.toDate());
 		log.setExiting(exiting);
-		//log.setCode("code");
-		//log.setEvent((exiting) ? "Leaving the location" : "Entering the location");
-		
+
 		if (ts.getDayOfWeek() <= 5) {
 			log.setWeekday(LogEvent.DAY_OF_WEEK);
 			log.setWorkday(LogEvent.YES_WORKDAY);
@@ -122,6 +121,19 @@ public class PrivacyService implements IPrivacyService {
 		logDao.create(log);
 		
 		return log;
+	}
+
+	public FrequencyLevel getFrequencyLevel(User user, Environment environment, DateTime date) {
+		EnvironmentFrequencyLevel envFreqLevel = getUserFrequencyLevel(user, environment, date);
+		FrequencyLevel frequencyLevel = null;
+
+		if (envFreqLevel == null) {
+			frequencyLevel = frequencyLevelDao.findByField("name", FrequencyLevel.NORMAL);
+		} else {
+			frequencyLevel = envFreqLevel.getFrequencyLevel();
+		}
+
+		return frequencyLevel;
 	}
 	
 	public EnvironmentFrequencyLevel getUserFrequencyLevel(User user, Environment environment, DateTime date) {
@@ -239,5 +251,45 @@ public class PrivacyService implements IPrivacyService {
 			device.setCurrentEnvironment(isExiting ? null : environment);
 			deviceDao.update(device);
 		}
+	}
+
+	public UserProfileEnvironment updateUserProfileInEnvironment(UserEnvironment userInEnvironment, FrequencyLevel frequencyLevel) {
+		UserProfileEnvironment profile = userInEnvironment.getUserProfile();
+
+		// check if the profile can evolve
+		if (evolvableProfiles.contains(profile.getId())) {
+			int index = evolvableProfiles.indexOf(profile.getId());
+
+			// less frequent means we downgrade de user, if possible
+			if (frequencyLevel.getName().equals(FrequencyLevel.LESS_FREQUENT)) {
+				// can't downgrade more, just leave it like that
+				if (index == 0) {
+					return profile;
+				}
+
+				profile = userProfileEnvironmentDAO.find(evolvableProfiles.get(index-1));
+			}
+
+			// frequent means the user is going to be upgraded
+			else if (frequencyLevel.getName().equals(FrequencyLevel.FREQUENT)) {
+				// unless there's nowhere to go up
+				if (index == (evolvableProfiles.size() - 1)) {
+					return profile;
+				}
+
+				profile = userProfileEnvironmentDAO.find(evolvableProfiles.get(index+1));
+			}
+
+			// otherwise everything stays the same
+			else {
+				return profile;
+			}
+
+			// if got here means we need to update the profile of the user in the environment
+			userInEnvironment.setUserProfile(profile);
+			userEnvironmentDao.update(userInEnvironment);
+		}
+
+		return profile;
 	}
 }
