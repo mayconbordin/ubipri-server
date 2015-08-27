@@ -53,12 +53,7 @@ public class LogEvent extends Model {
 	public Integer weekday;
 	public Character workday;
 	
-	@Constraints.Required
-	@Constraints.MaxLength(100)
-	public String event;
-	
-	@Constraints.MaxLength(100)
-	public String code;
+	private boolean exiting = false;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name="environment_id")
@@ -112,7 +107,7 @@ public class LogEvent extends Model {
 		this.workday = workday;
 	}
 
-	public String getEvent() {
+	/*public String getEvent() {
 		return event;
 	}
 
@@ -126,6 +121,14 @@ public class LogEvent extends Model {
 
 	public void setCode(String code) {
 		this.code = code;
+	}*/
+
+	public boolean isExiting() {
+		return exiting;
+	}
+
+	public void setExiting(boolean exiting) {
+		this.exiting = exiting;
 	}
 
 	public Environment getEnvironment() {

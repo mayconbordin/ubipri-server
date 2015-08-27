@@ -12,9 +12,9 @@ import play.data.validation.*;
 @Table(name="user_profile_environments")
 public class UserProfileEnvironment extends Model {
 	/*  Automatically classified IDs of the Default User Profiles in Environment */
-	public static final Integer UNKNOW = 1;
-	public static final Integer TRANSIENT = 2;
-	public static final Integer USER = 3;
+	public static final int UNKNOW    = 1;
+	public static final int TRANSIENT = 2;
+	public static final int USER 	  = 3;
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_profile_environments_id_seq")
@@ -39,7 +39,4 @@ public class UserProfileEnvironment extends Model {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
-
 }

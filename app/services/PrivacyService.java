@@ -101,8 +101,9 @@ public class PrivacyService implements IPrivacyService {
 		log.setEnvironment(environment);
 		log.setDevice(device);
 		log.setTime(ts.toDate());
-		log.setCode("code");
-		log.setEvent((exiting) ? "Leaving the location" : "Entering the location");
+		log.setExiting(exiting);
+		//log.setCode("code");
+		//log.setEvent((exiting) ? "Leaving the location" : "Entering the location");
 		
 		if (ts.getDayOfWeek() <= 5) {
 			log.setWeekday(LogEvent.DAY_OF_WEEK);
@@ -157,6 +158,7 @@ public class PrivacyService implements IPrivacyService {
 
 	/**
 	 * Get the period based on the first frequency level (assume all of them use the SAME metric the same for one environment).
+	 *
 	 * @param levels
 	 * @return
 	 */

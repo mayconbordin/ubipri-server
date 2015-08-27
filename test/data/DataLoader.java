@@ -13,15 +13,15 @@ import org.joda.time.DateTime;
 public class DataLoader {
     public static void populateLogs(LogEventDAO dao) {
         for (int d=1; d<=30; d++) {
-            LogEvent log = createLog(new DateTime(2015, 8, d, 14, 11));
+            LogEvent log = createLog(new DateTime(2015, 8, d, 14, 11), false);
             dao.create(log);
 
-            log = createLog(new DateTime(2015, 8, d, 14, 19));
+            log = createLog(new DateTime(2015, 8, d, 14, 19), true);
             dao.create(log);
         }
     }
 
-    public static LogEvent createLog(DateTime date) {
+    public static LogEvent createLog(DateTime date, boolean exiting) {
         Device device = new Device();
         device.setId(1);
 
@@ -36,7 +36,8 @@ public class DataLoader {
         log.setDevice(device);
         log.setEnvironment(env);
         log.setUser(user);
-        log.setEvent("test event");
+        log.setExiting(exiting);
+        //log.setEvent("test event");
         return log;
     }
 }

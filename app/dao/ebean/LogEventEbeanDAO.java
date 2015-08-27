@@ -26,7 +26,7 @@ public class LogEventEbeanDAO extends BaseEbeanDAO<LogEvent, Integer> implements
 
 		String sql = "SELECT COUNT(*) FROM (SELECT DISTINCT log_time::timestamp::date FROM log_events "
 				   + "WHERE log_time::timestamp::date > ?::date AND log_time::timestamp::date <= ?::date "
-				   + "AND user_id = ? AND environment_id = ?) AS count;";
+				   + "AND user_id = ? AND environment_id = ? AND exiting = FALSE) AS count;";
 
 		SqlRow sqlRow = Ebean.createSqlQuery(sql)
 				.setParameter(1, dtFormatter.print(start))
