@@ -10,7 +10,7 @@ CREATE TABLE environments (
 	location geometry(PointZ,4326) not null,
 	
 	-- replacement for environment_points, uses a POLYGON
-	shape geometry(PolygonZ, 4326),
+	shape geometry(Polygon, 4326),
 	
 	operating_range double precision not null default 1.0,
 	version integer not null default 0,

@@ -1,6 +1,7 @@
 package utils.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import models.UserEnvironment;
 import org.joda.time.DateTime;
 import org.postgis.Point;
 
+import org.postgis.Polygon;
+import play.Logger;
 import play.db.DB;
 import play.libs.Yaml;
 
@@ -21,15 +24,20 @@ import com.avaje.ebean.Ebean;
 import dao.ebean.EnvironmentEbeanDAO;
 
 public class FixturesUtil {
+	private static final Logger.ALogger LOGGER = Logger.of("FixturesUtil");
 	public static void load(String path) {
 		load(path, DB.getConnection());
 	}
 	
 	public static void load(String path, Connection dbConn) {
 		Map<String, List<Object>> tableMap = (Map<String, List<Object>>) Yaml.load(path);
+
+		List<Object> shapes = tableMap.get("_shapes");
 		
 		for (Map.Entry<String, List<Object>> tableEntry : tableMap.entrySet()) {
 			if (tableEntry.getKey().startsWith("_")) continue;
+
+			LOGGER.debug("Loading table "+tableEntry.getKey());
 
 			if (tableEntry.getKey().equals("user_in_environment")) {
 				for (Object o : tableEntry.getValue()) {
@@ -65,13 +73,23 @@ public class FixturesUtil {
 		    if (tableEntry.getKey().equals("environments")) {
 		    	EnvironmentEbeanDAO dao = new EnvironmentEbeanDAO();
 		    	dao.setConnection(dbConn);
-		    	
-		    	for (Object o : tableEntry.getValue()) {
-		    		Environment e = (Environment) o;
-		    		e.setLocation(new Point(e.getLocation().getX(), e.getLocation().getY(), e.getLocation().getZ()));
-		    		
-		    		dao.create(e);
-		    	}
+
+				for (int i=0; i<tableEntry.getValue().size(); i++) {
+					Environment e = (Environment) tableEntry.getValue().get(i);
+					e.setLocation(new Point(e.getLocation().getX(), e.getLocation().getY(), e.getLocation().getZ()));
+
+					if (i < shapes.size()) {
+						try {
+							Polygon shape = new Polygon((String) shapes.get(i));
+							shape.setSrid(4326);
+							e.setShape(shape);
+						} catch (SQLException ex) {
+							LOGGER.error("Unable to parse polygon shape.", ex);
+						}
+					}
+
+					dao.create(e);
+				}
 		    } else {
 		    	Ebean.save(tableEntry.getValue());
 		    }
