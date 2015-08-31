@@ -73,6 +73,10 @@ public class UserController extends BaseController {
 		if (form.hasErrors()) {
 			return invalidForm(form);
 		}
+
+		if (deviceDao.existsCode(form.get().getCode())) {
+			return conflict("Device code already exists.");
+		}
 		
 		Device device = new Device();
 		device.setCode(form.get().getCode());

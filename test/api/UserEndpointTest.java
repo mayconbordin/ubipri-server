@@ -100,6 +100,22 @@ public class UserEndpointTest extends GuiceApplicationBaseTest {
     	expected = String.format("[{code:'1234554321'},{code:'1111111111'},{code:'5E-EF-8-9B-54'},{code:'%s'}]", code);
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
 	}
+
+	@Test
+	public void testAddDeviceAlreadyExists() throws Exception {
+		logger.debug("testAddDeviceAlreadyExists");
+
+		String code = "1111111111";
+		String name = "Tablet Lab. 205";
+		String type = "Android";
+
+		RequestBuilder request = buildRequest().method(POST).uri("/user/devices")
+				.bodyForm(ImmutableMap.of("code", code, "name", name, "deviceType", type));
+
+		Result result = route(request);
+		assertEquals(Status.CONFLICT, result.status());
+		assertIsJson(result);
+	}
 	
 	@Test
     public void testUpdateLocation() throws Exception {

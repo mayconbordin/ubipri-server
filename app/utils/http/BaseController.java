@@ -178,4 +178,12 @@ public abstract class BaseController extends Controller {
 	public static Status internalServerError(Object obj, Class<?> serializationView) {
 		return status(obj, 500, serializationView);
 	}
+
+	public static Status conflict(Object obj) {
+		return status(obj, 409);
+	}
+
+	public static Status conflict(Object obj, Class<?> serializationView) {
+		return status(obj, 409, serializationView);
+	}
 }
