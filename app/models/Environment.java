@@ -52,6 +52,8 @@ public class Environment extends Model {
 	@Transient
 	public Integer parentId;
 
+	public Integer level;
+
     @OneToMany
     public List<Action> customActions;
     
@@ -159,14 +161,30 @@ public class Environment extends Model {
 		this.parentId = parentId;
 	}
 
-	@Override
-	public String toString() {
-		return "Environment [id=" + id + ", name=" + name + ", location="
-				+ location + ", shape=" + shape + ", operatingRange="
-				+ operatingRange + ", version=" + version
-				+ ", localizationType=" + localizationType
-				+ ", environmentType=" + environmentType + ", parent=" + parent
-				+ ", customActions=" + customActions + "]";
+	public Integer getLevel() {
+		return level;
 	}
 
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	@Override
+	public String toString() {
+		return "Environment{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", location=" + location +
+				", shape=" + shape +
+				", operatingRange=" + operatingRange +
+				", version=" + version +
+				", localizationType=" + localizationType +
+				", environmentType=" + environmentType +
+				", parent=" + parent +
+				", parentId=" + parentId +
+				", level=" + level +
+				", customActions=" + customActions +
+				", distance=" + distance +
+				'}';
+	}
 }

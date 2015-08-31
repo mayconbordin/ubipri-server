@@ -45,7 +45,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	public List<Environment> findAll(Integer limit, Integer offset) {
 		List<Environment> result = new ArrayList<Environment>();
 		
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, e.level, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric "
 				   + "FROM environments e "
@@ -80,7 +80,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	public List<Environment> findNearBy(Point location, double radius) {
 		List<Environment> result = new ArrayList<Environment>();
 		
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, e.level, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric, "
 				   + "ST_Distance_Sphere(e.location, ST_SetSRID(ST_MakePoint(?, ?, ?), 4326)) as distance_meters "
@@ -119,8 +119,8 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	@Override
 	public Environment create(Environment entity) {
 		String sql = "INSERT INTO environments (name, location, shape, operating_range, "
-				   + "version, parent_environment_id, environment_type_id, localization_type_id) "
-				   + "VALUES (?,?,?,?,?,?,?,?)";
+				   + "version, parent_environment_id, environment_type_id, localization_type_id, level) "
+				   + "VALUES (?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			PreparedStatement s = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -128,22 +128,24 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	        s.setObject(2, new PGgeometry(entity.getLocation()));
 	        s.setDouble(4, entity.getOperatingRange());
 	        s.setInt(5, entity.getVersion());
+
 	        s.setInt(7, entity.getEnvironmentType().getId());
 	        s.setInt(8, entity.getLocalizationType().getId());
-	        
-	        if (entity.getParent() != null) {
-	        	s.setInt(6, entity.getParent().getId());
-	        } else {
-	        	s.setNull(6, Types.NULL);
-	        }
+	        s.setInt(9, entity.getLevel());
+
+			if (entity.getParent() != null) {
+				s.setInt(6, entity.getParent().getId());
+			} else {
+				s.setNull(6, Types.NULL);
+			}
 	        
 	        if (entity.getShape() != null) {
 	        	s.setObject(3, new PGgeometry(entity.getShape()));
 	        } else {
 	        	s.setNull(3, Types.NULL);
 	        }
-	
-	        int affectedRows = s.executeUpdate();
+
+			int affectedRows = s.executeUpdate();
 	        
 	        if (affectedRows == 0) {
 	        	throw new SQLException("Creating user failed, no rows affected.");
@@ -160,7 +162,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	        s.close();
 	        return entity;
 		} catch (SQLException ex) {
-			logger.error("Error while inserting environment.", ex);
+			logger.error("Error while inserting environment: "+entity.toString(), ex);
 			return null;
 		}
 	}
@@ -169,7 +171,8 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 	public Environment update(Environment entity) {
 		String sql = "UPDATE environments SET name = ?, location = ?, shape = ?, "
 				   + "localization_type_id = ?, environment_type_id = ?, version = ?, "
-				   + "operating_range = ? WHERE id = ?";
+				   + "operating_range = ?, parent_environment_id = ?, level = ?"
+				   + " WHERE id = ?";
 		
 		try {
 			PreparedStatement s = getConnection().prepareStatement(sql);
@@ -181,13 +184,23 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 			} else {
 				s.setObject(3, new PGgeometry(entity.getShape()));
 			}
-			
+
 			s.setInt(4, entity.getLocalizationType().getId());
 			s.setInt(5, entity.getEnvironmentType().getId());
 			s.setInt(6, entity.getVersion());
 			s.setDouble(7, entity.getOperatingRange());
-			s.setInt(8, entity.getId());
-			
+			s.setInt(9, entity.getLevel());
+			s.setInt(10, entity.getId());
+
+			if (entity.getParent() != null) {
+				s.setInt(8, entity.getParent().getId());
+			} else {
+				s.setNull(8, Types.NULL);
+			}
+
+			s.execute();
+			s.close();
+
 			return entity;
 		} catch (SQLException ex) {
 			logger.error("Error while inserting environment.", ex);
@@ -197,7 +210,7 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
 
 	@Override
 	public Environment find(Integer id) {
-		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, "
+		String sql = "SELECT e.id, e.name, e.location, e.shape, e.operating_range, e.version, e.parent_environment_id, e.level, "
 				   + "et.id as et_id, et.name as et_name, lt.id as lt_id, lt.name as lt_name, "
 				   + "lt.precision as lt_precision, lt.metric as lt_metric FROM environments e "
 				   + "INNER JOIN environment_types AS et ON et.id = e.environment_type_id "
@@ -253,7 +266,10 @@ public class EnvironmentEbeanDAO extends BaseEbeanDAO<Environment, Integer> impl
     	e.setVersion(r.getInt("version"));
     	e.setEnvironmentType(type);
     	e.setLocalizationType(locType);
-		e.setParentId(r.getInt("parent_environment_id"));
+		e.setLevel(r.getInt("level"));
+
+		int parentId = r.getInt("parent_environment_id");
+		e.setParentId((parentId != 0) ? parentId : null);
     	
     	try {
     		e.setDistance(r.getDouble("distance_meters"));

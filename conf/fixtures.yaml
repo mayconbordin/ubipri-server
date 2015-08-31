@@ -211,6 +211,7 @@ environments:
     environmentType: *publicEnvType
     version: 1
     location: *poaLocation
+    level: 0
   - &campusValeUfrgsEnv !!models.Environment
     name: Campus Vale UFRGS
     operatingRange: 903.524
@@ -219,6 +220,7 @@ environments:
     version: 1
     location: *campusValeUfrgsLocation
     parent: *poaEnv
+    level: 1
   - &predioInf72Env !!models.Environment
     name: Prédio Informática 72
     operatingRange: 33.178
@@ -227,6 +229,7 @@ environments:
     version: 1
     location: *predioInf72Location
     parent: *campusValeUfrgsEnv
+    level: 2
   - &apBorgesEnv !!models.Environment
     name: Apartamento do Borges
     operatingRange: 20.826
@@ -235,6 +238,7 @@ environments:
     version: 2
     location: *apBorgesLocation
     parent: *poaEnv
+    level: 1
   - &lab205Env !!models.Environment
     name: Laboratório 205
     operatingRange: 5.0
@@ -243,6 +247,7 @@ environments:
     version: 2
     location: *lab205Location
     parent: *predioInf72Env
+    level: 3
     
 user_profile_environments:
   - &unknownProfile !!models.UserProfileEnvironment
