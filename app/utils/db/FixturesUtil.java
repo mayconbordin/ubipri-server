@@ -57,19 +57,6 @@ public class FixturesUtil {
 		    	}
 			}
 			
-			if (tableEntry.getKey().equals("actions")) {
-				for (Object o : tableEntry.getValue()) {
-					Action a = (Action) o;
-					
-					DateTime dt = new DateTime(2015, 2, 1, 8, 0, 0);
-					
-					a.setStartDate(dt.toDate());
-					a.setEndDate(dt.toDate());
-					a.setDurationInterval(100);
-					a.setStartDailyInterval(10);
-		    	}
-			}
-			
 		    if (tableEntry.getKey().equals("environments")) {
 		    	EnvironmentEbeanDAO dao = new EnvironmentEbeanDAO();
 		    	dao.setConnection(dbConn);

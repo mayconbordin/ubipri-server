@@ -114,7 +114,7 @@ public class UserEndpointTest extends GuiceApplicationBaseTest {
     	assertEquals(Status.OK, result.status());
     	assertIsJson(result);
     	
-    	//logger.info(contentAsString(result));
+    	logger.info(contentAsString(result));
 
     	String expected = "[{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Wi-Fi'},'action':'on'}]";
     	
