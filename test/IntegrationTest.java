@@ -1,3 +1,4 @@
+import base.GuiceApplicationBaseTest;
 import org.junit.*;
 
 import play.mvc.*;
@@ -9,7 +10,7 @@ import static org.junit.Assert.*;
 
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
-public class IntegrationTest {
+public class IntegrationTest extends GuiceApplicationBaseTest {
 
     /**
      * add your integration test here
