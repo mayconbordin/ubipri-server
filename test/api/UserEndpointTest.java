@@ -6,6 +6,7 @@ import static play.test.Helpers.*;
 import java.util.Map;
 
 import base.GuiceApplicationBaseTest;
+import forms.UserDeviceForm;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -74,20 +75,25 @@ public class UserEndpointTest extends GuiceApplicationBaseTest {
 	@Test
     public void testAddDevice() throws Exception {
 		logger.debug("testAddDevice");
-		
-		String code = "698dc19d489c4e4db73e28a713eab07b";
-		String name = "Samsung Galaxy S5";
-		String type = "Android";
+
+		UserDeviceForm form = new UserDeviceForm();
+		form.setCode("698dc19d489c4e4db73e28a713eab07b");
+		form.setName("Samsung Galaxy S5");
+		form.setDeviceType("Android");
+		form.addFunctionality("Wi-Fi");
+		form.addFunctionality("GPS");
 		
 		RequestBuilder request = buildRequest().method(POST).uri("/user/devices")
-			.bodyForm(ImmutableMap.of("code", code, "name", name, "deviceType", type));
-		
+				.bodyJson(Json.toJson(form));
+
 		Result result = route(request);
     	assertEquals(Status.CREATED, result.status());
-    	assertIsJson(result);
+		assertIsJson(result);
+
+		logger.info(contentAsString(result));
 
     	String expected = String.format("{code:'%s',name:'%s',type:{id:1,name:'%s'}}",
-    			code, name, type);
+				form.getCode(), form.getName(), form.getDeviceType());
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
     	
     	// List all devices again, expecting new device to be there too
@@ -97,7 +103,7 @@ public class UserEndpointTest extends GuiceApplicationBaseTest {
     	assertEquals(Status.OK, result.status());
     	assertIsJson(result);
 
-    	expected = String.format("[{code:'1234554321'},{code:'1111111111'},{code:'5E-EF-8-9B-54'},{code:'%s'}]", code);
+    	expected = String.format("[{code:'1234554321'},{code:'1111111111'},{code:'5E-EF-8-9B-54'},{code:'%s'}]", form.getCode());
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
 	}
 

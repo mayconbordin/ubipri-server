@@ -1,20 +1,14 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import dao.DeviceDAO;
-import dao.DeviceTypeDAO;
-import dao.UserDAO;
-import dao.UserEnvironmentDAO;
+import dao.*;
 import forms.UserDeviceForm;
 import forms.UserLocationForm;
-import models.Device;
-import models.DeviceType;
-import models.User;
-import models.UserEnvironment;
-import models.UserEnvironmentPK;
+import models.*;
 import models.serialization.Views;
 import play.data.Form;
 import play.mvc.*;
@@ -27,6 +21,7 @@ public class UserController extends BaseController {
 	@Inject DeviceDAO deviceDao;
 	@Inject DeviceTypeDAO deviceTypeDao;
 	@Inject UserEnvironmentDAO userEnvDao;
+	@Inject FunctionalityDAO functionalityDAO;
 	
 	@Inject PrivacyService service;
 	
@@ -69,11 +64,12 @@ public class UserController extends BaseController {
 		User user = getAuthUser();
 		
 		Form<UserDeviceForm> form = Form.form(UserDeviceForm.class).bindFromRequest();
-		
+
 		if (form.hasErrors()) {
 			return invalidForm(form);
 		}
 
+		// check if device code already exists
 		if (deviceDao.existsCode(form.get().getCode())) {
 			return conflict("Device code already exists.");
 		}
@@ -82,17 +78,26 @@ public class UserController extends BaseController {
 		device.setCode(form.get().getCode());
 		device.setName(form.get().getName());
 		device.setUser(user);
-		
+
+		// find the type of device by name
 		DeviceType type = deviceTypeDao.findByField("name", form.get().getDeviceType());
-		
 		if (type == null) {
 			return invalidField("deviceType", "Device type not found");
 		}
 		
 		device.setType(type);
+
+		List<Functionality> functionalities = new ArrayList<>();
+		for (String fName : form.get().getFunctionalities()) {
+			Functionality f = functionalityDAO.findByField("name", fName);
+			functionalities.add(f);
+		}
+
+		device.setFunctionalities(functionalities);
+
 		deviceDao.create(device);
 		
-		return created(device);
+		return created(device, Views.Full.class);
 	}
 	
 	@Security.Authenticated(Secured.class)

@@ -2,6 +2,9 @@ package forms;
 
 import play.data.validation.Constraints;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDeviceForm {
 	@Constraints.Required
     @Constraints.MaxLength(50)
@@ -14,6 +17,8 @@ public class UserDeviceForm {
     @Constraints.Required
     @Constraints.MaxLength(100)
     private String deviceType;
+
+	private List<String> functionalities = new ArrayList<>();
 
 	public String getCode() {
 		return code;
@@ -37,5 +42,17 @@ public class UserDeviceForm {
 
 	public void setDeviceType(String deviceType) {
 		this.deviceType = deviceType;
+	}
+
+	public List<String> getFunctionalities() {
+		return functionalities;
+	}
+
+	public void setFunctionalities(List<String> functionalities) {
+		this.functionalities = functionalities;
+	}
+
+	public void addFunctionality(String functionality) {
+		functionalities.add(functionality);
 	}
 }
