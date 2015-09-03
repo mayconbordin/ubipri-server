@@ -142,4 +142,24 @@ public class UserEndpointTest extends GuiceApplicationBaseTest {
     	
     	JSONAssert.assertEquals(expected, contentAsString(result), false);
     }
+
+	@Test
+	public void testUpdateLocationNewOnEnvironment() throws Exception {
+		logger.debug("testUpdateLocationNewOnEnvironment");
+		RequestBuilder request = buildRequest().method(PUT).uri("/user/location")
+				.bodyForm(ImmutableMap.of(
+						"deviceCode", "1234554321",
+						"environmentId", "6"
+				));
+
+		Result result = route(request);
+		assertEquals(Status.OK, result.status());
+		assertIsJson(result);
+
+		logger.info(contentAsString(result));
+
+		//String expected = "[{'accessLevel':{'accessType':{'name':'Administrative'},'environmentType':{'name':'Public'}},'functionality':{'name':'Wi-Fi'},'action':'on'}]";
+
+		//JSONAssert.assertEquals(expected, contentAsString(result), false);
+	}
 }

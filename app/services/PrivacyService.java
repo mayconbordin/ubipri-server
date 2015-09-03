@@ -32,6 +32,7 @@ public class PrivacyService implements IPrivacyService {
 	@Inject EnvironmentFrequencyLevelDAO envFreqDao;
 	@Inject FrequencyLevelDAO frequencyLevelDao;
 	@Inject UserProfileEnvironmentDAO userProfileEnvironmentDAO;
+	@Inject EnvironmentDAO environmentDAO;
 
 	@Inject IClock clock;
 	
@@ -44,8 +45,13 @@ public class PrivacyService implements IPrivacyService {
 		
 		// get the rules for the user in the current environment
 		UserEnvironment userInEnvironment = userEnvironmentDao.findWith(new UserEnvironmentPK(
-				user.getId(), form.getEnvironmentId()), "environment", "userProfile", 
+						user.getId(), form.getEnvironmentId()), "environment", "userProfile",
 				"currentAccessType", "environment.environmentType", "user");
+
+		// if not rules set, create default ones
+		if (userInEnvironment == null) {
+			userInEnvironment = createDefaultUserInEnvironment(user, form.getEnvironmentId());
+		}
 		
 		Environment environment = userInEnvironment.getEnvironment();
 
@@ -166,6 +172,29 @@ public class PrivacyService implements IPrivacyService {
 		}
 
 		return selectedLevel;
+	}
+
+	/**
+	 * Create rules for the user in the environment with default parameters.
+	 * TODO: Each environment could have a default access type.
+	 *
+	 * @param user
+	 * @param environmentId
+	 * @return
+	 */
+	protected UserEnvironment createDefaultUserInEnvironment(User user, int environmentId) {
+		Environment environment = environmentDAO.find(environmentId);
+		UserProfileEnvironment userProfile = userProfileEnvironmentDAO.find(UserProfileEnvironment.UNKNOW);
+
+		UserEnvironment userInEnvironment = new UserEnvironment();
+		userInEnvironment.setUser(user);
+		userInEnvironment.setEnvironment(environment);
+		userInEnvironment.setUserProfile(userProfile);
+		userInEnvironment.setCurrentAccessType(AccessType.BLOCKED);
+
+		userEnvironmentDao.create(userInEnvironment);
+
+		return userInEnvironment;
 	}
 
 	/**
