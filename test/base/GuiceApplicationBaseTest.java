@@ -36,21 +36,31 @@ public class GuiceApplicationBaseTest extends WithApplication {
 	protected Application application;
 	protected Database database;
 
-	protected Map<String,String> setupDatabase() {
-		String driver = "org.postgresql.Driver";
-		String url    = "jdbc:postgresql://localhost/ubipri_test";
-		
-		database = Databases.createFrom(driver, url, ImmutableMap.of(
-            "username", "postgres",
-            "password", "postgres"
-        ));
+	protected Map<String,String> getDatabaseConfig() {
+		return ImmutableMap.of(
+			"driver", "org.postgresql.Driver",
+			"url", "jdbc:postgresql://localhost/ubipri_test",
+			"username", "postgres",
+			"password", "postgres"
+		);
+	}
+
+	protected Map<String,String> setupDatabase(Map<String,String> config) {
+		database = Databases.createFrom(config.get("driver"), config.get("url"), ImmutableMap.of(
+			"username", config.get("username"),
+			"password", config.get("password")
+		));
 
 		Evolutions.applyEvolutions(database);
 
-        return ImmutableMap.of(
-			"db.default.driver", driver,
-			"db.default.url", url
+		return ImmutableMap.of(
+			"db.default.driver", config.get("driver"),
+			"db.default.url"   , config.get("url")
 		);
+	}
+
+	protected Map<String,String> setupDatabase() {
+		return setupDatabase(getDatabaseConfig());
     }
 
 	@Override
