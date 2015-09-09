@@ -87,17 +87,18 @@ public class PrivacyService implements IPrivacyService {
 		
 		// Find the user's access level based on the environment type and access type
 		AccessLevel accessLevel = accessLevelDao.findWith(environment.getEnvironmentType(),
-				classified.getAccessType(), "actions", "actions.functionality");
+				classified.getAccessType()/*, "actions", "actions.functionality", "actions.environment"*/);
 
 		// Get the custom actions (actions set for a particular environment)
+		List<Action> defaultActions = actionDao.getDefaultActions(accessLevel);
 		List<Action> customActions = actionDao.getCustomActions(environment, accessLevel);
 
 		// logging info
-		logger.info("AccessLevel "+accessLevel.getId()+" actions: " + accessLevel.getActions().size());
+		logger.info("AccessLevel "+accessLevel.getId()+" actions: " + defaultActions.size());
 		logger.info("Custom actions: " + customActions.size());
 		logger.info("Device functionalities: " + device.getFunctionalities().size());
 		
-		return mergeActions(accessLevel.getActions(), customActions, device.getFunctionalities());
+		return mergeActions(defaultActions, customActions, device.getFunctionalities());
 	}
 	
 	public LogEvent createLogEvent(User user, Environment environment, Device device, boolean exiting) {
@@ -236,12 +237,18 @@ public class PrivacyService implements IPrivacyService {
         if (customActions.size() > 0) {
             for (int i = 0; i < accessLevelActions.size(); i++) {
                 for (int j = 0; j < customActions.size(); j++) {
+					// replace the default actions by the custom ones
                     if (accessLevelActions.get(i).getId() == customActions.get(j).getId()) {
-                    	accessLevelActions.set(i, customActions.get(j));
+                    	accessLevelActions.set(i, customActions.remove(j));
                     }
                 }
             }
         }
+
+		// If there are still custom actions left, append them to the final actions
+		if (customActions.size() > 0) {
+			accessLevelActions.addAll(customActions);
+		}
 
         // Filter the actions by the number of functionalities of the device
         for (int i = 0; i < accessLevelActions.size(); i++) {

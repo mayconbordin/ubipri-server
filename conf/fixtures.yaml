@@ -625,6 +625,12 @@ actions:
     accessLevel: *adminPublicAccessLevel
     functionality: *wifiFunctionality
     action: on
+
+  - !!models.Action
+    accessLevel: *adminPublicAccessLevel
+    functionality: *silentModeFunctionality
+    action: on
+    environment: *fatecEnv
   
 frequency_levels:
   - &less_frequentFrequency !!models.FrequencyLevel

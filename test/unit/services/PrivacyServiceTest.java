@@ -68,7 +68,7 @@ public class PrivacyServiceTest extends ApplicationBaseTest {
 
 	@Test
 	public void testChangeUserLocationPrivateEnv() {
-		logger.debug("testChangeUserLocation");
+		logger.debug("testChangeUserLocationPrivateEnv");
 		logger.debug("User entering a private location");
 
 		User user = new User();
@@ -124,6 +124,27 @@ public class PrivacyServiceTest extends ApplicationBaseTest {
 		assertEquals("Wi-Fi", actions.get(0).getFunctionality().getName());
 		assertEquals("on", actions.get(0).getAction());
 		assertEquals("GPS", actions.get(1).getFunctionality().getName());
+		assertEquals("on", actions.get(1).getAction());
+	}
+
+	@Test
+	public void testChangeUserLocationEnteringFatec() {
+		logger.debug("testChangeUserLocationEnteringFatec");
+		logger.debug("User entering FATEC");
+
+		User user = new User();
+		user.setId(1);
+
+		UserLocationForm form = new UserLocationForm("1234554321", 7, false);
+
+		List<Action> actions = service.changeUserLocation(user, form);
+
+		logger.info("Size of actions: " + actions.size());
+
+		assertEquals(2, actions.size());
+		assertEquals("Wi-Fi", actions.get(0).getFunctionality().getName());
+		assertEquals("on", actions.get(0).getAction());
+		assertEquals("Silent Mode", actions.get(1).getFunctionality().getName());
 		assertEquals("on", actions.get(1).getAction());
 	}
 
