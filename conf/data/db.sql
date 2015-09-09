@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.9
 -- Dumped by pg_dump version 9.3.6
--- Started on 2015-09-09 15:50:43 BRT
+-- Started on 2015-09-09 17:04:27 BRT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1570,6 +1570,7 @@ INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_i
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (56, 7, 5, NULL, 'on', NULL, NULL, NULL, NULL);
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (57, 8, 5, NULL, 'on', NULL, NULL, NULL, NULL);
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (58, 8, 2, 7, 'on', NULL, NULL, NULL, NULL);
+INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (81, 8, 2, 6, 'on', NULL, NULL, NULL, NULL);
 
 
 --
@@ -1595,7 +1596,7 @@ SELECT pg_catalog.setval('actions_args_id_seq', 1, false);
 -- Name: actions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('actions_id_seq', 80, true);
+SELECT pg_catalog.setval('actions_id_seq', 81, true);
 
 
 --
@@ -1659,6 +1660,17 @@ INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 2);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 3);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 5);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 9);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 8);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 7);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 1);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 9);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 15);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 5);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 12);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 3);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 10);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 6);
+INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 2);
 
 
 --
@@ -1693,6 +1705,7 @@ SELECT pg_catalog.setval('device_types_id_seq', 20, true);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (1, '1234554321', 'VitualMachineAndroid_2.3', 4, 1, NULL);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (2, '1111111111', 'Tablet Lab. 205', 1, 1, NULL);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (3, '5E-EF-8-9B-54', 'RFID Card - Borges', 6, 1, NULL);
+INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (21, 'ffffffff-a532-a6d5-7413-31f40c97adbb', 'samsung GT-I8262B 3.4.0-1515091-user', 1, 21, 7);
 
 
 --
@@ -1701,7 +1714,7 @@ INSERT INTO devices (id, code, name, device_type_id, user_id, current_environmen
 -- Name: devices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('devices_id_seq', 20, true);
+SELECT pg_catalog.setval('devices_id_seq', 40, true);
 
 
 --
@@ -1836,6 +1849,26 @@ SELECT pg_catalog.setval('localization_types_id_seq', 20, true);
 -- Data for Name: log_events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (1, '2015-09-09 16:19:05.832', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (2, '2015-09-09 16:22:33.247', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (3, '2015-09-09 16:23:13.382', 'd', 1, 'y', 21, 21, 7, true);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (4, '2015-09-09 16:23:13.79', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (21, '2015-09-09 16:45:38.382', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (22, '2015-09-09 16:45:51.225', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (23, '2015-09-09 16:46:21.507', 'd', 1, 'y', 21, 21, 7, true);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (24, '2015-09-09 16:46:22.158', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (25, '2015-09-09 16:46:36.238', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (26, '2015-09-09 16:46:56.718', 'd', 1, 'y', 21, 21, 7, true);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (27, '2015-09-09 16:46:57.251', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (28, '2015-09-09 16:56:00.121', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (29, '2015-09-09 16:56:01.167', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (30, '2015-09-09 16:56:02.032', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (31, '2015-09-09 16:58:35.546', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (32, '2015-09-09 16:58:36.187', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (33, '2015-09-09 17:02:06.369', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (34, '2015-09-09 17:02:06.902', 'd', 1, 'y', 21, 21, 7, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (35, '2015-09-09 17:03:15.901', 'd', 1, 'y', 21, 21, 6, false);
+INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (36, '2015-09-09 17:03:16.647', 'd', 1, 'y', 21, 21, 7, false);
 
 
 --
@@ -1844,7 +1877,7 @@ SELECT pg_catalog.setval('localization_types_id_seq', 20, true);
 -- Name: log_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('log_events_id_seq', 1, false);
+SELECT pg_catalog.setval('log_events_id_seq', 60, true);
 
 
 --
@@ -2155,6 +2188,7 @@ INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, 
 --
 
 INSERT INTO user_credentials (id, external_id, system, user_id) VALUES (1, '1234', 'SIGA-i', 2);
+INSERT INTO user_credentials (id, external_id, system, user_id) VALUES (21, '0000', 'SIGA-i', 21);
 
 
 --
@@ -2163,7 +2197,7 @@ INSERT INTO user_credentials (id, external_id, system, user_id) VALUES (1, '1234
 -- Name: user_credentials_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_credentials_id_seq', 20, true);
+SELECT pg_catalog.setval('user_credentials_id_seq', 40, true);
 
 
 --
@@ -2177,6 +2211,8 @@ INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, envir
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (3, 1, 5, 3, 0, 3, NULL);
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (4, 1, 6, 4, 0, 5, NULL);
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (5, 1, 5, 5, 0, 3, NULL);
+INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (6, 21, 1, 6, 0, 1, NULL);
+INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (7, 21, 1, 7, 0, 1, NULL);
 
 
 --
@@ -2185,7 +2221,7 @@ INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, envir
 -- Name: user_in_environment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_in_environment_id_seq', 5, true);
+SELECT pg_catalog.setval('user_in_environment_id_seq', 7, true);
 
 
 --
@@ -2241,6 +2277,7 @@ SELECT pg_catalog.setval('user_types_id_seq', 20, true);
 
 INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (1, 'borges', 'Guilherme A. Borges', NULL, 'guilhermeborges@gmail.com', 1, NULL);
 INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (2, 'valderi', 'Valderi R. Q. Leithardt', NULL, 'valderi@gmail.com', 1, NULL);
+INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (21, 'administrador', 'Administrador', NULL, 'admin@sigai.org', 2, 7);
 
 
 --
@@ -2249,7 +2286,7 @@ INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id,
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_id_seq', 20, true);
+SELECT pg_catalog.setval('users_id_seq', 40, true);
 
 
 --
@@ -2828,7 +2865,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2015-09-09 15:50:43 BRT
+-- Completed on 2015-09-09 17:04:30 BRT
 
 --
 -- PostgreSQL database dump complete

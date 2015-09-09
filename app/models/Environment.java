@@ -55,6 +55,7 @@ public class Environment extends Model {
 	public Integer level;
 
     @OneToMany
+	@JsonIgnore
     public List<Action> customActions;
     
     /**

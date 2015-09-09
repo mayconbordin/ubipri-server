@@ -11,6 +11,7 @@ import forms.UserLocationForm;
 import models.*;
 import models.serialization.Views;
 import play.data.Form;
+import play.db.ebean.Transactional;
 import play.mvc.*;
 import services.PrivacyService;
 import utils.http.BaseController;
@@ -60,6 +61,7 @@ public class UserController extends BaseController {
 	}
 	
 	@Security.Authenticated(Secured.class)
+	@Transactional
 	public Result addDevice() {
 		User user = getAuthUser();
 		

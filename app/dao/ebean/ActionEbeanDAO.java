@@ -25,11 +25,11 @@ public class ActionEbeanDAO extends BaseEbeanDAO<Action, Long> implements Action
 	
 	public List<Action> getCustomActions(Environment environment, AccessLevel accessLevel) {
 		List<Action> actions = Ebean.find(Action.class)
-				.fetch("accessLevel")
+			 .fetch("accessLevel")
 		     .fetch("functionality")
 		     .fetch("environment")
-				.fetch("args")
-				.where()
+			 .fetch("args")
+			 .where()
 		     	.eq("custom_environment_id", environment.getId())
 		     	.eq("access_level_id", accessLevel.getId())
 		     .findList();
@@ -42,7 +42,7 @@ public class ActionEbeanDAO extends BaseEbeanDAO<Action, Long> implements Action
 				.fetch("functionality")
 				.fetch("args")
 				.where().eq("access_level_id", accessLevel.getId())
-				.isNull("environment")
+				.isNull("custom_environment_id")
 				.findList();
 
 		return actions;
