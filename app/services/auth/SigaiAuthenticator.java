@@ -49,7 +49,7 @@ public class SigaiAuthenticator implements Authenticator {
         config = Play.application().configuration();
 
         accessTokenUrl = config.getString("sigai.access_token_url", "http://localhost/api/oauth/access_token");
-        verifyTokenUrl = config.getString("sigai.access_token_url", "http://localhost/api/oauth/verify");
+        verifyTokenUrl = config.getString("sigai.verify_token_url", "http://localhost/api/oauth/verify");
         clientId 	   = config.getString("sigai.client_id", "ubipri");
         clientSecret   = config.getString("sigai.client_secret", "163a53cf0ed6f83b564cbe3497eb95436229e1c0");
         scopes         = config.getString("sigai.scopes", "verify-token");
@@ -133,6 +133,10 @@ public class SigaiAuthenticator implements Authenticator {
             if (listOfRoles.contains(role)) {
                 selectedRole = role;
             }
+        }
+        
+        if (selectedRole == null || listOfRoles.size() == 0) {
+            selectedRole = "Normal";
         }
 
         return userTypeDao.findByField("name", selectedRole);
