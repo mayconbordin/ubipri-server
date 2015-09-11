@@ -10,6 +10,7 @@ scalaVersion := "2.11.6"
 
 resolvers += "custom maven releases" at "http://52north.org/maven/repo/releases/"
 resolvers += "jitpack" at "https://jitpack.io"
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies ++= Seq(
   javaJdbc,
@@ -24,7 +25,11 @@ libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.5",
   "com.github.mayconbordin" % "OAuth2Client" % "1.0.2",
-  "org.mockito" % "mockito-all" % "1.10.19"
+  "org.mockito" % "mockito-all" % "1.10.19",
+
+  // Web UI
+  "org.webjars" % "webjars-play_2.11" % "2.4.0-1",
+  "com.adrianhurt" % "play-bootstrap3_2.11" % "0.4.4-P24"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

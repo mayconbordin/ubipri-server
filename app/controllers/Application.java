@@ -10,7 +10,7 @@ import views.html.*;
 public class Application extends Controller {
 
     public Result index() {
-        return ok("Your new application is ready.");
+        return ok(index.render("hello"));
     }
 
 }
