@@ -1,0 +1,14 @@
+app.title = UbiPri
+app.index = Home
+
+app.actions = Actions
+app.actions.delete = Delete
+app.actions.edit = Edit
+
+app.environments = Environments
+app.environment.edit = Edit Environment
+app.environments.name = Name
+app.environments.type = Type
+app.environments.version = Version
+
+app.localization.type = Localization Type

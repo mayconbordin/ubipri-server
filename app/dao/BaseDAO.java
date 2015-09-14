@@ -34,6 +34,8 @@ public interface BaseDAO<T, ID extends Serializable> {
 	public List<T> findAll();
 	
 	public PagedList<T> findAll(int pageIndex, int pageSize);
+
+	public PagedList<T> findAllWith(int pageIndex, int pageSize, String...relations);
 	
 	public T update(T entity);
 	

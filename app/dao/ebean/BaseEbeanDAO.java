@@ -112,6 +112,16 @@ public abstract class BaseEbeanDAO<T, ID extends Serializable> implements BaseDA
 		return Ebean.find(getPersistentClass()).findPagedList(pageIndex, pageSize);
 	}
 
+	public PagedList<T> findAllWith(int pageIndex, int pageSize, String...relations) {
+		Query<T> query = Ebean.find(getPersistentClass());
+
+		for (String relation : relations) {
+			query.fetch(relation);
+		}
+
+		return query.findPagedList(pageIndex, pageSize);
+	}
+
 	// update ------------------------------------------------------------------
 	
 	public T update(T entity) {

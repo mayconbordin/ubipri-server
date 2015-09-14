@@ -1,0 +1,43 @@
+@(list: List[Environment], currentPage: Integer, totalPages: Integer, totalRecords: Integer)
+
+@import helper._
+
+@main("app.environments") {
+
+    <div class="page-header">
+        <h2>@Messages("app.environments")</h2>
+    </div>
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Messages("app.environments.name")</th>
+                <th>@Messages("app.environments.type")</th>
+                <th>@Messages("app.localization.type")</th>
+                <th>@Messages("app.environments.version")</th>
+                <th>@Messages("app.actions")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(e <- list) {
+            <tr>
+                <td scope="row">@e.getId</td>
+                <td>@e.getName</td>
+                <td>@e.getEnvironmentType.getName</td>
+                <td>@e.getLocalizationType.getName</td>
+                <td>@e.getVersion</td>
+                <td>
+                    <a href="@controllers.admin.routes.EnvironmentController.edit(e.getId)" class="btn btn-default btn-sm">
+                        <i class="fa fa-pencil-square-o"></i> @Messages("app.actions.edit")
+                    </a>
+                    <a href="" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> @Messages("app.actions.delete")</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    @pagination(currentPage, totalPages, controllers.admin.routes.EnvironmentController.index().toString())
+}
