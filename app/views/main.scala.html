@@ -1,4 +1,4 @@
-@(currentPage: String, extraTitle: String = "")(content: Html)
+@(currentPage: String, extraTitle: String = "", scripts: Html = Html(""), styles: Html = Html(""))(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +23,7 @@
 
         <!-- Custom styles for this template -->
         <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
+        @styles
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -74,5 +75,6 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("js/bootstrap.min.js"))"></script>
+        @scripts
     </body>
 </html>

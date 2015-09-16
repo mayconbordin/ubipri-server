@@ -30,7 +30,9 @@ libraryDependencies ++= Seq(
   // Web UI
   "org.webjars" % "webjars-play_2.11" % "2.4.0-1",
   "com.adrianhurt" % "play-bootstrap3_2.11" % "0.4.4-P24",
-  "org.webjars.bower" % "font-awesome" % "4.4.0"
+
+  "org.webjars.bower" % "font-awesome" % "4.4.0",
+  "org.webjars.bower" % "github-com-arthur-e-Wicket" % "1.2"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

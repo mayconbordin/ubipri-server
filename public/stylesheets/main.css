@@ -40,3 +40,9 @@ body {
 nav.pagination-container {
     text-align: center;
 }
+
+
+/** Maps **/
+#map {
+    height: 450px;
+}
