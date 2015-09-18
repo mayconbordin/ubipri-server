@@ -27,6 +27,11 @@ public class LocalizationType extends Model {
 	@Constraints.MaxLength(10)
 	public String metric;
 
+	public LocalizationType() {}
+	public LocalizationType(int id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}

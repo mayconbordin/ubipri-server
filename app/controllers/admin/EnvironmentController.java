@@ -9,17 +9,20 @@ import forms.EnvironmentForm;
 import models.Environment;
 import models.EnvironmentType;
 import models.LocalizationType;
+import org.postgis.Polygon;
 import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.http.BaseController;
 import views.html.environment.index;
 import views.html.environment.edit;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 import java.util.List;
 
-public class EnvironmentController extends Controller {
+public class EnvironmentController extends BaseController {
 
     @Inject EnvironmentDAO dao;
     @Inject EnvironmentTypeDAO environmentTypeDAO;
@@ -33,18 +36,42 @@ public class EnvironmentController extends Controller {
         return ok(index.render(pagedList.getList(), page, pagedList.getTotalPageCount(), pagedList.getTotalRowCount()));
     }
 
-    public Result edit(int id) {
+    public Result show(int id) {
         Environment e = dao.find(id);
 
         if (e == null) {
             return notFound();
         }
 
-        List<EnvironmentType> types = environmentTypeDAO.findAll();
-        List<LocalizationType> localizationTypes = localizationTypeDAO.findAll();
-        Form<EnvironmentForm> form = Form.form(EnvironmentForm.class).fill(EnvironmentForm.create(e));
+        List<EnvironmentType> eTypes  = environmentTypeDAO.findAll();
+        List<LocalizationType> lTypes = localizationTypeDAO.findAll();
+        Form<EnvironmentForm> form    = EnvironmentForm.create(e);
 
-        return ok(edit.render(form, types, localizationTypes));
+        return ok(edit.render(form, eTypes, lTypes));
+    }
+
+    public Result edit(int id) {
+        List<EnvironmentType> eTypes  = environmentTypeDAO.findAll();
+        List<LocalizationType> lTypes = localizationTypeDAO.findAll();
+        Form<EnvironmentForm> form    = Form.form(EnvironmentForm.class).bindFromRequest();
+
+        if (form.hasErrors()) {
+            flash("error", "There are errors in the form");
+            return badRequest(edit.render(form, eTypes, lTypes));
+        }
+
+        Environment e = dao.find(id);
+
+        if (e == null) {
+            return notFound();
+        }
+
+        // fill Environment object with new values
+        form.get().fill(e);
+        dao.update(e);
+
+        flash("success", "Environment successfully saved.");
+        return redirect(routes.EnvironmentController.show(1));
     }
 
 }

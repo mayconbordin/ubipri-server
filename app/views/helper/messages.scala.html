@@ -1,0 +1,11 @@
+@(error: String = "")
+
+@if(flash.containsKey("success")) {
+    <div class="alert alert-success" role="alert">@{ flash.get("success") }</div>
+} else { @if(flash.containsKey("error")) {
+    <div class="alert alert-danger" role="alert">@{ flash.get("error") }</div>
+}}
+
+@if(!error.isEmpty) {
+    <div class="alert alert-danger" role="alert">@{ error }</div>
+}

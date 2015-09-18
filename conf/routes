@@ -5,7 +5,8 @@
 # Home page
 GET         /admin                                     controllers.admin.IndexController.index()
 GET         /admin/environments                        controllers.admin.EnvironmentController.index(page: Integer ?= 1)
-GET         /admin/environments/:id                    controllers.admin.EnvironmentController.edit(id: Integer)
+GET         /admin/environments/:id                    controllers.admin.EnvironmentController.show(id: Integer)
+POST        /admin/environments/:id                    controllers.admin.EnvironmentController.edit(id: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                              controllers.Assets.versioned(path="/public", file: Asset)

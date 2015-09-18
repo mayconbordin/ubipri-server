@@ -1,5 +1,6 @@
 @import forms.EnvironmentForm
 @import b3.vertical.fieldConstructor
+@import helper.messages
 
 @(form: Form[EnvironmentForm], envTypes: List[EnvironmentType], locTypes: List[LocalizationType])
 
@@ -15,8 +16,69 @@
 
     <script>
 
-var Point = function(point) {
+google.maps.Polygon.prototype.getBounds = function() {
+    var bounds = new google.maps.LatLngBounds();
+    var paths = this.getPaths();
+    var path;
+    for (var i = 0; i < paths.getLength(); i++) {
+        path = paths.getAt(i);
+        for (var ii = 0; ii < path.getLength(); ii++) {
+            bounds.extend(path.getAt(ii));
+        }
+    }
+    return bounds;
+}
+
+var Shape = function(polygon, onChangeCb) {
+    this.polygon = polygon;
+    this.onChangeCb = onChangeCb;
+
+    this.init();
+};
+
+Shape.prototype = {
+    init: function() {
+        var self = this;
+
+        this.polygon.setOptions({fillOpacity:0});
+
+        // New vertex is inserted
+        google.maps.event.addListener(this.polygon.getPath(), 'insert_at', function (n) {
+            self.onChange();
+        });
+        // Existing vertex is removed (insertion is undone)
+        google.maps.event.addListener(this.polygon.getPath(), 'remove_at', function (n) {
+            self.onChange();
+        });
+        // Existing vertex is moved (set elsewhere)
+        google.maps.event.addListener(this.polygon.getPath(), 'set_at', function (n) {
+            self.onChange();
+        });
+    },
+
+    onChange: function() {
+        console.log("Shape changed");
+
+        var wkt = new Wkt.Wkt();
+        wkt.fromObject(this.polygon);
+        var val = wkt.write();
+
+        if (typeof(this.onChangeCb) == "function") {
+            this.onChangeCb(val);
+        }
+    },
+
+    destroy: function() {
+        this.polygon.setMap(null);
+    },
+};
+
+var Point = function(point, positionChangedCb, radiusChangedCb, radius) {
     this.point = point;
+    this.positionChangedCb = positionChangedCb;
+    this.radiusChangedCb = radiusChangedCb;
+    this.radius = (typeof(radius) == "undefined") ? 100 : radius;
+
     this.init();
 };
 
@@ -31,33 +93,82 @@ Point.prototype = {
           strokeWeight: 2,
           fillOpacity: 0,
           map: this.point.map,
-          center: {lat: this.point.position.H, lng: this.point.position.L},
-          radius: 100,
+          center: this.getPosition(),
+          radius: this.radius,
           editable: true
         });
 
         google.maps.event.addListener(this.point, 'position_changed', function() {
-            self.circle.setCenter({lat: self.point.position.H, lng: self.point.position.L});
+            self.onPositionChanged();
         });
+
+        google.maps.event.addListener(this.circle, 'radius_changed', function() {
+            self.onRadiusChanged();
+        });
+
+        this.onPositionChanged();
+        this.onRadiusChanged();
     },
 
     destroy: function() {
         this.point.setMap(null);
         this.circle.setMap(null);
+    },
+
+    getPosition: function() {
+        return {lat: this.point.position.H, lng: this.point.position.L};
+    },
+
+    onPositionChanged: function() {
+        var p = this.getPosition();
+
+        this.circle.setCenter(p);
+
+        if (typeof(this.positionChangedCb) == "function") {
+            this.positionChangedCb(p);
+        }
+    },
+
+    onRadiusChanged: function() {
+        this.radius = this.circle.getRadius();
+
+        if (typeof(this.radiusChangedCb) == "function") {
+            this.radiusChangedCb(this.radius);
+        }
     }
 };
 
 var Map = (function() {
     var map;
+    var geocoder;
     var point = null;
     var shape = null;
 
+    var onPointPosChanged = function(p) {
+        $("#latitude").val(p.lat);
+        $("#longitude").val(p.lng);
+    };
 
+    var onPointRadChanged = function(r) {
+        $("#radius").val(r);
+    };
+
+    var clearMapControls = function() {
+        $("#latitude").val("");
+        $("#longitude").val("");
+        $("#radius").val("");
+    };
+
+    var onShapeChanged = function(val) {
+        console.log($("#shape").val());
+        console.log(val);
+        $("#shape").val(val);
+    };
 
     return {
         options: {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 2,
+            zoom: 8,
             defaults: {
                 icon: '@routes.Assets.versioned("images/red_dot.png")',
                 shadow: '@routes.Assets.versioned("images/dot_shadow.png")',
@@ -108,16 +219,38 @@ var Map = (function() {
 
                 console.log(this);
             });
+
+            // create the geocoder
+            geocoder = new google.maps.Geocoder();
+
+            // add geocoder trigger
+            $("#geocoder .search").click(function() {
+                var address = $("#geocoder .address").val();
+                Map.geocodeAddress(address);
+            });
+            $("#geocoder .address").keypress(function(event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    var address = $(this).val();
+                    Map.geocodeAddress(address);
+                }
+            });
+
+            // load values
+            Map.loadShape();
+            Map.loadLocation();
         },
 
         clear: function() {
             Map.clearShape();
             Map.clearPoint();
+
+            clearMapControls();
         },
 
         clearShape: function() {
             if (shape != null) {
-                shape.setMap(null);
+                shape.destroy();
                 shape = null;
             }
         },
@@ -129,6 +262,16 @@ var Map = (function() {
             }
         },
 
+        geocodeAddress: function(address) {
+            geocoder.geocode({'address': address}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                } else {
+                  console.error('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        },
+
         onMapDraw: function (event) {
             // Set the drawing mode to "pan" (the hand) so users can immediately edit
             map.drawingManager.setDrawingMode(null);
@@ -137,14 +280,63 @@ var Map = (function() {
             if (event.type === google.maps.drawing.OverlayType.POLYGON) {
                 console.log("Polygon drawn");
                 Map.clearShape();
-                shape = event.overlay;
-                shape.setOptions({fillOpacity:0});
+                shape = new Shape(event.overlay, onShapeChanged);
+                //shape.setOptions({fillOpacity:0});
 
             } else if (event.type === google.maps.drawing.OverlayType.MARKER) {
                 console.log("Marker drawn");
                 Map.clearPoint();
-                point = new Point(event.overlay);
+                point = new Point(event.overlay, onPointPosChanged, onPointRadChanged);
             }
+        },
+
+        loadLocation: function() {
+            var lat = parseFloat($("#latitude").val());
+            var lon = parseFloat($("#longitude").val());
+            var rad = parseFloat($("#radius").val());
+
+            if (isNaN(lat) || isNaN(lon) || isNaN(rad)) return;
+
+            var location = {lat: lat, lng: lon};
+
+            var marker = new google.maps.Marker($.extend({}, map.defaults, {
+                position: location
+            }));
+
+            map.setCenter(location);
+            marker.setMap(map);
+
+            point = new Point(marker, onPointPosChanged, onPointRadChanged, rad);
+        },
+
+        loadShape: function() {
+            var wkt = new Wkt.Wkt();
+            var val = $("#shape").val();
+
+            if (val.trim().length == 0) return;
+            if (val.indexOf(";") != -1) {
+                val = val.split(";")[1];
+            }
+
+            try {
+                wkt.read(val);
+            } catch (e1) {
+                try {
+                    wkt.read(val.replace('\n', '').replace('\r', '').replace('\t', ''));
+                } catch (e2) {
+                    if (e2.name === 'WKTError') {
+                        console.error('Wicket could not understand the WKT string entered.');
+                        return;
+                    }
+                }
+            }
+
+            var polygon = wkt.toObject(map.defaults);
+            polygon.setMap(map);
+
+            map.fitBounds(polygon.getBounds());
+
+            shape = new Shape(polygon, onShapeChanged);
         }
     };
 })();
@@ -166,6 +358,8 @@ $(document).ready(function() {
         <h2>@Messages("app.actions.edit"): @form("name").value</h2>
     </div>
 
+    @messages()
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Information</h3>
@@ -175,36 +369,45 @@ $(document).ready(function() {
             @b3.form(controllers.admin.routes.EnvironmentController.edit(1)) {
                 @b3.text( form("name"), '_label -> "Name", 'placeholder -> "Name" )
                 @b3.select( form("environmentTypeId"), options = envTypesSeq, '_label -> "Type" )
-                @b3.select( form("localizationTypeId"), options = locTypesSeq, '_label -> "Localization Type" )
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-12">
+                    @b3.text( form("latitude"), '_label -> "Latitude", 'readonly -> true )
+                    </div>
+
+                    <div class="col-sm-6 col-sm-12">
+                    @b3.text( form("longitude"), '_label -> "Longitude", 'readonly -> true )
+                    </div>
+
+                    <div class="col-sm-6 col-sm-12">
+                    @b3.text( form("radius"), '_label -> "Radius", 'readonly -> true )
+                    </div>
+
+                    <div class="col-sm-6 col-sm-12">
+                    @b3.select( form("localizationTypeId"), options = locTypesSeq, '_label -> "Localization Type" )
+                    </div>
+                </div>
+
+                @b3.hidden("shape", form("shape").value, 'id -> "shape" )
+
+                @b3.submit('class -> "btn btn-default pull-right"){ Save }
             }
 
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-9">
-        <div class="panel panel-default ">
-            <div class="panel-heading">
-                <h3 class="panel-title">Map</h3>
-            </div>
-            <div class="panel-body row">
 
-                <div id="map"></div>
-
-            </div>
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h3 class="panel-title">Map</h3>
         </div>
+        <div class="panel-body" style="padding:0;">
+            <div id="map"></div>
         </div>
-
-        <div class="col-xs-3">
-        <div class="panel panel-default ">
-            <div class="panel-heading">
-                <h3 class="panel-title">Location</h3>
-            </div>
-            <div id="map-controls" class="panel-body row">
-                <button class="btn btn-primary clear">Clear</button>
+        <div class="panel-footer">
+            <div id="geocoder" >
+                <input type="text" class="form-control address" placeholder="Search an address...">
             </div>
         </div>
-        </div>
-
     </div>
 }

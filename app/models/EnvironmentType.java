@@ -20,6 +20,11 @@ public class EnvironmentType extends Model {
 	@Constraints.MaxLength(100)
 	public String name;
 
+	public EnvironmentType() {}
+	public EnvironmentType(int id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}

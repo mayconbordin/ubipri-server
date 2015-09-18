@@ -144,6 +144,7 @@ public class Environment extends Model {
 
 	public void setShape(Polygon shape) {
 		this.shape = shape;
+		this.shape.setSrid(SRID);
 	}
 
 	public double getDistance() {
