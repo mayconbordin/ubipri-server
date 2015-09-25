@@ -7,6 +7,7 @@ import play.Environment;
 import services.*;
 import services.auth.Authenticator;
 import services.auth.SigaiAuthenticator;
+import services.auth.UbiPriAuthenticator;
 
 public class ServiceModule extends AbstractModule {
 
@@ -32,6 +33,6 @@ public class ServiceModule extends AbstractModule {
     	
     	bind(IClock.class).to(RealClock.class);
     	bind(IPrivacyService.class).to(PrivacyService.class);
-    	bind(Authenticator.class).to(SigaiAuthenticator.class);
+        bind(Authenticator.class).to(UbiPriAuthenticator.class);
     }
 }

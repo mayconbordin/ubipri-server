@@ -12,6 +12,8 @@ public class OAuthAccessTokenEbeanDAO extends BaseEbeanDAO<OAuthAccessToken, Int
     @Override
     public OAuthAccessToken findByAccessToken(String accessToken) {
         return createQuery()
+                .fetch("account")
+                .fetch("client")
                 .where().eq("accessToken", accessToken)
                 .findUnique();
     }
