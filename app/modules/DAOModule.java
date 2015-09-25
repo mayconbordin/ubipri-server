@@ -27,5 +27,10 @@ public class DAOModule extends AbstractModule {
         bind(UserEnvironmentDAO.class).to(UserEnvironmentEbeanDAO.class);
         bind(UserProfileEnvironmentDAO.class).to(UserProfileEnvironmentEbeanDAO.class);
         bind(UserTypeDAO.class).to(UserTypeEbeanDAO.class);
+
+        // OAuth
+        bind(OAuthAccessTokenDAO.class).to(OAuthAccessTokenEbeanDAO.class);
+        bind(OAuthAuthorizationCodeDAO.class).to(OAuthAuthorizationCodeEbeanDAO.class);
+        bind(OAuthClientDAO.class).to(OAuthClientEbeanDAO.class);
     }
 }

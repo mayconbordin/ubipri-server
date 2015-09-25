@@ -16,18 +16,32 @@ users:
     fullName: Guilherme A. Borges
     emailAddress: guilhermeborges@gmail.com
     userType: *normalType
+    password: $2a$10$ARkrKZ4NZEe1m7zBmfnOOusDSZFedcZr7wNoztQhq1qy.o4Oeh6re
   - &valderiUser !!models.User
     name: valderi
     fullName: Valderi R. Q. Leithardt
     emailAddress: valderi@gmail.com
     userType: *normalType
+    password: $2a$10$ARkrKZ4NZEe1m7zBmfnOOusDSZFedcZr7wNoztQhq1qy.o4Oeh6re
     
 user_credentials:
   - &valderiSigai !!models.UserCredential
     externalId: 1234
     system: SIGA-i
     user: *valderiUser
-    
+
+oauth_clients:
+  - &ubipriOauthClient !!models.OAuthClient
+    owner: *valderiUser
+    grantType: password
+    clientId: ubipri_client_id
+    clientSecret: secret
+  - &ubipriOauthClient2 !!models.OAuthClient
+    owner: *valderiUser
+    grantType: client_credentials
+    clientId: ubipri_client_id_2
+    clientSecret: secret
+
 device_types:
   - &androidDeviceType !!models.DeviceType
     name: Android

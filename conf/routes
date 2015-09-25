@@ -2,7 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# Admin Panel
+# ~~~~~~~~~~~
 GET         /admin                                     controllers.admin.IndexController.index()
 GET         /admin/environments                        controllers.admin.EnvironmentController.index(page: Integer ?= 1)
 GET         /admin/environments/:id                    controllers.admin.EnvironmentController.show(id: Integer)
@@ -13,8 +14,14 @@ GET         /assets/*file                              controllers.Assets.versio
 GET         /webjars/*file                             controllers.WebJarAssets.at(file)
 
 # Authentication
-POST        /login                                     controllers.SecurityController.login()
-POST        /logout                                    controllers.SecurityController.logout()
+#POST        /login                                     controllers.SecurityController.login()
+#POST        /logout                                    controllers.SecurityController.logout()
+
+# API
+# ~~~
+
+# OAuth 2.0
+POST         /api/oauth/access_token                   controllers.OAuthController.accessToken
 
 # User
 GET         /user                                      controllers.UserController.getUser()

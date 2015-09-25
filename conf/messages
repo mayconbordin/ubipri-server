@@ -4,6 +4,7 @@ app.index = Home
 app.actions = Actions
 app.actions.delete = Delete
 app.actions.edit = Edit
+app.actions.create = Create
 
 app.environments = Environments
 app.environment.edit = Edit Environment

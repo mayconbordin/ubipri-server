@@ -68,9 +68,14 @@ public class EnvironmentController extends BaseController {
 
         // fill Environment object with new values
         form.get().fill(e);
-        dao.update(e);
 
-        flash("success", "Environment successfully saved.");
+        // Check if environment was updated
+        if (dao.update(e) == null) {
+            flash("error", "Unable to save Environment.");
+        } else {
+            flash("success", "Environment successfully saved.");
+        }
+
         return redirect(routes.EnvironmentController.show(1));
     }
 

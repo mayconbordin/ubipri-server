@@ -27,6 +27,12 @@ libraryDependencies ++= Seq(
   "com.github.mayconbordin" % "OAuth2Client" % "1.0.2",
   "org.mockito" % "mockito-all" % "1.10.19",
 
+  // OAuth 2.0
+  "com.nulab-inc" %% "play2-oauth2-provider" % "0.15.1",
+
+  // BCrypt
+  "org.mindrot" % "jbcrypt" % "0.3m",
+
   // Web UI
   "org.webjars" % "webjars-play_2.11" % "2.4.0-1",
   "com.adrianhurt" % "play-bootstrap3_2.11" % "0.4.4-P24",

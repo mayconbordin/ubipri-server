@@ -49,6 +49,9 @@ public class User extends Model {
     @Constraints.MaxLength(256)
     @JsonIgnore
     private String password;*/
+	@JsonIgnore
+	@Column(length = 60, nullable = false)
+	private String password;
     
     @ManyToOne(optional=true)
 	@JoinColumn(name="current_environment_id")
@@ -115,14 +118,13 @@ public class User extends Model {
 		this.emailAddress = emailAddress.toLowerCase();
 	}
 
-	/*public String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-		shaPassword = HashUtil.getSha512(password);
-	}*/
+	}
 
 	public Environment getCurrentEnvironment() {
 		return currentEnvironment;

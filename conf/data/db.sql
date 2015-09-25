@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.9
 -- Dumped by pg_dump version 9.3.6
--- Started on 2015-09-09 17:04:27 BRT
+-- Started on 2015-09-25 09:07:15 BRT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,7 +14,26 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 226 (class 3079 OID 11789)
+-- TOC entry 3568 (class 1262 OID 570033)
+-- Name: ubipri; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE ubipri WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+
+
+ALTER DATABASE ubipri OWNER TO postgres;
+
+\connect ubipri
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 232 (class 3079 OID 11789)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,8 +41,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 3518 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3571 (class 0 OID 0)
+-- Dependencies: 232
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -31,7 +50,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 227 (class 3079 OID 557526)
+-- TOC entry 233 (class 3079 OID 570034)
 -- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -39,8 +58,8 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 
 
 --
--- TOC entry 3519 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 3572 (class 0 OID 0)
+-- Dependencies: 233
 -- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -54,7 +73,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 208 (class 1259 OID 559006)
+-- TOC entry 208 (class 1259 OID 571514)
 -- Name: access_levels; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -69,7 +88,7 @@ CREATE TABLE access_levels (
 ALTER TABLE public.access_levels OWNER TO postgres;
 
 --
--- TOC entry 207 (class 1259 OID 559004)
+-- TOC entry 207 (class 1259 OID 571512)
 -- Name: access_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -84,7 +103,7 @@ CREATE SEQUENCE access_levels_id_seq
 ALTER TABLE public.access_levels_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3520 (class 0 OID 0)
+-- TOC entry 3573 (class 0 OID 0)
 -- Dependencies: 207
 -- Name: access_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -93,7 +112,7 @@ ALTER SEQUENCE access_levels_id_seq OWNED BY access_levels.id;
 
 
 --
--- TOC entry 220 (class 1259 OID 559125)
+-- TOC entry 220 (class 1259 OID 571633)
 -- Name: access_type_classifier; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -112,7 +131,7 @@ CREATE TABLE access_type_classifier (
 ALTER TABLE public.access_type_classifier OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 559123)
+-- TOC entry 219 (class 1259 OID 571631)
 -- Name: access_type_classifier_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -127,7 +146,7 @@ CREATE SEQUENCE access_type_classifier_id_seq
 ALTER TABLE public.access_type_classifier_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3521 (class 0 OID 0)
+-- TOC entry 3574 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: access_type_classifier_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -136,7 +155,7 @@ ALTER SEQUENCE access_type_classifier_id_seq OWNED BY access_type_classifier.id;
 
 
 --
--- TOC entry 206 (class 1259 OID 558998)
+-- TOC entry 206 (class 1259 OID 571506)
 -- Name: access_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -149,7 +168,7 @@ CREATE TABLE access_types (
 ALTER TABLE public.access_types OWNER TO postgres;
 
 --
--- TOC entry 205 (class 1259 OID 558996)
+-- TOC entry 205 (class 1259 OID 571504)
 -- Name: access_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -164,7 +183,7 @@ CREATE SEQUENCE access_types_id_seq
 ALTER TABLE public.access_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3522 (class 0 OID 0)
+-- TOC entry 3575 (class 0 OID 0)
 -- Dependencies: 205
 -- Name: access_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -173,7 +192,7 @@ ALTER SEQUENCE access_types_id_seq OWNED BY access_types.id;
 
 
 --
--- TOC entry 214 (class 1259 OID 559064)
+-- TOC entry 214 (class 1259 OID 571572)
 -- Name: actions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -193,7 +212,7 @@ CREATE TABLE actions (
 ALTER TABLE public.actions OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 559087)
+-- TOC entry 216 (class 1259 OID 571595)
 -- Name: actions_args; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -208,7 +227,7 @@ CREATE TABLE actions_args (
 ALTER TABLE public.actions_args OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 559085)
+-- TOC entry 215 (class 1259 OID 571593)
 -- Name: actions_args_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -223,7 +242,7 @@ CREATE SEQUENCE actions_args_id_seq
 ALTER TABLE public.actions_args_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3523 (class 0 OID 0)
+-- TOC entry 3576 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: actions_args_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -232,7 +251,7 @@ ALTER SEQUENCE actions_args_id_seq OWNED BY actions_args.id;
 
 
 --
--- TOC entry 213 (class 1259 OID 559062)
+-- TOC entry 213 (class 1259 OID 571570)
 -- Name: actions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -247,7 +266,7 @@ CREATE SEQUENCE actions_id_seq
 ALTER TABLE public.actions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3524 (class 0 OID 0)
+-- TOC entry 3577 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: actions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -256,7 +275,7 @@ ALTER SEQUENCE actions_id_seq OWNED BY actions.id;
 
 
 --
--- TOC entry 199 (class 1259 OID 558945)
+-- TOC entry 199 (class 1259 OID 571453)
 -- Name: communication_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -269,7 +288,7 @@ CREATE TABLE communication_types (
 ALTER TABLE public.communication_types OWNER TO postgres;
 
 --
--- TOC entry 198 (class 1259 OID 558943)
+-- TOC entry 198 (class 1259 OID 571451)
 -- Name: communication_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -284,7 +303,7 @@ CREATE SEQUENCE communication_types_id_seq
 ALTER TABLE public.communication_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3525 (class 0 OID 0)
+-- TOC entry 3578 (class 0 OID 0)
 -- Dependencies: 198
 -- Name: communication_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -293,7 +312,7 @@ ALTER SEQUENCE communication_types_id_seq OWNED BY communication_types.id;
 
 
 --
--- TOC entry 201 (class 1259 OID 558953)
+-- TOC entry 201 (class 1259 OID 571461)
 -- Name: device_communications; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -313,7 +332,7 @@ CREATE TABLE device_communications (
 ALTER TABLE public.device_communications OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 558951)
+-- TOC entry 200 (class 1259 OID 571459)
 -- Name: device_communications_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -328,7 +347,7 @@ CREATE SEQUENCE device_communications_id_seq
 ALTER TABLE public.device_communications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3526 (class 0 OID 0)
+-- TOC entry 3579 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: device_communications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -337,7 +356,7 @@ ALTER SEQUENCE device_communications_id_seq OWNED BY device_communications.id;
 
 
 --
--- TOC entry 204 (class 1259 OID 558981)
+-- TOC entry 204 (class 1259 OID 571489)
 -- Name: device_functionalities; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -350,7 +369,7 @@ CREATE TABLE device_functionalities (
 ALTER TABLE public.device_functionalities OWNER TO postgres;
 
 --
--- TOC entry 195 (class 1259 OID 558912)
+-- TOC entry 195 (class 1259 OID 571420)
 -- Name: device_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -363,7 +382,7 @@ CREATE TABLE device_types (
 ALTER TABLE public.device_types OWNER TO postgres;
 
 --
--- TOC entry 194 (class 1259 OID 558910)
+-- TOC entry 194 (class 1259 OID 571418)
 -- Name: device_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -378,7 +397,7 @@ CREATE SEQUENCE device_types_id_seq
 ALTER TABLE public.device_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3527 (class 0 OID 0)
+-- TOC entry 3580 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: device_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -387,7 +406,7 @@ ALTER SEQUENCE device_types_id_seq OWNED BY device_types.id;
 
 
 --
--- TOC entry 197 (class 1259 OID 558920)
+-- TOC entry 197 (class 1259 OID 571428)
 -- Name: devices; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -404,7 +423,7 @@ CREATE TABLE devices (
 ALTER TABLE public.devices OWNER TO postgres;
 
 --
--- TOC entry 196 (class 1259 OID 558918)
+-- TOC entry 196 (class 1259 OID 571426)
 -- Name: devices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -419,7 +438,7 @@ CREATE SEQUENCE devices_id_seq
 ALTER TABLE public.devices_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3528 (class 0 OID 0)
+-- TOC entry 3581 (class 0 OID 0)
 -- Dependencies: 196
 -- Name: devices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -428,7 +447,7 @@ ALTER SEQUENCE devices_id_seq OWNED BY devices.id;
 
 
 --
--- TOC entry 225 (class 1259 OID 559168)
+-- TOC entry 225 (class 1259 OID 571676)
 -- Name: environment_frequency_levels; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -445,7 +464,7 @@ CREATE TABLE environment_frequency_levels (
 ALTER TABLE public.environment_frequency_levels OWNER TO postgres;
 
 --
--- TOC entry 187 (class 1259 OID 558839)
+-- TOC entry 187 (class 1259 OID 571347)
 -- Name: environment_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -458,7 +477,7 @@ CREATE TABLE environment_types (
 ALTER TABLE public.environment_types OWNER TO postgres;
 
 --
--- TOC entry 186 (class 1259 OID 558837)
+-- TOC entry 186 (class 1259 OID 571345)
 -- Name: environment_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -473,7 +492,7 @@ CREATE SEQUENCE environment_types_id_seq
 ALTER TABLE public.environment_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3529 (class 0 OID 0)
+-- TOC entry 3582 (class 0 OID 0)
 -- Dependencies: 186
 -- Name: environment_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -482,7 +501,7 @@ ALTER SEQUENCE environment_types_id_seq OWNED BY environment_types.id;
 
 
 --
--- TOC entry 191 (class 1259 OID 558857)
+-- TOC entry 191 (class 1259 OID 571365)
 -- Name: environments; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -503,7 +522,7 @@ CREATE TABLE environments (
 ALTER TABLE public.environments OWNER TO postgres;
 
 --
--- TOC entry 190 (class 1259 OID 558855)
+-- TOC entry 190 (class 1259 OID 571363)
 -- Name: environments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -518,7 +537,7 @@ CREATE SEQUENCE environments_id_seq
 ALTER TABLE public.environments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3530 (class 0 OID 0)
+-- TOC entry 3583 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: environments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -527,7 +546,7 @@ ALTER SEQUENCE environments_id_seq OWNED BY environments.id;
 
 
 --
--- TOC entry 224 (class 1259 OID 559162)
+-- TOC entry 224 (class 1259 OID 571670)
 -- Name: frequency_levels; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -541,7 +560,7 @@ CREATE TABLE frequency_levels (
 ALTER TABLE public.frequency_levels OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 559160)
+-- TOC entry 223 (class 1259 OID 571668)
 -- Name: frequency_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -556,7 +575,7 @@ CREATE SEQUENCE frequency_levels_id_seq
 ALTER TABLE public.frequency_levels_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3531 (class 0 OID 0)
+-- TOC entry 3584 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: frequency_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -565,7 +584,7 @@ ALTER SEQUENCE frequency_levels_id_seq OWNED BY frequency_levels.id;
 
 
 --
--- TOC entry 203 (class 1259 OID 558975)
+-- TOC entry 203 (class 1259 OID 571483)
 -- Name: functionalities; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -578,7 +597,7 @@ CREATE TABLE functionalities (
 ALTER TABLE public.functionalities OWNER TO postgres;
 
 --
--- TOC entry 202 (class 1259 OID 558973)
+-- TOC entry 202 (class 1259 OID 571481)
 -- Name: functionalities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -593,7 +612,7 @@ CREATE SEQUENCE functionalities_id_seq
 ALTER TABLE public.functionalities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3532 (class 0 OID 0)
+-- TOC entry 3585 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: functionalities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -602,7 +621,7 @@ ALTER SEQUENCE functionalities_id_seq OWNED BY functionalities.id;
 
 
 --
--- TOC entry 189 (class 1259 OID 558847)
+-- TOC entry 189 (class 1259 OID 571355)
 -- Name: localization_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -617,7 +636,7 @@ CREATE TABLE localization_types (
 ALTER TABLE public.localization_types OWNER TO postgres;
 
 --
--- TOC entry 188 (class 1259 OID 558845)
+-- TOC entry 188 (class 1259 OID 571353)
 -- Name: localization_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -632,7 +651,7 @@ CREATE SEQUENCE localization_types_id_seq
 ALTER TABLE public.localization_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3533 (class 0 OID 0)
+-- TOC entry 3586 (class 0 OID 0)
 -- Dependencies: 188
 -- Name: localization_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -641,7 +660,7 @@ ALTER SEQUENCE localization_types_id_seq OWNED BY localization_types.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 559101)
+-- TOC entry 218 (class 1259 OID 571609)
 -- Name: log_events; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -661,7 +680,7 @@ CREATE TABLE log_events (
 ALTER TABLE public.log_events OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 559099)
+-- TOC entry 217 (class 1259 OID 571607)
 -- Name: log_events_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -676,7 +695,7 @@ CREATE SEQUENCE log_events_id_seq
 ALTER TABLE public.log_events_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3534 (class 0 OID 0)
+-- TOC entry 3587 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: log_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -685,7 +704,131 @@ ALTER SEQUENCE log_events_id_seq OWNED BY log_events.id;
 
 
 --
--- TOC entry 183 (class 1259 OID 558821)
+-- TOC entry 231 (class 1259 OID 571763)
+-- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE oauth_access_tokens (
+    id integer NOT NULL,
+    account_id bigint NOT NULL,
+    oauth_client_id bigint NOT NULL,
+    access_token character varying(100) NOT NULL,
+    refresh_token character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.oauth_access_tokens OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 571761)
+-- Name: oauth_access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE oauth_access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.oauth_access_tokens_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3588 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: oauth_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE oauth_access_tokens_id_seq OWNED BY oauth_access_tokens.id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 571738)
+-- Name: oauth_authorization_codes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE oauth_authorization_codes (
+    id integer NOT NULL,
+    account_id bigint NOT NULL,
+    oauth_client_id bigint NOT NULL,
+    code character varying(100) NOT NULL,
+    redirect_uri character varying(2000) NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.oauth_authorization_codes OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 571736)
+-- Name: oauth_authorization_codes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE oauth_authorization_codes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.oauth_authorization_codes_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3589 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: oauth_authorization_codes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE oauth_authorization_codes_id_seq OWNED BY oauth_authorization_codes.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 571718)
+-- Name: oauth_clients; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE oauth_clients (
+    id integer NOT NULL,
+    owner_id bigint NOT NULL,
+    grant_type character varying(20) NOT NULL,
+    client_id character varying(100) NOT NULL,
+    client_secret character varying(100) NOT NULL,
+    redirect_uri character varying(2000),
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.oauth_clients OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 571716)
+-- Name: oauth_clients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE oauth_clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.oauth_clients_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3590 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: oauth_clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE oauth_clients_id_seq OWNED BY oauth_clients.id;
+
+
+--
+-- TOC entry 183 (class 1259 OID 571329)
 -- Name: play_evolutions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -703,7 +846,7 @@ CREATE TABLE play_evolutions (
 ALTER TABLE public.play_evolutions OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 559148)
+-- TOC entry 222 (class 1259 OID 571656)
 -- Name: user_credentials; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -718,7 +861,7 @@ CREATE TABLE user_credentials (
 ALTER TABLE public.user_credentials OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 559146)
+-- TOC entry 221 (class 1259 OID 571654)
 -- Name: user_credentials_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -733,7 +876,7 @@ CREATE SEQUENCE user_credentials_id_seq
 ALTER TABLE public.user_credentials_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3535 (class 0 OID 0)
+-- TOC entry 3591 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: user_credentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -742,7 +885,7 @@ ALTER SEQUENCE user_credentials_id_seq OWNED BY user_credentials.id;
 
 
 --
--- TOC entry 212 (class 1259 OID 559032)
+-- TOC entry 212 (class 1259 OID 571540)
 -- Name: user_in_environment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -760,7 +903,7 @@ CREATE TABLE user_in_environment (
 ALTER TABLE public.user_in_environment OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 559030)
+-- TOC entry 211 (class 1259 OID 571538)
 -- Name: user_in_environment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -775,7 +918,7 @@ CREATE SEQUENCE user_in_environment_id_seq
 ALTER TABLE public.user_in_environment_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3536 (class 0 OID 0)
+-- TOC entry 3592 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: user_in_environment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -784,7 +927,7 @@ ALTER SEQUENCE user_in_environment_id_seq OWNED BY user_in_environment.id;
 
 
 --
--- TOC entry 210 (class 1259 OID 559024)
+-- TOC entry 210 (class 1259 OID 571532)
 -- Name: user_profile_environments; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -797,7 +940,7 @@ CREATE TABLE user_profile_environments (
 ALTER TABLE public.user_profile_environments OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 559022)
+-- TOC entry 209 (class 1259 OID 571530)
 -- Name: user_profile_environments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -812,7 +955,7 @@ CREATE SEQUENCE user_profile_environments_id_seq
 ALTER TABLE public.user_profile_environments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3537 (class 0 OID 0)
+-- TOC entry 3593 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: user_profile_environments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -821,7 +964,7 @@ ALTER SEQUENCE user_profile_environments_id_seq OWNED BY user_profile_environmen
 
 
 --
--- TOC entry 185 (class 1259 OID 558831)
+-- TOC entry 185 (class 1259 OID 571339)
 -- Name: user_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -834,7 +977,7 @@ CREATE TABLE user_types (
 ALTER TABLE public.user_types OWNER TO postgres;
 
 --
--- TOC entry 184 (class 1259 OID 558829)
+-- TOC entry 184 (class 1259 OID 571337)
 -- Name: user_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -849,7 +992,7 @@ CREATE SEQUENCE user_types_id_seq
 ALTER TABLE public.user_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3538 (class 0 OID 0)
+-- TOC entry 3594 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: user_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -858,7 +1001,7 @@ ALTER SEQUENCE user_types_id_seq OWNED BY user_types.id;
 
 
 --
--- TOC entry 193 (class 1259 OID 558887)
+-- TOC entry 193 (class 1259 OID 571395)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -869,14 +1012,15 @@ CREATE TABLE users (
     auth_token character varying(255),
     email_address character varying(256) NOT NULL,
     user_type_id integer NOT NULL,
-    current_environment_id integer
+    current_environment_id integer,
+    password character varying(60)
 );
 
 
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 192 (class 1259 OID 558885)
+-- TOC entry 192 (class 1259 OID 571393)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -891,7 +1035,7 @@ CREATE SEQUENCE users_id_seq
 ALTER TABLE public.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3539 (class 0 OID 0)
+-- TOC entry 3595 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -900,7 +1044,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- TOC entry 3250 (class 2604 OID 559009)
+-- TOC entry 3270 (class 2604 OID 571517)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -908,7 +1052,7 @@ ALTER TABLE ONLY access_levels ALTER COLUMN id SET DEFAULT nextval('access_level
 
 
 --
--- TOC entry 3261 (class 2604 OID 559128)
+-- TOC entry 3281 (class 2604 OID 571636)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -916,7 +1060,7 @@ ALTER TABLE ONLY access_type_classifier ALTER COLUMN id SET DEFAULT nextval('acc
 
 
 --
--- TOC entry 3249 (class 2604 OID 559001)
+-- TOC entry 3269 (class 2604 OID 571509)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -924,7 +1068,7 @@ ALTER TABLE ONLY access_types ALTER COLUMN id SET DEFAULT nextval('access_types_
 
 
 --
--- TOC entry 3255 (class 2604 OID 559067)
+-- TOC entry 3275 (class 2604 OID 571575)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -932,7 +1076,7 @@ ALTER TABLE ONLY actions ALTER COLUMN id SET DEFAULT nextval('actions_id_seq'::r
 
 
 --
--- TOC entry 3256 (class 2604 OID 559090)
+-- TOC entry 3276 (class 2604 OID 571598)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -940,7 +1084,7 @@ ALTER TABLE ONLY actions_args ALTER COLUMN id SET DEFAULT nextval('actions_args_
 
 
 --
--- TOC entry 3245 (class 2604 OID 558948)
+-- TOC entry 3265 (class 2604 OID 571456)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -948,7 +1092,7 @@ ALTER TABLE ONLY communication_types ALTER COLUMN id SET DEFAULT nextval('commun
 
 
 --
--- TOC entry 3246 (class 2604 OID 558956)
+-- TOC entry 3266 (class 2604 OID 571464)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -956,7 +1100,7 @@ ALTER TABLE ONLY device_communications ALTER COLUMN id SET DEFAULT nextval('devi
 
 
 --
--- TOC entry 3243 (class 2604 OID 558915)
+-- TOC entry 3263 (class 2604 OID 571423)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -964,7 +1108,7 @@ ALTER TABLE ONLY device_types ALTER COLUMN id SET DEFAULT nextval('device_types_
 
 
 --
--- TOC entry 3244 (class 2604 OID 558923)
+-- TOC entry 3264 (class 2604 OID 571431)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -972,7 +1116,7 @@ ALTER TABLE ONLY devices ALTER COLUMN id SET DEFAULT nextval('devices_id_seq'::r
 
 
 --
--- TOC entry 3234 (class 2604 OID 558842)
+-- TOC entry 3254 (class 2604 OID 571350)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -980,7 +1124,7 @@ ALTER TABLE ONLY environment_types ALTER COLUMN id SET DEFAULT nextval('environm
 
 
 --
--- TOC entry 3238 (class 2604 OID 558860)
+-- TOC entry 3258 (class 2604 OID 571368)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -988,7 +1132,7 @@ ALTER TABLE ONLY environments ALTER COLUMN id SET DEFAULT nextval('environments_
 
 
 --
--- TOC entry 3263 (class 2604 OID 559165)
+-- TOC entry 3283 (class 2604 OID 571673)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -996,7 +1140,7 @@ ALTER TABLE ONLY frequency_levels ALTER COLUMN id SET DEFAULT nextval('frequency
 
 
 --
--- TOC entry 3248 (class 2604 OID 558978)
+-- TOC entry 3268 (class 2604 OID 571486)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1004,7 +1148,7 @@ ALTER TABLE ONLY functionalities ALTER COLUMN id SET DEFAULT nextval('functional
 
 
 --
--- TOC entry 3235 (class 2604 OID 558850)
+-- TOC entry 3255 (class 2604 OID 571358)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1012,7 +1156,7 @@ ALTER TABLE ONLY localization_types ALTER COLUMN id SET DEFAULT nextval('localiz
 
 
 --
--- TOC entry 3258 (class 2604 OID 559104)
+-- TOC entry 3278 (class 2604 OID 571612)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1020,7 +1164,31 @@ ALTER TABLE ONLY log_events ALTER COLUMN id SET DEFAULT nextval('log_events_id_s
 
 
 --
--- TOC entry 3262 (class 2604 OID 559151)
+-- TOC entry 3288 (class 2604 OID 571766)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_access_tokens ALTER COLUMN id SET DEFAULT nextval('oauth_access_tokens_id_seq'::regclass);
+
+
+--
+-- TOC entry 3286 (class 2604 OID 571741)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_authorization_codes ALTER COLUMN id SET DEFAULT nextval('oauth_authorization_codes_id_seq'::regclass);
+
+
+--
+-- TOC entry 3284 (class 2604 OID 571721)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_clients ALTER COLUMN id SET DEFAULT nextval('oauth_clients_id_seq'::regclass);
+
+
+--
+-- TOC entry 3282 (class 2604 OID 571659)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1028,7 +1196,7 @@ ALTER TABLE ONLY user_credentials ALTER COLUMN id SET DEFAULT nextval('user_cred
 
 
 --
--- TOC entry 3252 (class 2604 OID 559035)
+-- TOC entry 3272 (class 2604 OID 571543)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1036,7 +1204,7 @@ ALTER TABLE ONLY user_in_environment ALTER COLUMN id SET DEFAULT nextval('user_i
 
 
 --
--- TOC entry 3251 (class 2604 OID 559027)
+-- TOC entry 3271 (class 2604 OID 571535)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1044,7 +1212,7 @@ ALTER TABLE ONLY user_profile_environments ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 3233 (class 2604 OID 558834)
+-- TOC entry 3253 (class 2604 OID 571342)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1052,7 +1220,7 @@ ALTER TABLE ONLY user_types ALTER COLUMN id SET DEFAULT nextval('user_types_id_s
 
 
 --
--- TOC entry 3242 (class 2604 OID 558890)
+-- TOC entry 3262 (class 2604 OID 571398)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1060,7 +1228,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- TOC entry 3493 (class 0 OID 559006)
+-- TOC entry 3540 (class 0 OID 571514)
 -- Dependencies: 208
 -- Data for Name: access_levels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1076,7 +1244,7 @@ INSERT INTO access_levels (id, impact_factor, environment_type_id, access_type_i
 
 
 --
--- TOC entry 3540 (class 0 OID 0)
+-- TOC entry 3596 (class 0 OID 0)
 -- Dependencies: 207
 -- Name: access_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1085,7 +1253,7 @@ SELECT pg_catalog.setval('access_levels_id_seq', 20, true);
 
 
 --
--- TOC entry 3505 (class 0 OID 559125)
+-- TOC entry 3552 (class 0 OID 571633)
 -- Dependencies: 220
 -- Data for Name: access_type_classifier; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1350,46 +1518,46 @@ INSERT INTO access_type_classifier (id, user_profile_environment_id, environment
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (258, 5, 2, 0, 'n', 'y', 1, 3);
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (259, 5, 2, 0, 'n', 'y', 1, 2);
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (260, 5, 2, 0, 'n', 'y', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (261, 5, 2, 0, 'n', 'n', 1, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (262, 5, 2, 0, 'n', 'n', 1, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (263, 5, 2, 0, 'n', 'n', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (264, 5, 3, 1, 'd', 'y', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (265, 5, 3, 1, 'd', 'y', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (266, 5, 3, 1, 'd', 'y', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (267, 5, 3, 1, 'd', 'n', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (268, 5, 3, 1, 'd', 'n', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (269, 5, 3, 1, 'd', 'n', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (270, 5, 3, 1, 'n', 'y', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (271, 5, 3, 1, 'n', 'y', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (272, 5, 3, 1, 'n', 'y', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (273, 5, 3, 1, 'n', 'n', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (274, 5, 3, 1, 'n', 'n', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (275, 5, 3, 1, 'n', 'n', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (276, 5, 3, 0, 'd', 'y', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (277, 5, 3, 0, 'd', 'y', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (278, 5, 3, 0, 'd', 'y', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (279, 5, 3, 0, 'd', 'n', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (280, 5, 3, 0, 'd', 'n', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (281, 5, 3, 0, 'd', 'n', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (282, 5, 3, 0, 'n', 'y', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (283, 5, 3, 0, 'n', 'y', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (284, 5, 3, 0, 'n', 'y', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (285, 5, 3, 0, 'n', 'n', 5, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (286, 5, 3, 0, 'n', 'n', 5, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (287, 5, 3, 0, 'n', 'n', 5, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (288, 5, 1, 1, 'd', 'y', 2, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (289, 5, 1, 1, 'd', 'y', 1, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (290, 5, 1, 1, 'd', 'y', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (291, 5, 1, 1, 'd', 'n', 1, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (292, 5, 1, 1, 'd', 'n', 1, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (293, 5, 1, 1, 'd', 'n', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (294, 5, 1, 1, 'n', 'y', 2, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (295, 5, 1, 1, 'n', 'y', 1, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (296, 5, 1, 1, 'n', 'y', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (297, 5, 1, 1, 'n', 'n', 1, 3);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (298, 5, 1, 1, 'n', 'n', 1, 2);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (299, 5, 1, 1, 'n', 'n', 1, 1);
-INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (300, 5, 1, 0, 'd', 'y', 2, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (281, 5, 2, 0, 'n', 'n', 1, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (282, 5, 2, 0, 'n', 'n', 1, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (283, 5, 2, 0, 'n', 'n', 1, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (284, 5, 3, 1, 'd', 'y', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (285, 5, 3, 1, 'd', 'y', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (286, 5, 3, 1, 'd', 'y', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (287, 5, 3, 1, 'd', 'n', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (288, 5, 3, 1, 'd', 'n', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (289, 5, 3, 1, 'd', 'n', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (290, 5, 3, 1, 'n', 'y', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (291, 5, 3, 1, 'n', 'y', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (292, 5, 3, 1, 'n', 'y', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (293, 5, 3, 1, 'n', 'n', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (294, 5, 3, 1, 'n', 'n', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (295, 5, 3, 1, 'n', 'n', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (296, 5, 3, 0, 'd', 'y', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (297, 5, 3, 0, 'd', 'y', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (298, 5, 3, 0, 'd', 'y', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (299, 5, 3, 0, 'd', 'n', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (300, 5, 3, 0, 'd', 'n', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (261, 5, 3, 0, 'd', 'n', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (262, 5, 3, 0, 'n', 'y', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (263, 5, 3, 0, 'n', 'y', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (264, 5, 3, 0, 'n', 'y', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (265, 5, 3, 0, 'n', 'n', 5, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (266, 5, 3, 0, 'n', 'n', 5, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (267, 5, 3, 0, 'n', 'n', 5, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (268, 5, 1, 1, 'd', 'y', 2, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (269, 5, 1, 1, 'd', 'y', 1, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (270, 5, 1, 1, 'd', 'y', 1, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (271, 5, 1, 1, 'd', 'n', 1, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (272, 5, 1, 1, 'd', 'n', 1, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (273, 5, 1, 1, 'd', 'n', 1, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (274, 5, 1, 1, 'n', 'y', 2, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (275, 5, 1, 1, 'n', 'y', 1, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (276, 5, 1, 1, 'n', 'y', 1, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (277, 5, 1, 1, 'n', 'n', 1, 3);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (278, 5, 1, 1, 'n', 'n', 1, 2);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (279, 5, 1, 1, 'n', 'n', 1, 1);
+INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (280, 5, 1, 0, 'd', 'y', 2, 3);
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (301, 5, 1, 0, 'd', 'y', 1, 2);
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (302, 5, 1, 0, 'd', 'y', 1, 1);
 INSERT INTO access_type_classifier (id, user_profile_environment_id, environment_type_id, weekday, shift, workday, access_type_id, frequency_level_id) VALUES (303, 5, 1, 0, 'd', 'n', 1, 3);
@@ -1476,7 +1644,7 @@ INSERT INTO access_type_classifier (id, user_profile_environment_id, environment
 
 
 --
--- TOC entry 3541 (class 0 OID 0)
+-- TOC entry 3597 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: access_type_classifier_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1485,7 +1653,7 @@ SELECT pg_catalog.setval('access_type_classifier_id_seq', 400, true);
 
 
 --
--- TOC entry 3491 (class 0 OID 558998)
+-- TOC entry 3538 (class 0 OID 571506)
 -- Dependencies: 206
 -- Data for Name: access_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1498,7 +1666,7 @@ INSERT INTO access_types (id, name) VALUES (5, 'Administrative');
 
 
 --
--- TOC entry 3542 (class 0 OID 0)
+-- TOC entry 3598 (class 0 OID 0)
 -- Dependencies: 205
 -- Name: access_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1507,7 +1675,7 @@ SELECT pg_catalog.setval('access_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3499 (class 0 OID 559064)
+-- TOC entry 3546 (class 0 OID 571572)
 -- Dependencies: 214
 -- Data for Name: actions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1570,11 +1738,10 @@ INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_i
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (56, 7, 5, NULL, 'on', NULL, NULL, NULL, NULL);
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (57, 8, 5, NULL, 'on', NULL, NULL, NULL, NULL);
 INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (58, 8, 2, 7, 'on', NULL, NULL, NULL, NULL);
-INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_id, action_name, start_date, end_date, start_daily_interval, interval_duration) VALUES (81, 8, 2, 6, 'on', NULL, NULL, NULL, NULL);
 
 
 --
--- TOC entry 3501 (class 0 OID 559087)
+-- TOC entry 3548 (class 0 OID 571595)
 -- Dependencies: 216
 -- Data for Name: actions_args; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1582,7 +1749,7 @@ INSERT INTO actions (id, access_level_id, functionality_id, custom_environment_i
 
 
 --
--- TOC entry 3543 (class 0 OID 0)
+-- TOC entry 3599 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: actions_args_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1591,16 +1758,16 @@ SELECT pg_catalog.setval('actions_args_id_seq', 1, false);
 
 
 --
--- TOC entry 3544 (class 0 OID 0)
+-- TOC entry 3600 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: actions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('actions_id_seq', 81, true);
+SELECT pg_catalog.setval('actions_id_seq', 80, true);
 
 
 --
--- TOC entry 3484 (class 0 OID 558945)
+-- TOC entry 3531 (class 0 OID 571453)
 -- Dependencies: 199
 -- Data for Name: communication_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1615,7 +1782,7 @@ INSERT INTO communication_types (id, name) VALUES (7, 'HTTP');
 
 
 --
--- TOC entry 3545 (class 0 OID 0)
+-- TOC entry 3601 (class 0 OID 0)
 -- Dependencies: 198
 -- Name: communication_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1624,7 +1791,7 @@ SELECT pg_catalog.setval('communication_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3486 (class 0 OID 558953)
+-- TOC entry 3533 (class 0 OID 571461)
 -- Dependencies: 201
 -- Data for Name: device_communications; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1635,7 +1802,7 @@ INSERT INTO device_communications (id, name, address, parameters, address_format
 
 
 --
--- TOC entry 3546 (class 0 OID 0)
+-- TOC entry 3602 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: device_communications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1644,7 +1811,7 @@ SELECT pg_catalog.setval('device_communications_id_seq', 20, true);
 
 
 --
--- TOC entry 3489 (class 0 OID 558981)
+-- TOC entry 3536 (class 0 OID 571489)
 -- Dependencies: 204
 -- Data for Name: device_functionalities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1660,21 +1827,10 @@ INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 2);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 3);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 5);
 INSERT INTO device_functionalities (device_id, functionality_id) VALUES (2, 9);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 8);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 7);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 1);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 9);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 15);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 5);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 12);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 3);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 10);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 6);
-INSERT INTO device_functionalities (device_id, functionality_id) VALUES (21, 2);
 
 
 --
--- TOC entry 3480 (class 0 OID 558912)
+-- TOC entry 3527 (class 0 OID 571420)
 -- Dependencies: 195
 -- Data for Name: device_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1688,7 +1844,7 @@ INSERT INTO device_types (id, name) VALUES (6, 'RFID Card');
 
 
 --
--- TOC entry 3547 (class 0 OID 0)
+-- TOC entry 3603 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: device_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1697,7 +1853,7 @@ SELECT pg_catalog.setval('device_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3482 (class 0 OID 558920)
+-- TOC entry 3529 (class 0 OID 571428)
 -- Dependencies: 197
 -- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1705,20 +1861,19 @@ SELECT pg_catalog.setval('device_types_id_seq', 20, true);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (1, '1234554321', 'VitualMachineAndroid_2.3', 4, 1, NULL);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (2, '1111111111', 'Tablet Lab. 205', 1, 1, NULL);
 INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (3, '5E-EF-8-9B-54', 'RFID Card - Borges', 6, 1, NULL);
-INSERT INTO devices (id, code, name, device_type_id, user_id, current_environment_id) VALUES (21, 'ffffffff-a532-a6d5-7413-31f40c97adbb', 'samsung GT-I8262B 3.4.0-1515091-user', 1, 21, 7);
 
 
 --
--- TOC entry 3548 (class 0 OID 0)
+-- TOC entry 3604 (class 0 OID 0)
 -- Dependencies: 196
 -- Name: devices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('devices_id_seq', 40, true);
+SELECT pg_catalog.setval('devices_id_seq', 20, true);
 
 
 --
--- TOC entry 3510 (class 0 OID 559168)
+-- TOC entry 3557 (class 0 OID 571676)
 -- Dependencies: 225
 -- Data for Name: environment_frequency_levels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1729,7 +1884,7 @@ INSERT INTO environment_frequency_levels (environment_id, frequency_level_id, mi
 
 
 --
--- TOC entry 3472 (class 0 OID 558839)
+-- TOC entry 3519 (class 0 OID 571347)
 -- Dependencies: 187
 -- Data for Name: environment_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1740,7 +1895,7 @@ INSERT INTO environment_types (id, name) VALUES (3, 'Public');
 
 
 --
--- TOC entry 3549 (class 0 OID 0)
+-- TOC entry 3605 (class 0 OID 0)
 -- Dependencies: 186
 -- Name: environment_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1749,7 +1904,7 @@ SELECT pg_catalog.setval('environment_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3476 (class 0 OID 558857)
+-- TOC entry 3523 (class 0 OID 571365)
 -- Dependencies: 191
 -- Data for Name: environments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1764,7 +1919,7 @@ INSERT INTO environments (id, name, location, shape, operating_range, version, p
 
 
 --
--- TOC entry 3550 (class 0 OID 0)
+-- TOC entry 3606 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: environments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1773,7 +1928,7 @@ SELECT pg_catalog.setval('environments_id_seq', 7, true);
 
 
 --
--- TOC entry 3509 (class 0 OID 559162)
+-- TOC entry 3556 (class 0 OID 571670)
 -- Dependencies: 224
 -- Data for Name: frequency_levels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1784,7 +1939,7 @@ INSERT INTO frequency_levels (id, name, level) VALUES (3, 'frequent', 3);
 
 
 --
--- TOC entry 3551 (class 0 OID 0)
+-- TOC entry 3607 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: frequency_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1793,7 +1948,7 @@ SELECT pg_catalog.setval('frequency_levels_id_seq', 20, true);
 
 
 --
--- TOC entry 3488 (class 0 OID 558975)
+-- TOC entry 3535 (class 0 OID 571483)
 -- Dependencies: 203
 -- Data for Name: functionalities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1816,7 +1971,7 @@ INSERT INTO functionalities (id, name) VALUES (15, 'GPS');
 
 
 --
--- TOC entry 3552 (class 0 OID 0)
+-- TOC entry 3608 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: functionalities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1825,7 +1980,7 @@ SELECT pg_catalog.setval('functionalities_id_seq', 40, true);
 
 
 --
--- TOC entry 3474 (class 0 OID 558847)
+-- TOC entry 3521 (class 0 OID 571355)
 -- Dependencies: 189
 -- Data for Name: localization_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1835,7 +1990,7 @@ INSERT INTO localization_types (id, name, "precision", metric) VALUES (2, 'RFID'
 
 
 --
--- TOC entry 3553 (class 0 OID 0)
+-- TOC entry 3609 (class 0 OID 0)
 -- Dependencies: 188
 -- Name: localization_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1844,66 +1999,98 @@ SELECT pg_catalog.setval('localization_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3503 (class 0 OID 559101)
+-- TOC entry 3550 (class 0 OID 571609)
 -- Dependencies: 218
 -- Data for Name: log_events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (1, '2015-09-09 16:19:05.832', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (2, '2015-09-09 16:22:33.247', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (3, '2015-09-09 16:23:13.382', 'd', 1, 'y', 21, 21, 7, true);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (4, '2015-09-09 16:23:13.79', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (21, '2015-09-09 16:45:38.382', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (22, '2015-09-09 16:45:51.225', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (23, '2015-09-09 16:46:21.507', 'd', 1, 'y', 21, 21, 7, true);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (24, '2015-09-09 16:46:22.158', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (25, '2015-09-09 16:46:36.238', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (26, '2015-09-09 16:46:56.718', 'd', 1, 'y', 21, 21, 7, true);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (27, '2015-09-09 16:46:57.251', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (28, '2015-09-09 16:56:00.121', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (29, '2015-09-09 16:56:01.167', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (30, '2015-09-09 16:56:02.032', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (31, '2015-09-09 16:58:35.546', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (32, '2015-09-09 16:58:36.187', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (33, '2015-09-09 17:02:06.369', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (34, '2015-09-09 17:02:06.902', 'd', 1, 'y', 21, 21, 7, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (35, '2015-09-09 17:03:15.901', 'd', 1, 'y', 21, 21, 6, false);
-INSERT INTO log_events (id, log_time, shift, weekday, workday, user_id, device_id, environment_id, exiting) VALUES (36, '2015-09-09 17:03:16.647', 'd', 1, 'y', 21, 21, 7, false);
 
 
 --
--- TOC entry 3554 (class 0 OID 0)
+-- TOC entry 3610 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: log_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('log_events_id_seq', 60, true);
+SELECT pg_catalog.setval('log_events_id_seq', 1, false);
 
 
 --
--- TOC entry 3468 (class 0 OID 558821)
+-- TOC entry 3563 (class 0 OID 571763)
+-- Dependencies: 231
+-- Data for Name: oauth_access_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3611 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: oauth_access_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('oauth_access_tokens_id_seq', 1, false);
+
+
+--
+-- TOC entry 3561 (class 0 OID 571738)
+-- Dependencies: 229
+-- Data for Name: oauth_authorization_codes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3612 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: oauth_authorization_codes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('oauth_authorization_codes_id_seq', 1, false);
+
+
+--
+-- TOC entry 3559 (class 0 OID 571718)
+-- Dependencies: 227
+-- Data for Name: oauth_clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO oauth_clients (id, owner_id, grant_type, client_id, client_secret, redirect_uri, created_at) VALUES (1, 2, 'client_credentials', 'ubipri_client_id', 'secret', NULL, '2015-09-25 09:03:30.126');
+
+
+--
+-- TOC entry 3613 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: oauth_clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('oauth_clients_id_seq', 20, true);
+
+
+--
+-- TOC entry 3515 (class 0 OID 571329)
 -- Dependencies: 183
 -- Data for Name: play_evolutions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (1, '96d482bb06650d8692ddbeb112084cfd7bde4487', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS user_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (1, '96d482bb06650d8692ddbeb112084cfd7bde4487', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS user_types CASCADE;
 CREATE TABLE user_types (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE user_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (2, '0a30c35a39dea69b20ad342eab8fcef7094108cd', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS environment_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (2, '0a30c35a39dea69b20ad342eab8fcef7094108cd', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS environment_types CASCADE;
 CREATE TABLE environment_types (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE environment_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (3, '4dda3e35a85edb38871acc854c333ad73f705bbf', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS localization_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (3, '4dda3e35a85edb38871acc854c333ad73f705bbf', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS localization_types CASCADE;
 CREATE TABLE localization_types (
 id serial NOT NULL primary key,
 name character varying(100) NOT NULL,
 precision double precision not null default 5.0,
 metric varchar(20) not null default ''m2''
 );', 'DROP TABLE localization_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (4, 'f9389ccda8c895b99f9dd2f58e09b49855f28d46', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS environments CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (4, 'f9389ccda8c895b99f9dd2f58e09b49855f28d46', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS environments CASCADE;
 CREATE TABLE environments (
 id serial not null primary key,
 name varchar(100) not null,
@@ -1930,7 +2117,7 @@ CREATE INDEX environment_location_idx ON environments USING GIST (location);
 CREATE INDEX environment_shape_idx ON environments USING GIST (shape);', 'DROP INDEX IF EXISTS environment_location_idx;
 DROP INDEX IF EXISTS environment_shape_idx;
 DROP TABLE environments;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (5, 'aca8b72c2083a0f403e38c39a376e62d7f6830b7', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS users CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (5, 'aca8b72c2083a0f403e38c39a376e62d7f6830b7', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
 id 	serial not null primary key,
 name varchar(100) not null unique,
@@ -1947,12 +2134,12 @@ constraint uq_user_email_address unique (email_address),
 foreign key (user_type_id) references user_types (id),
 foreign key (current_environment_id) references environments (id)
 );', 'DROP TABLE users;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (6, '65ce7a91ebf6f834eb42d490904cfba4a29c7161', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS device_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (6, '65ce7a91ebf6f834eb42d490904cfba4a29c7161', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS device_types CASCADE;
 CREATE TABLE device_types (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE device_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (7, '6107b20d68ba6591b575056a792888d77a986885', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS devices CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (7, '6107b20d68ba6591b575056a792888d77a986885', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS devices CASCADE;
 CREATE TABLE devices (
 id  serial not null primary key,
 code varchar(50) not null unique,
@@ -1966,12 +2153,12 @@ foreign key (device_type_id) references device_types (id),
 foreign key (user_id) references users (id),
 foreign key (current_environment_id) references environments (id)
 );', 'DROP TABLE devices;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (8, 'a73d9239c2c8ece708f4f858f78842d4337c9b8d', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS communication_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (8, 'a73d9239c2c8ece708f4f858f78842d4337c9b8d', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS communication_types CASCADE;
 CREATE TABLE communication_types (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE communication_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (9, '53e869e4adb733cde3b2c90155a386dcfe2c6d2d', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS device_communications CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (9, '53e869e4adb733cde3b2c90155a386dcfe2c6d2d', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS device_communications CASCADE;
 CREATE TABLE device_communications (
 id serial not null primary key,
 name varchar(100) not null,
@@ -1987,12 +2174,12 @@ preferred_order integer not null default 1,
 foreign key (device_id) references devices (id),
 foreign key (communication_type_id) references communication_types (id)
 );', 'DROP TABLE device_communications;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (10, 'ac113e5233044bb07c82225c694e38b674b732be', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS functionalities CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (10, 'ac113e5233044bb07c82225c694e38b674b732be', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS functionalities CASCADE;
 CREATE TABLE functionalities (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE functionalities;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (11, '9dd29dfac244df08776f8ef208c46acd971ffefd', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS device_functionalities CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (11, '9dd29dfac244df08776f8ef208c46acd971ffefd', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS device_functionalities CASCADE;
 CREATE TABLE device_functionalities (
 device_id integer not null,
 functionality_id integer not null,
@@ -2000,7 +2187,7 @@ primary key (device_id, functionality_id),
 foreign key (device_id) references devices (id),
 foreign key (functionality_id) references functionalities (id)
 );', 'DROP TABLE device_functionalities;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (12, '8b751ad759e54438df897ccdb51eee17917e6b49', '2015-09-09 00:00:00', '--DROP TABLE IF EXISTS environment_points CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (12, '8b751ad759e54438df897ccdb51eee17917e6b49', '2015-09-25 00:00:00', '--DROP TABLE IF EXISTS environment_points CASCADE;
 --CREATE TABLE environment_points (
 --	id serial not null primary key,
 --	latitude double precision not null,
@@ -2012,12 +2199,12 @@ INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, 
 
 --	foreign key (environment_id) references environments (id)
 --);', '--DROP TABLE environment_points;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (13, 'd8612aa2eda2b2fbcf4e472d420388c9adaac804', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS access_types CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (13, 'd8612aa2eda2b2fbcf4e472d420388c9adaac804', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS access_types CASCADE;
 CREATE TABLE access_types (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE access_types;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (14, 'c94674f5b1fe5bf086f7f694746a190f5a25fef7', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS access_levels CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (14, 'c94674f5b1fe5bf086f7f694746a190f5a25fef7', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS access_levels CASCADE;
 CREATE TABLE access_levels (
 id serial not null primary key,
 impact_factor double precision not null,
@@ -2028,23 +2215,23 @@ access_type_id integer not null,
 foreign key (environment_type_id) references environment_types (id),
 foreign key (access_type_id) references access_types (id)
 );', 'DROP TABLE access_levels;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (15, 'afc1f050942e34ef3e8cacd14dafaf2dc4f6021c', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS user_profile_environments CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (15, 'afc1f050942e34ef3e8cacd14dafaf2dc4f6021c', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS user_profile_environments CASCADE;
 CREATE TABLE user_profile_environments (
 id serial not null primary key,
 name varchar(100) not null
 );', 'DROP TABLE user_profile_environments;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (25, '4d286c9212a04829595a96bf28dbdd3c1332f471', '2015-09-09 00:00:00', 'ALTER TABLE access_type_classifier ADD COLUMN frequency_level_id integer NOT NULL;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (25, '4d286c9212a04829595a96bf28dbdd3c1332f471', '2015-09-25 00:00:00', 'ALTER TABLE access_type_classifier ADD COLUMN frequency_level_id integer NOT NULL;
 
 ALTER TABLE access_type_classifier ADD CONSTRAINT access_type_classifier_frequency_level_id_fkey FOREIGN KEY (frequency_level_id)
 REFERENCES frequency_levels (id);', 'ALTER TABLE access_type_classifier DROP CONSTRAINT access_type_classifier_frequency_level_id_fkey;
 ALTER TABLE access_type_classifier DROP COLUMN frequency_level_id;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (26, 'e284465d66e68a9f17c82fe80794e53c77851b8c', '2015-09-09 00:00:00', 'ALTER TABLE users DROP COLUMN sha_password;', 'ALTER TABLE users ADD COLUMN sha_password bytea NULL;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (27, 'd1ec480cbe70644c0f58b732a458e417e4df603f', '2015-09-09 00:00:00', 'ALTER TABLE log_events DROP COLUMN event;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (26, 'e284465d66e68a9f17c82fe80794e53c77851b8c', '2015-09-25 00:00:00', 'ALTER TABLE users DROP COLUMN sha_password;', 'ALTER TABLE users ADD COLUMN sha_password bytea NULL;', 'applied', '');
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (27, 'd1ec480cbe70644c0f58b732a458e417e4df603f', '2015-09-25 00:00:00', 'ALTER TABLE log_events DROP COLUMN event;
 ALTER TABLE log_events DROP COLUMN code;
 ALTER TABLE log_events ADD COLUMN exiting BOOLEAN NOT NULL DEFAULT FALSE;', 'ALTER TABLE log_events ADD COLUMN event CHARACTER VARYING(100);
 ALTER TABLE log_events ADD COLUMN code CHARACTER VARYING(100);
 ALTER TABLE log_events DROP COLUMN exiting;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (16, '4274a077e458a62622b3608cdc0681e4e444b292', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS user_in_environment CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (16, '4274a077e458a62622b3608cdc0681e4e444b292', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS user_in_environment CASCADE;
 CREATE TABLE user_in_environment (
 id serial not null unique,
 
@@ -2062,7 +2249,7 @@ foreign key (environment_id) references environments (id),
 foreign key (user_id) references users (id),
 foreign key (current_access_type_id) references access_types (id)
 );', 'DROP TABLE user_in_environment;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (17, 'c6c18f3163b4534b89e622d61ea74230dd490ec1', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS actions CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (17, 'c6c18f3163b4534b89e622d61ea74230dd490ec1', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS actions CASCADE;
 CREATE TABLE actions (
 id serial not null primary key,
 
@@ -2082,7 +2269,7 @@ foreign key (access_level_id) references access_levels (id),
 foreign key (functionality_id) references functionalities (id),
 foreign key (custom_environment_id) references environments (id)
 );', 'DROP TABLE actions;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (18, 'a7b4614104fd210bba8e84d4967b560d6ca09f9e', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS actions_args CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (18, 'a7b4614104fd210bba8e84d4967b560d6ca09f9e', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS actions_args CASCADE;
 CREATE TABLE actions_args (
 id serial not null primary key,
 label varchar(100) default null,
@@ -2092,7 +2279,7 @@ action_id integer not null,
 
 foreign key (action_id) references actions (id)
 );', 'DROP TABLE actions_args;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (19, '07fc043eea845c776250af8c3c72cdf2144b72f1', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS log_events CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (19, '07fc043eea845c776250af8c3c72cdf2144b72f1', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS log_events CASCADE;
 CREATE TABLE log_events (
 id serial not null primary key,
 log_time timestamp not null default now(),
@@ -2110,7 +2297,7 @@ foreign key (environment_id) references environments (id),
 foreign key (user_id) references users (id),
 foreign key (device_id) references devices (id)
 );', 'DROP TABLE log_events;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (20, 'de853a73d3d182f8420b91855d100b4388cbc3ca', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS access_type_classifier CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (20, 'de853a73d3d182f8420b91855d100b4388cbc3ca', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS access_type_classifier CASCADE;
 CREATE TABLE access_type_classifier (
 id serial not null primary key,
 
@@ -2126,7 +2313,7 @@ foreign key (user_profile_environment_id) references user_profile_environments (
 foreign key (environment_type_id) references environment_types (id),
 foreign key (access_type_id) references access_types (id)
 );', 'DROP TABLE access_type_classifier;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (21, 'a9fb2070a639d79bc7f989de81b2ae93cafb7c22', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS user_credentials CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (21, 'a9fb2070a639d79bc7f989de81b2ae93cafb7c22', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS user_credentials CASCADE;
 CREATE TABLE user_credentials (
 id serial not null primary key,
 external_id character varying(255) NOT NULL,
@@ -2144,14 +2331,14 @@ external_id ASC NULLS LAST,
 system ASC NULLS LAST
 );', 'DROP INDEX IF EXISTS user_credentials_external_id_system_idx CASCADE;
 DROP TABLE user_credentials;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (22, 'c98bf7ed0ce6b6b3da2f4992a1d7eb4b1fd5bf75', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS frequency_levels CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (22, 'c98bf7ed0ce6b6b3da2f4992a1d7eb4b1fd5bf75', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS frequency_levels CASCADE;
 
 CREATE TABLE frequency_levels (
 id serial not null primary key,
 name character varying(100) NOT NULL,
 level smallint NOT NULL
 );', 'DROP TABLE frequency_levels;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (23, 'c8b541ddee0197fa21801ef3fe634de48d5e2596', '2015-09-09 00:00:00', 'DROP TABLE IF EXISTS environment_frequency_levels CASCADE;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (23, 'c8b541ddee0197fa21801ef3fe634de48d5e2596', '2015-09-25 00:00:00', 'DROP TABLE IF EXISTS environment_frequency_levels CASCADE;
 
 CREATE TABLE environment_frequency_levels (
 environment_id integer NOT NULL,
@@ -2165,16 +2352,84 @@ CONSTRAINT environment_frequency_levels_pkey PRIMARY KEY (environment_id, freque
 FOREIGN KEY (environment_id) REFERENCES environments (id),
 FOREIGN KEY (frequency_level_id) REFERENCES frequency_levels (id)
 );', 'DROP TABLE environment_frequency_levels;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (24, '65d8c8526ead2355af89d5d95e06c4f1f94f65e8', '2015-09-09 00:00:00', 'ALTER TABLE user_in_environment ADD COLUMN current_frequency_level_id integer NULL;
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (24, '65d8c8526ead2355af89d5d95e06c4f1f94f65e8', '2015-09-25 00:00:00', 'ALTER TABLE user_in_environment ADD COLUMN current_frequency_level_id integer NULL;
 
 ALTER TABLE user_in_environment ADD CONSTRAINT user_in_environment_current_freq_lev_fkey FOREIGN KEY (current_frequency_level_id)
 REFERENCES frequency_levels (id);', 'ALTER TABLE user_in_environment DROP CONSTRAINT user_in_environment_current_freq_lev_fkey;
 ALTER TABLE user_in_environment DROP COLUMN current_frequency_level_id;', 'applied', '');
-INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (28, '5e6bc805cfc9260f7780617979c3e8dafdbb8bf2', '2015-09-09 00:00:00', 'ALTER TABLE environments ADD COLUMN level integer not null default 0;', 'ALTER TABLE environments DROP COLUMN level;', 'applied', '');
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (28, '5e6bc805cfc9260f7780617979c3e8dafdbb8bf2', '2015-09-25 00:00:00', 'ALTER TABLE environments ADD COLUMN level integer not null default 0;', 'ALTER TABLE environments DROP COLUMN level;', 'applied', '');
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (29, '5c28ebb68467952607222c70fc6fcbfa9ab9c7e2', '2015-09-25 00:00:00', 'create table oauth_clients
+(
+id serial not null primary key,
+owner_id bigint not null,
+grant_type varchar(20) not null,
+client_id varchar(100) not null,
+client_secret varchar(100) not null,
+redirect_uri varchar(2000),
+created_at timestamp not null default current_timestamp,
+
+constraint oauth_client_owner_id_fkey foreign key (owner_id)
+references users (id) on delete cascade,
+constraint oauth_client_client_id_key unique (client_id)
+);
+create index oauth_client_owner_id_idx on oauth_clients(owner_id);
+
+
+create table oauth_authorization_codes
+(
+id serial not null primary key,
+account_id bigint not null,
+oauth_client_id bigint not null,
+code varchar(100) not null,
+redirect_uri varchar(2000) not null,
+created_at timestamp not null default current_timestamp,
+
+constraint oauth_authorization_codes_account_id_fkey foreign key (account_id)
+references users (id) on delete cascade,
+constraint oauth_authorization_codes_oauth_client_id_fkey foreign key (oauth_client_id)
+references oauth_clients (id) on delete cascade
+);
+
+create index oauth_authorization_codes_account_id_idx on oauth_authorization_codes(account_id);
+create unique index oauth_authorizations_code_code_idx on oauth_authorization_codes(code);
+create index oauth_authorization_codes_oauth_client_id_idx on oauth_authorization_codes(oauth_client_id);
+
+
+create table oauth_access_tokens
+(
+id serial not null primary key,
+account_id bigint not null,
+oauth_client_id bigint not null,
+access_token varchar(100) not null,
+refresh_token varchar(100) not null,
+created_at timestamp not null default current_timestamp,
+
+constraint oauth_access_tokens_account_id_fkey foreign key (account_id)
+references users (id) on delete cascade,
+constraint oauth_access_tokens_oauth_client_id_fkey foreign key (oauth_client_id)
+references oauth_clients (id) on delete cascade
+);
+create index oauth_access_tokens_account_id_idx on oauth_access_tokens(account_id);
+create index oauth_access_tokens_oauth_client_id_idx on oauth_access_tokens(oauth_client_id);
+create unique index oauth_access_tokens_access_token_idx on oauth_access_tokens(access_token);
+create unique index oauth_access_tokens_refresh_token_idx on oauth_access_tokens(refresh_token);', 'drop index oauth_access_tokens_account_id_idx;
+drop index oauth_access_tokens_oauth_client_id_idx;
+drop index oauth_access_tokens_access_token_idx;
+drop index oauth_access_tokens_refresh_token_idx;
+drop table oauth_access_tokens;
+
+drop index oauth_authorization_codes_account_id_idx;
+drop index oauth_authorizations_code_code_idx;
+drop index oauth_authorization_codes_oauth_client_id_idx;
+drop table oauth_authorization_codes;
+
+drop index oauth_client_owner_id_idx;
+drop table oauth_clients;', 'applied', '');
+INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, state, last_problem) VALUES (30, '3af39c21a4aa41611374609c703a75b6eb730c89', '2015-09-25 00:00:00', 'ALTER TABLE users ADD COLUMN password CHARACTER VARYING(60);', 'ALTER TABLE users DROP COLUMN password;', 'applied', '');
 
 
 --
--- TOC entry 3231 (class 0 OID 557794)
+-- TOC entry 3251 (class 0 OID 570302)
 -- Dependencies: 171
 -- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2182,26 +2437,25 @@ INSERT INTO play_evolutions (id, hash, applied_at, apply_script, revert_script, 
 
 
 --
--- TOC entry 3507 (class 0 OID 559148)
+-- TOC entry 3554 (class 0 OID 571656)
 -- Dependencies: 222
 -- Data for Name: user_credentials; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO user_credentials (id, external_id, system, user_id) VALUES (1, '1234', 'SIGA-i', 2);
-INSERT INTO user_credentials (id, external_id, system, user_id) VALUES (21, '0000', 'SIGA-i', 21);
 
 
 --
--- TOC entry 3555 (class 0 OID 0)
+-- TOC entry 3614 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: user_credentials_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_credentials_id_seq', 40, true);
+SELECT pg_catalog.setval('user_credentials_id_seq', 20, true);
 
 
 --
--- TOC entry 3497 (class 0 OID 559032)
+-- TOC entry 3544 (class 0 OID 571540)
 -- Dependencies: 212
 -- Data for Name: user_in_environment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2211,21 +2465,19 @@ INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, envir
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (3, 1, 5, 3, 0, 3, NULL);
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (4, 1, 6, 4, 0, 5, NULL);
 INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (5, 1, 5, 5, 0, 3, NULL);
-INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (6, 21, 1, 6, 0, 1, NULL);
-INSERT INTO user_in_environment (id, user_id, user_profile_environment_id, environment_id, impact_factor, current_access_type_id, current_frequency_level_id) VALUES (7, 21, 1, 7, 0, 1, NULL);
 
 
 --
--- TOC entry 3556 (class 0 OID 0)
+-- TOC entry 3615 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: user_in_environment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_in_environment_id_seq', 7, true);
+SELECT pg_catalog.setval('user_in_environment_id_seq', 5, true);
 
 
 --
--- TOC entry 3495 (class 0 OID 559024)
+-- TOC entry 3542 (class 0 OID 571532)
 -- Dependencies: 210
 -- Data for Name: user_profile_environments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2239,7 +2491,7 @@ INSERT INTO user_profile_environments (id, name) VALUES (6, 'Manager');
 
 
 --
--- TOC entry 3557 (class 0 OID 0)
+-- TOC entry 3616 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: user_profile_environments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2248,7 +2500,7 @@ SELECT pg_catalog.setval('user_profile_environments_id_seq', 20, true);
 
 
 --
--- TOC entry 3470 (class 0 OID 558831)
+-- TOC entry 3517 (class 0 OID 571339)
 -- Dependencies: 185
 -- Data for Name: user_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2261,7 +2513,7 @@ INSERT INTO user_types (id, name) VALUES (5, 'Coordenador');
 
 
 --
--- TOC entry 3558 (class 0 OID 0)
+-- TOC entry 3617 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: user_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2270,27 +2522,26 @@ SELECT pg_catalog.setval('user_types_id_seq', 20, true);
 
 
 --
--- TOC entry 3478 (class 0 OID 558887)
+-- TOC entry 3525 (class 0 OID 571395)
 -- Dependencies: 193
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (1, 'borges', 'Guilherme A. Borges', NULL, 'guilhermeborges@gmail.com', 1, NULL);
-INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (2, 'valderi', 'Valderi R. Q. Leithardt', NULL, 'valderi@gmail.com', 1, NULL);
-INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id) VALUES (21, 'administrador', 'Administrador', NULL, 'admin@sigai.org', 2, 7);
+INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id, password) VALUES (1, 'borges', 'Guilherme A. Borges', NULL, 'guilhermeborges@gmail.com', 1, NULL, '$2a$10$ARkrKZ4NZEe1m7zBmfnOOusDSZFedcZr7wNoztQhq1qy.o4Oeh6re');
+INSERT INTO users (id, name, full_name, auth_token, email_address, user_type_id, current_environment_id, password) VALUES (2, 'valderi', 'Valderi R. Q. Leithardt', NULL, 'valderi@gmail.com', 1, NULL, '$2a$10$ARkrKZ4NZEe1m7zBmfnOOusDSZFedcZr7wNoztQhq1qy.o4Oeh6re');
 
 
 --
--- TOC entry 3559 (class 0 OID 0)
+-- TOC entry 3618 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_id_seq', 40, true);
+SELECT pg_catalog.setval('users_id_seq', 20, true);
 
 
 --
--- TOC entry 3299 (class 2606 OID 559011)
+-- TOC entry 3325 (class 2606 OID 571519)
 -- Name: access_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2299,7 +2550,7 @@ ALTER TABLE ONLY access_levels
 
 
 --
--- TOC entry 3313 (class 2606 OID 559130)
+-- TOC entry 3339 (class 2606 OID 571638)
 -- Name: access_type_classifier_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2308,7 +2559,7 @@ ALTER TABLE ONLY access_type_classifier
 
 
 --
--- TOC entry 3297 (class 2606 OID 559003)
+-- TOC entry 3323 (class 2606 OID 571511)
 -- Name: access_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2317,7 +2568,7 @@ ALTER TABLE ONLY access_types
 
 
 --
--- TOC entry 3309 (class 2606 OID 559093)
+-- TOC entry 3335 (class 2606 OID 571601)
 -- Name: actions_args_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2326,7 +2577,7 @@ ALTER TABLE ONLY actions_args
 
 
 --
--- TOC entry 3307 (class 2606 OID 559069)
+-- TOC entry 3333 (class 2606 OID 571577)
 -- Name: actions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2335,7 +2586,7 @@ ALTER TABLE ONLY actions
 
 
 --
--- TOC entry 3289 (class 2606 OID 558950)
+-- TOC entry 3315 (class 2606 OID 571458)
 -- Name: communication_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2344,7 +2595,7 @@ ALTER TABLE ONLY communication_types
 
 
 --
--- TOC entry 3291 (class 2606 OID 558962)
+-- TOC entry 3317 (class 2606 OID 571470)
 -- Name: device_communications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2353,7 +2604,7 @@ ALTER TABLE ONLY device_communications
 
 
 --
--- TOC entry 3295 (class 2606 OID 558985)
+-- TOC entry 3321 (class 2606 OID 571493)
 -- Name: device_functionalities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2362,7 +2613,7 @@ ALTER TABLE ONLY device_functionalities
 
 
 --
--- TOC entry 3283 (class 2606 OID 558917)
+-- TOC entry 3309 (class 2606 OID 571425)
 -- Name: device_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2371,7 +2622,7 @@ ALTER TABLE ONLY device_types
 
 
 --
--- TOC entry 3285 (class 2606 OID 558927)
+-- TOC entry 3311 (class 2606 OID 571435)
 -- Name: devices_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2380,7 +2631,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- TOC entry 3287 (class 2606 OID 558925)
+-- TOC entry 3313 (class 2606 OID 571433)
 -- Name: devices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2389,7 +2640,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- TOC entry 3320 (class 2606 OID 559172)
+-- TOC entry 3346 (class 2606 OID 571680)
 -- Name: environment_frequency_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2398,7 +2649,7 @@ ALTER TABLE ONLY environment_frequency_levels
 
 
 --
--- TOC entry 3269 (class 2606 OID 558844)
+-- TOC entry 3295 (class 2606 OID 571352)
 -- Name: environment_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2407,7 +2658,7 @@ ALTER TABLE ONLY environment_types
 
 
 --
--- TOC entry 3275 (class 2606 OID 558867)
+-- TOC entry 3301 (class 2606 OID 571375)
 -- Name: environments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2416,7 +2667,7 @@ ALTER TABLE ONLY environments
 
 
 --
--- TOC entry 3318 (class 2606 OID 559167)
+-- TOC entry 3344 (class 2606 OID 571675)
 -- Name: frequency_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2425,7 +2676,7 @@ ALTER TABLE ONLY frequency_levels
 
 
 --
--- TOC entry 3293 (class 2606 OID 558980)
+-- TOC entry 3319 (class 2606 OID 571488)
 -- Name: functionalities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2434,7 +2685,7 @@ ALTER TABLE ONLY functionalities
 
 
 --
--- TOC entry 3271 (class 2606 OID 558854)
+-- TOC entry 3297 (class 2606 OID 571362)
 -- Name: localization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2443,7 +2694,7 @@ ALTER TABLE ONLY localization_types
 
 
 --
--- TOC entry 3311 (class 2606 OID 559107)
+-- TOC entry 3337 (class 2606 OID 571615)
 -- Name: log_events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2452,7 +2703,43 @@ ALTER TABLE ONLY log_events
 
 
 --
--- TOC entry 3265 (class 2606 OID 558828)
+-- TOC entry 3361 (class 2606 OID 571769)
+-- Name: oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY oauth_access_tokens
+    ADD CONSTRAINT oauth_access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3355 (class 2606 OID 571747)
+-- Name: oauth_authorization_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY oauth_authorization_codes
+    ADD CONSTRAINT oauth_authorization_codes_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3348 (class 2606 OID 571729)
+-- Name: oauth_client_client_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY oauth_clients
+    ADD CONSTRAINT oauth_client_client_id_key UNIQUE (client_id);
+
+
+--
+-- TOC entry 3351 (class 2606 OID 571727)
+-- Name: oauth_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY oauth_clients
+    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3291 (class 2606 OID 571336)
 -- Name: play_evolutions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2461,7 +2748,7 @@ ALTER TABLE ONLY play_evolutions
 
 
 --
--- TOC entry 3277 (class 2606 OID 558899)
+-- TOC entry 3303 (class 2606 OID 571407)
 -- Name: uq_user_email_address; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2470,7 +2757,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 3316 (class 2606 OID 559153)
+-- TOC entry 3342 (class 2606 OID 571661)
 -- Name: user_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2479,7 +2766,7 @@ ALTER TABLE ONLY user_credentials
 
 
 --
--- TOC entry 3303 (class 2606 OID 559041)
+-- TOC entry 3329 (class 2606 OID 571549)
 -- Name: user_in_environment_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2488,7 +2775,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3305 (class 2606 OID 559039)
+-- TOC entry 3331 (class 2606 OID 571547)
 -- Name: user_in_environment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2497,7 +2784,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3301 (class 2606 OID 559029)
+-- TOC entry 3327 (class 2606 OID 571537)
 -- Name: user_profile_environments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2506,7 +2793,7 @@ ALTER TABLE ONLY user_profile_environments
 
 
 --
--- TOC entry 3267 (class 2606 OID 558836)
+-- TOC entry 3293 (class 2606 OID 571344)
 -- Name: user_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2515,7 +2802,7 @@ ALTER TABLE ONLY user_types
 
 
 --
--- TOC entry 3279 (class 2606 OID 558897)
+-- TOC entry 3305 (class 2606 OID 571405)
 -- Name: users_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2524,7 +2811,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 3281 (class 2606 OID 558895)
+-- TOC entry 3307 (class 2606 OID 571403)
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2533,7 +2820,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 3272 (class 1259 OID 558883)
+-- TOC entry 3298 (class 1259 OID 571391)
 -- Name: environment_location_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2541,7 +2828,7 @@ CREATE INDEX environment_location_idx ON environments USING gist (location);
 
 
 --
--- TOC entry 3273 (class 1259 OID 558884)
+-- TOC entry 3299 (class 1259 OID 571392)
 -- Name: environment_shape_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2549,7 +2836,71 @@ CREATE INDEX environment_shape_idx ON environments USING gist (shape);
 
 
 --
--- TOC entry 3314 (class 1259 OID 559159)
+-- TOC entry 3357 (class 1259 OID 571782)
+-- Name: oauth_access_tokens_access_token_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX oauth_access_tokens_access_token_idx ON oauth_access_tokens USING btree (access_token);
+
+
+--
+-- TOC entry 3358 (class 1259 OID 571780)
+-- Name: oauth_access_tokens_account_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX oauth_access_tokens_account_id_idx ON oauth_access_tokens USING btree (account_id);
+
+
+--
+-- TOC entry 3359 (class 1259 OID 571781)
+-- Name: oauth_access_tokens_oauth_client_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX oauth_access_tokens_oauth_client_id_idx ON oauth_access_tokens USING btree (oauth_client_id);
+
+
+--
+-- TOC entry 3362 (class 1259 OID 571783)
+-- Name: oauth_access_tokens_refresh_token_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX oauth_access_tokens_refresh_token_idx ON oauth_access_tokens USING btree (refresh_token);
+
+
+--
+-- TOC entry 3352 (class 1259 OID 571758)
+-- Name: oauth_authorization_codes_account_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX oauth_authorization_codes_account_id_idx ON oauth_authorization_codes USING btree (account_id);
+
+
+--
+-- TOC entry 3353 (class 1259 OID 571760)
+-- Name: oauth_authorization_codes_oauth_client_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX oauth_authorization_codes_oauth_client_id_idx ON oauth_authorization_codes USING btree (oauth_client_id);
+
+
+--
+-- TOC entry 3356 (class 1259 OID 571759)
+-- Name: oauth_authorizations_code_code_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX oauth_authorizations_code_code_idx ON oauth_authorization_codes USING btree (code);
+
+
+--
+-- TOC entry 3349 (class 1259 OID 571735)
+-- Name: oauth_client_owner_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX oauth_client_owner_id_idx ON oauth_clients USING btree (owner_id);
+
+
+--
+-- TOC entry 3340 (class 1259 OID 571667)
 -- Name: user_credentials_external_id_system_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2557,7 +2908,7 @@ CREATE INDEX user_credentials_external_id_system_idx ON user_credentials USING b
 
 
 --
--- TOC entry 3334 (class 2606 OID 559017)
+-- TOC entry 3376 (class 2606 OID 571525)
 -- Name: access_levels_access_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2566,7 +2917,7 @@ ALTER TABLE ONLY access_levels
 
 
 --
--- TOC entry 3333 (class 2606 OID 559012)
+-- TOC entry 3375 (class 2606 OID 571520)
 -- Name: access_levels_environment_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2575,7 +2926,7 @@ ALTER TABLE ONLY access_levels
 
 
 --
--- TOC entry 3349 (class 2606 OID 559141)
+-- TOC entry 3391 (class 2606 OID 571649)
 -- Name: access_type_classifier_access_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2584,7 +2935,7 @@ ALTER TABLE ONLY access_type_classifier
 
 
 --
--- TOC entry 3348 (class 2606 OID 559136)
+-- TOC entry 3390 (class 2606 OID 571644)
 -- Name: access_type_classifier_environment_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2593,7 +2944,7 @@ ALTER TABLE ONLY access_type_classifier
 
 
 --
--- TOC entry 3350 (class 2606 OID 559188)
+-- TOC entry 3392 (class 2606 OID 571696)
 -- Name: access_type_classifier_frequency_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2602,7 +2953,7 @@ ALTER TABLE ONLY access_type_classifier
 
 
 --
--- TOC entry 3347 (class 2606 OID 559131)
+-- TOC entry 3389 (class 2606 OID 571639)
 -- Name: access_type_classifier_user_profile_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2611,7 +2962,7 @@ ALTER TABLE ONLY access_type_classifier
 
 
 --
--- TOC entry 3340 (class 2606 OID 559070)
+-- TOC entry 3382 (class 2606 OID 571578)
 -- Name: actions_access_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2620,7 +2971,7 @@ ALTER TABLE ONLY actions
 
 
 --
--- TOC entry 3343 (class 2606 OID 559094)
+-- TOC entry 3385 (class 2606 OID 571602)
 -- Name: actions_args_action_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2629,7 +2980,7 @@ ALTER TABLE ONLY actions_args
 
 
 --
--- TOC entry 3342 (class 2606 OID 559080)
+-- TOC entry 3384 (class 2606 OID 571588)
 -- Name: actions_custom_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2638,7 +2989,7 @@ ALTER TABLE ONLY actions
 
 
 --
--- TOC entry 3341 (class 2606 OID 559075)
+-- TOC entry 3383 (class 2606 OID 571583)
 -- Name: actions_functionality_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2647,7 +2998,7 @@ ALTER TABLE ONLY actions
 
 
 --
--- TOC entry 3330 (class 2606 OID 558968)
+-- TOC entry 3372 (class 2606 OID 571476)
 -- Name: device_communications_communication_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2656,7 +3007,7 @@ ALTER TABLE ONLY device_communications
 
 
 --
--- TOC entry 3329 (class 2606 OID 558963)
+-- TOC entry 3371 (class 2606 OID 571471)
 -- Name: device_communications_device_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2665,7 +3016,7 @@ ALTER TABLE ONLY device_communications
 
 
 --
--- TOC entry 3331 (class 2606 OID 558986)
+-- TOC entry 3373 (class 2606 OID 571494)
 -- Name: device_functionalities_device_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2674,7 +3025,7 @@ ALTER TABLE ONLY device_functionalities
 
 
 --
--- TOC entry 3332 (class 2606 OID 558991)
+-- TOC entry 3374 (class 2606 OID 571499)
 -- Name: device_functionalities_functionality_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2683,7 +3034,7 @@ ALTER TABLE ONLY device_functionalities
 
 
 --
--- TOC entry 3328 (class 2606 OID 558938)
+-- TOC entry 3370 (class 2606 OID 571446)
 -- Name: devices_current_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2692,7 +3043,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- TOC entry 3326 (class 2606 OID 558928)
+-- TOC entry 3368 (class 2606 OID 571436)
 -- Name: devices_device_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2701,7 +3052,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- TOC entry 3327 (class 2606 OID 558933)
+-- TOC entry 3369 (class 2606 OID 571441)
 -- Name: devices_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2710,7 +3061,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- TOC entry 3352 (class 2606 OID 559173)
+-- TOC entry 3394 (class 2606 OID 571681)
 -- Name: environment_frequency_levels_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2719,7 +3070,7 @@ ALTER TABLE ONLY environment_frequency_levels
 
 
 --
--- TOC entry 3353 (class 2606 OID 559178)
+-- TOC entry 3395 (class 2606 OID 571686)
 -- Name: environment_frequency_levels_frequency_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2728,7 +3079,7 @@ ALTER TABLE ONLY environment_frequency_levels
 
 
 --
--- TOC entry 3322 (class 2606 OID 558873)
+-- TOC entry 3364 (class 2606 OID 571381)
 -- Name: environments_environment_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2737,7 +3088,7 @@ ALTER TABLE ONLY environments
 
 
 --
--- TOC entry 3323 (class 2606 OID 558878)
+-- TOC entry 3365 (class 2606 OID 571386)
 -- Name: environments_localization_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2746,7 +3097,7 @@ ALTER TABLE ONLY environments
 
 
 --
--- TOC entry 3321 (class 2606 OID 558868)
+-- TOC entry 3363 (class 2606 OID 571376)
 -- Name: environments_parent_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2755,7 +3106,7 @@ ALTER TABLE ONLY environments
 
 
 --
--- TOC entry 3346 (class 2606 OID 559118)
+-- TOC entry 3388 (class 2606 OID 571626)
 -- Name: log_events_device_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2764,7 +3115,7 @@ ALTER TABLE ONLY log_events
 
 
 --
--- TOC entry 3344 (class 2606 OID 559108)
+-- TOC entry 3386 (class 2606 OID 571616)
 -- Name: log_events_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2773,7 +3124,7 @@ ALTER TABLE ONLY log_events
 
 
 --
--- TOC entry 3345 (class 2606 OID 559113)
+-- TOC entry 3387 (class 2606 OID 571621)
 -- Name: log_events_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2782,7 +3133,52 @@ ALTER TABLE ONLY log_events
 
 
 --
--- TOC entry 3351 (class 2606 OID 559154)
+-- TOC entry 3399 (class 2606 OID 571770)
+-- Name: oauth_access_tokens_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_access_tokens
+    ADD CONSTRAINT oauth_access_tokens_account_id_fkey FOREIGN KEY (account_id) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3400 (class 2606 OID 571775)
+-- Name: oauth_access_tokens_oauth_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_access_tokens
+    ADD CONSTRAINT oauth_access_tokens_oauth_client_id_fkey FOREIGN KEY (oauth_client_id) REFERENCES oauth_clients(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3397 (class 2606 OID 571748)
+-- Name: oauth_authorization_codes_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_authorization_codes
+    ADD CONSTRAINT oauth_authorization_codes_account_id_fkey FOREIGN KEY (account_id) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3398 (class 2606 OID 571753)
+-- Name: oauth_authorization_codes_oauth_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_authorization_codes
+    ADD CONSTRAINT oauth_authorization_codes_oauth_client_id_fkey FOREIGN KEY (oauth_client_id) REFERENCES oauth_clients(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3396 (class 2606 OID 571730)
+-- Name: oauth_client_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY oauth_clients
+    ADD CONSTRAINT oauth_client_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3393 (class 2606 OID 571662)
 -- Name: user_credentials_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2791,7 +3187,7 @@ ALTER TABLE ONLY user_credentials
 
 
 --
--- TOC entry 3338 (class 2606 OID 559057)
+-- TOC entry 3380 (class 2606 OID 571565)
 -- Name: user_in_environment_current_access_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2800,7 +3196,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3339 (class 2606 OID 559183)
+-- TOC entry 3381 (class 2606 OID 571691)
 -- Name: user_in_environment_current_freq_lev_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2809,7 +3205,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3336 (class 2606 OID 559047)
+-- TOC entry 3378 (class 2606 OID 571555)
 -- Name: user_in_environment_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2818,7 +3214,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3337 (class 2606 OID 559052)
+-- TOC entry 3379 (class 2606 OID 571560)
 -- Name: user_in_environment_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2827,7 +3223,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3335 (class 2606 OID 559042)
+-- TOC entry 3377 (class 2606 OID 571550)
 -- Name: user_in_environment_user_profile_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2836,7 +3232,7 @@ ALTER TABLE ONLY user_in_environment
 
 
 --
--- TOC entry 3325 (class 2606 OID 558905)
+-- TOC entry 3367 (class 2606 OID 571413)
 -- Name: users_current_environment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2845,7 +3241,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 3324 (class 2606 OID 558900)
+-- TOC entry 3366 (class 2606 OID 571408)
 -- Name: users_user_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2854,7 +3250,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 3517 (class 0 OID 0)
+-- TOC entry 3570 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -2865,7 +3261,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2015-09-09 17:04:30 BRT
+-- Completed on 2015-09-25 09:07:16 BRT
 
 --
 -- PostgreSQL database dump complete
